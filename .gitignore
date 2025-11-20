@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+.venv/
+.env
+*.log
+.DS_Store
+Thumbs.db
+.ipynb_checkpoints/
+data/raw/
+data/processed/model_predictions.csv
+models/*.joblib

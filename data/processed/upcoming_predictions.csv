@@ -1,0 +1,2 @@
+match_id,date,league_code,HomeTeam,AwayTeam,pred_home_goals,pred_away_goals,pred_total_goals,market_total_line,best_over_odds,best_under_odds,prob_over,prob_under
+E2_2025-11-20_Peterboro_Stockport,2025-11-20,E2,Peterboro,Stockport,1.5400892099054142,0.7729912201735394,2.3130804300789536,2.5,1.85,2.0,0.3668639053254437,0.6331360946745563
