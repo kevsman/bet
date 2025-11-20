@@ -1,0 +1,11 @@
+date,time,home_team,away_team,league,tv_channel,over_1_5,under_1_5,over_2_5,under_2_5,over_3_5,under_3_5
+2025-11-22,13:30,Burnley,Chelsea,England - Premier League,TV3+,1.23,3.9,1.75,2.0,2.9,1.38
+2025-11-22,16:00,Fulham,Sunderland,England - Premier League,VSport Premier L4,1.4,2.8,2.2,1.62,4.0,1.22
+2025-11-22,16:00,Bournemouth,West Ham,England - Premier League,VSport Premier L2,1.18,4.5,1.62,2.2,2.55,1.48
+2025-11-22,16:00,Liverpool,Nott'm Forest,England - Premier League,Vsport Premier League,1.16,4.8,1.52,2.4,2.35,1.55
+2025-11-22,16:00,Wolves,Crystal Palace,England - Premier League,VSport Premier L1,1.33,3.15,2.0,1.75,3.55,1.27
+2025-11-22,16:00,Brighton,Brentford,England - Premier League,VSport Premier L3,1.22,4.1,1.67,2.1,2.7,1.43
+2025-11-22,18:30,Newcastle,Man City,England - Premier League,Vsport Premier League,1.22,4.1,1.67,2.1,2.7,1.43
+2025-11-23,15:00,Leeds,Aston Villa,England - Premier League,VSport Premier L1,1.37,2.95,2.1,1.67,3.9,1.23
+2025-11-23,17:30,Arsenal,Tottenham,England - Premier League,Vsport Premier League,1.25,3.7,1.8,1.95,3.05,1.35
+2025-11-24,21:00,Man United,Everton,England - Premier League,Vsport Premier League,1.23,3.9,1.75,2.0,2.8,1.4
