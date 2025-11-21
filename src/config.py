@@ -27,8 +27,8 @@ class StrategyConfig:
     target_total_line: float = 2.5
     min_edge: float = 0.05
     bankroll: float = 10_000.0
-    kelly_fraction: float = 0.5
-    max_bet_fraction: float = 0.1
+    kelly_fraction: float = 0.15
+    max_bet_fraction: float = 0.05
 
 
 @dataclass

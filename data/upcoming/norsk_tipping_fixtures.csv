@@ -1,47 +1,109 @@
 Div,Date,Time,HomeTeam,AwayTeam,best_over_odds,best_under_odds,market_total_line
+E0,2025-11-22,13:30,Burnley,Chelsea,1.22,4.1,1.5
+E0,2025-11-22,13:30,Burnley,Chelsea,1.22,4.1,1.5
 E0,2025-11-22,13:30,Burnley,Chelsea,1.67,2.1,2.5
-E0,2025-11-22,16:00,Wolves,Crystal Palace,2.0,1.75,2.5
-E0,2025-11-22,16:00,Fulham,Sunderland,2.15,1.65,2.5
-E0,2025-11-22,16:00,Brighton,Brentford,1.67,2.1,2.5
-E0,2025-11-22,16:00,Liverpool,Nott'm Forest,1.5,2.5,2.5
-E0,2025-11-22,16:00,Bournemouth,West Ham,1.75,2.0,2.5
-E0,2025-11-22,18:30,Newcastle,Man City,1.72,2.05,2.5
-E0,2025-11-23,15:00,Leeds,Aston Villa,2.1,1.67,2.5
-E0,2025-11-23,17:30,Arsenal,Tottenham,1.8,1.95,2.5
-E0,2025-11-24,21:00,Man United,Everton,1.72,2.05,2.5
-E0,2025-11-29,16:00,Sunderland,Bournemouth,,,2.5
-E0,2025-11-29,16:00,Man City,Leeds,,,2.5
-E0,2025-11-29,16:00,Brentford,Burnley,,,2.5
-E0,2025-11-29,18:30,Everton,Newcastle,,,2.5
-F1,2025-11-22,17:00,Lens,Strasbourg Alsace,1.6,2.2,2.5
-F1,2025-11-22,19:00,Rennes,AS Monaco,1.52,2.35,2.5
-F1,2025-11-22,21:05,Paris SG,Le Havre,1.45,2.55,2.5
-F1,2025-11-23,15:00,Auxerre,Olympique Lyon,1.87,1.82,2.5
-F1,2025-11-23,17:15,Toulouse,Angers SCO,1.95,1.75,2.5
-F1,2025-11-23,17:15,Stade Brest 29,FC Metz,1.77,1.95,2.5
-F1,2025-11-23,17:15,FC Nantes,FC Lorient,1.95,1.75,2.5
-F1,2025-11-23,20:45,Lille OSC,Paris FC,1.65,2.1,2.5
-F1,2025-11-28,20:45,FC Metz,Rennes,,,2.5
-D1,2025-11-22,15:30,Augsburg,Hamburger SV,1.67,2.1,2.5
-D1,2025-11-22,15:30,Bayern Munich,Freiburg,1.32,3.05,2.5
+E0,2025-11-22,13:30,Burnley,Chelsea,1.67,2.1,2.5
+E0,2025-11-22,13:30,Burnley,Chelsea,2.75,1.42,3.5
+E0,2025-11-22,13:30,Burnley,Chelsea,2.75,1.42,3.5
+D1,2025-11-22,15:30,1. FC Heidenheim,M'gladbach,1.2,4.2,1.5
 D1,2025-11-22,15:30,1. FC Heidenheim,M'gladbach,1.62,2.15,2.5
-D1,2025-11-22,15:30,Wolfsburg,Bayer Leverkusen,1.57,2.25,2.5
+D1,2025-11-22,15:30,1. FC Heidenheim,M'gladbach,2.5,1.47,3.5
+D1,2025-11-22,15:30,Augsburg,Hamburger SV,1.2,4.0,1.5
+D1,2025-11-22,15:30,Augsburg,Hamburger SV,1.67,2.1,2.5
+D1,2025-11-22,15:30,Augsburg,Hamburger SV,2.6,1.45,3.5
+D1,2025-11-22,15:30,Bayern Munich,Freiburg,1.09,6.1,1.5
+D1,2025-11-22,15:30,Bayern Munich,Freiburg,1.32,3.05,2.5
+D1,2025-11-22,15:30,Bayern Munich,Freiburg,1.85,1.87,3.5
+D1,2025-11-22,15:30,Dortmund,Stuttgart,1.15,4.7,1.5
 D1,2025-11-22,15:30,Dortmund,Stuttgart,1.52,2.4,2.5
-D1,2025-11-22,18:30,FC Köln,Ein Frankfurt,1.5,2.4,2.5
-D1,2025-11-23,15:30,RB Leipzig,Werder Bremen,1.32,3.1,2.5
-D1,2025-11-23,17:30,St Pauli,Union Berlin,2.05,1.67,2.5
-D1,2025-11-28,20:30,M'gladbach,RB Leipzig,,,2.5
-E0,2025-11-22,13:30,Burnley,Chelsea,1.67,2.1,2.5
-E0,2025-11-22,16:00,Wolves,Crystal Palace,2.0,1.75,2.5
-E0,2025-11-22,16:00,Fulham,Sunderland,2.15,1.65,2.5
-E0,2025-11-22,16:00,Brighton,Brentford,1.67,2.1,2.5
-E0,2025-11-22,16:00,Liverpool,Nott'm Forest,1.5,2.5,2.5
+D1,2025-11-22,15:30,Dortmund,Stuttgart,2.25,1.57,3.5
+D1,2025-11-22,15:30,Wolfsburg,Bayer Leverkusen,1.17,4.4,1.5
+D1,2025-11-22,15:30,Wolfsburg,Bayer Leverkusen,1.57,2.25,2.5
+D1,2025-11-22,15:30,Wolfsburg,Bayer Leverkusen,2.4,1.52,3.5
+E0,2025-11-22,16:00,Bournemouth,West Ham,1.23,3.9,1.5
+E0,2025-11-22,16:00,Bournemouth,West Ham,1.23,3.9,1.5
 E0,2025-11-22,16:00,Bournemouth,West Ham,1.75,2.0,2.5
+E0,2025-11-22,16:00,Bournemouth,West Ham,1.75,2.0,2.5
+E0,2025-11-22,16:00,Bournemouth,West Ham,2.85,1.4,3.5
+E0,2025-11-22,16:00,Bournemouth,West Ham,2.85,1.4,3.5
+E0,2025-11-22,16:00,Brighton,Brentford,1.22,4.1,1.5
+E0,2025-11-22,16:00,Brighton,Brentford,1.22,4.1,1.5
+E0,2025-11-22,16:00,Brighton,Brentford,1.67,2.1,2.5
+E0,2025-11-22,16:00,Brighton,Brentford,1.67,2.1,2.5
+E0,2025-11-22,16:00,Brighton,Brentford,2.7,1.43,3.5
+E0,2025-11-22,16:00,Brighton,Brentford,2.7,1.43,3.5
+E0,2025-11-22,16:00,Fulham,Sunderland,1.38,2.9,1.5
+E0,2025-11-22,16:00,Fulham,Sunderland,1.38,2.9,1.5
+E0,2025-11-22,16:00,Fulham,Sunderland,2.15,1.65,2.5
+E0,2025-11-22,16:00,Fulham,Sunderland,2.15,1.65,2.5
+E0,2025-11-22,16:00,Fulham,Sunderland,3.95,1.22,3.5
+E0,2025-11-22,16:00,Fulham,Sunderland,3.95,1.22,3.5
+E0,2025-11-22,16:00,Liverpool,Nott'm Forest,1.14,5.2,1.5
+E0,2025-11-22,16:00,Liverpool,Nott'm Forest,1.14,5.2,1.5
+E0,2025-11-22,16:00,Liverpool,Nott'm Forest,1.5,2.5,2.5
+E0,2025-11-22,16:00,Liverpool,Nott'm Forest,1.5,2.5,2.5
+E0,2025-11-22,16:00,Liverpool,Nott'm Forest,2.25,1.6,3.5
+E0,2025-11-22,16:00,Liverpool,Nott'm Forest,2.25,1.6,3.5
+E0,2025-11-22,16:00,Wolves,Crystal Palace,1.33,3.15,1.5
+E0,2025-11-22,16:00,Wolves,Crystal Palace,1.33,3.15,1.5
+E0,2025-11-22,16:00,Wolves,Crystal Palace,2.0,1.75,2.5
+E0,2025-11-22,16:00,Wolves,Crystal Palace,2.0,1.75,2.5
+E0,2025-11-22,16:00,Wolves,Crystal Palace,3.55,1.27,3.5
+E0,2025-11-22,16:00,Wolves,Crystal Palace,3.55,1.27,3.5
+F1,2025-11-22,17:00,Lens,Strasbourg Alsace,1.18,4.3,1.5
+F1,2025-11-22,17:00,Lens,Strasbourg Alsace,1.6,2.2,2.5
+F1,2025-11-22,17:00,Lens,Strasbourg Alsace,2.45,1.5,3.5
+D1,2025-11-22,18:30,FC Köln,Ein Frankfurt,1.15,4.8,1.5
+D1,2025-11-22,18:30,FC Köln,Ein Frankfurt,1.5,2.4,2.5
+D1,2025-11-22,18:30,FC Köln,Ein Frankfurt,2.2,1.6,3.5
+E0,2025-11-22,18:30,Newcastle,Man City,1.22,4.0,1.5
+E0,2025-11-22,18:30,Newcastle,Man City,1.22,4.0,1.5
 E0,2025-11-22,18:30,Newcastle,Man City,1.72,2.05,2.5
+E0,2025-11-22,18:30,Newcastle,Man City,1.72,2.05,2.5
+E0,2025-11-22,18:30,Newcastle,Man City,2.75,1.42,3.5
+E0,2025-11-22,18:30,Newcastle,Man City,2.75,1.42,3.5
+F1,2025-11-22,19:00,Rennes,AS Monaco,1.15,4.6,1.5
+F1,2025-11-22,19:00,Rennes,AS Monaco,1.52,2.35,2.5
+F1,2025-11-22,19:00,Rennes,AS Monaco,2.3,1.55,3.5
+F1,2025-11-22,21:05,Paris SG,Le Havre,1.14,5.0,1.5
+F1,2025-11-22,21:05,Paris SG,Le Havre,1.45,2.55,2.5
+F1,2025-11-22,21:05,Paris SG,Le Havre,2.15,1.62,3.5
+F1,2025-11-23,15:00,Auxerre,Olympique Lyon,1.27,3.35,1.5
+F1,2025-11-23,15:00,Auxerre,Olympique Lyon,1.87,1.82,2.5
+F1,2025-11-23,15:00,Auxerre,Olympique Lyon,3.15,1.32,3.5
+E0,2025-11-23,15:00,Leeds,Aston Villa,1.37,2.95,1.5
+E0,2025-11-23,15:00,Leeds,Aston Villa,1.37,2.95,1.5
 E0,2025-11-23,15:00,Leeds,Aston Villa,2.1,1.67,2.5
+E0,2025-11-23,15:00,Leeds,Aston Villa,2.1,1.67,2.5
+E0,2025-11-23,15:00,Leeds,Aston Villa,3.9,1.23,3.5
+E0,2025-11-23,15:00,Leeds,Aston Villa,3.9,1.23,3.5
+D1,2025-11-23,15:30,RB Leipzig,Werder Bremen,1.09,6.2,1.5
+D1,2025-11-23,15:30,RB Leipzig,Werder Bremen,1.32,3.1,2.5
+D1,2025-11-23,15:30,RB Leipzig,Werder Bremen,1.8,1.9,3.5
+F1,2025-11-23,17:15,FC Nantes,FC Lorient,1.32,3.15,1.5
+F1,2025-11-23,17:15,FC Nantes,FC Lorient,1.95,1.75,2.5
+F1,2025-11-23,17:15,FC Nantes,FC Lorient,3.35,1.27,3.5
+F1,2025-11-23,17:15,Stade Brest 29,FC Metz,1.25,3.65,1.5
+F1,2025-11-23,17:15,Stade Brest 29,FC Metz,1.77,1.95,2.5
+F1,2025-11-23,17:15,Stade Brest 29,FC Metz,2.85,1.37,3.5
+F1,2025-11-23,17:15,Toulouse,Angers SCO,1.32,3.15,1.5
+F1,2025-11-23,17:15,Toulouse,Angers SCO,1.95,1.75,2.5
+F1,2025-11-23,17:15,Toulouse,Angers SCO,3.35,1.27,3.5
+E0,2025-11-23,17:30,Arsenal,Tottenham,1.25,3.7,1.5
+E0,2025-11-23,17:30,Arsenal,Tottenham,1.25,3.7,1.5
 E0,2025-11-23,17:30,Arsenal,Tottenham,1.8,1.95,2.5
+E0,2025-11-23,17:30,Arsenal,Tottenham,1.8,1.95,2.5
+E0,2025-11-23,17:30,Arsenal,Tottenham,3.05,1.35,3.5
+E0,2025-11-23,17:30,Arsenal,Tottenham,3.05,1.35,3.5
+D1,2025-11-23,17:30,St Pauli,Union Berlin,1.35,3.0,1.5
+D1,2025-11-23,17:30,St Pauli,Union Berlin,2.05,1.67,2.5
+D1,2025-11-23,17:30,St Pauli,Union Berlin,3.55,1.25,3.5
+F1,2025-11-23,20:45,Lille OSC,Paris FC,1.2,4.0,1.5
+F1,2025-11-23,20:45,Lille OSC,Paris FC,1.65,2.1,2.5
+F1,2025-11-23,20:45,Lille OSC,Paris FC,2.6,1.45,3.5
+E0,2025-11-24,21:00,Man United,Everton,1.23,3.9,1.5
+E0,2025-11-24,21:00,Man United,Everton,1.23,3.9,1.5
 E0,2025-11-24,21:00,Man United,Everton,1.72,2.05,2.5
-E0,2025-11-29,16:00,Sunderland,Bournemouth,,,2.5
-E0,2025-11-29,16:00,Man City,Leeds,,,2.5
-E0,2025-11-29,16:00,Brentford,Burnley,,,2.5
-E0,2025-11-29,18:30,Everton,Newcastle,,,2.5
+E0,2025-11-24,21:00,Man United,Everton,1.72,2.05,2.5
+E0,2025-11-24,21:00,Man United,Everton,2.8,1.4,3.5
+E0,2025-11-24,21:00,Man United,Everton,2.8,1.4,3.5

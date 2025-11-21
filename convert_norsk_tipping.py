@@ -90,17 +90,39 @@ def convert_norsk_tipping_to_fixtures(
     # Convert date format
     df['Date'] = pd.to_datetime(df['date']).dt.strftime('%Y-%m-%d')
     
-    # Rename columns to match expected format
-    fixtures = pd.DataFrame({
-        'Div': df['Div'],
-        'Date': df['Date'],
-        'Time': df['time'],
-        'HomeTeam': df['home_team'],
-        'AwayTeam': df['away_team'],
-        'best_over_odds': df['over_2_5'],  # Use 2.5 line for compatibility
-        'best_under_odds': df['under_2_5'],
-        'market_total_line': 2.5,
-    })
+    # Create fixtures for each line (1.5, 2.5, 3.5)
+    fixtures_list = []
+    
+    for line in [1.5, 2.5, 3.5]:
+        line_str = str(line).replace('.', '_')
+        over_col = f'over_{line_str}'
+        under_col = f'under_{line_str}'
+        
+        if over_col in df.columns and under_col in df.columns:
+            # Filter out rows where odds are missing for this line
+            line_df = df.dropna(subset=[over_col, under_col]).copy()
+            
+            if not line_df.empty:
+                line_fixtures = pd.DataFrame({
+                    'Div': line_df['Div'],
+                    'Date': line_df['Date'],
+                    'Time': line_df['time'],
+                    'HomeTeam': line_df['home_team'],
+                    'AwayTeam': line_df['away_team'],
+                    'best_over_odds': line_df[over_col],
+                    'best_under_odds': line_df[under_col],
+                    'market_total_line': line,
+                })
+                fixtures_list.append(line_fixtures)
+    
+    if not fixtures_list:
+        print("No valid odds found for any line.")
+        return pd.DataFrame()
+        
+    fixtures = pd.concat(fixtures_list, ignore_index=True)
+    
+    # Sort by Date, Time, HomeTeam, Line
+    fixtures = fixtures.sort_values(['Date', 'Time', 'HomeTeam', 'market_total_line'])
     
     # Save to output
     if output_csv is None:

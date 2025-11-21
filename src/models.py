@@ -52,8 +52,6 @@ def select_feature_columns(df: pd.DataFrame) -> List[str]:
         elif col in {
             "home_matches_played",
             "away_matches_played",
-            "home_goal_diff",
-            "away_goal_diff",
         }:
             candidates.append(col)
     return sorted(candidates)

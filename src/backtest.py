@@ -19,6 +19,12 @@ def settle_bet(total_goals: float, line: float, selection: str, stake: float, od
 
 def run_backtest(cfg: AppConfig) -> pd.DataFrame:
     predictions = load_predictions(cfg)
+    
+    # Filter for test set only to avoid look-ahead bias
+    if "dataset_split" in predictions.columns:
+        predictions = predictions[predictions["dataset_split"] == "test"]
+        print(f"Backtesting on {len(predictions)} test matches...")
+    
     bankroll = cfg.backtest.starting_bankroll
     records = []
     for _, row in predictions.sort_values("Date").iterrows():
