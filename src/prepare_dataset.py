@@ -16,6 +16,11 @@ REQUIRED_COLUMNS = [
     "FTAG",
 ]
 
+OPTIONAL_COLUMNS = [
+    "HST", "AST",  # Shots on Target
+    "HC", "AC",    # Corners
+]
+
 
 def load_raw_frames(cfg: AppConfig) -> List[pd.DataFrame]:
     frames: List[pd.DataFrame] = []
@@ -57,6 +62,12 @@ def attach_match_ids(df: pd.DataFrame) -> pd.DataFrame:
 def build_team_level(df: pd.DataFrame) -> pd.DataFrame:
     records = []
     for _, row in df.iterrows():
+        # Extract optional stats with defaults
+        hst = row.get("HST", np.nan)
+        ast = row.get("AST", np.nan)
+        hc = row.get("HC", np.nan)
+        ac = row.get("AC", np.nan)
+        
         records.append(
             {
                 "match_id": row["match_id"],
@@ -66,6 +77,10 @@ def build_team_level(df: pd.DataFrame) -> pd.DataFrame:
                 "date": row["Date"],
                 "goals_for": row["FTHG"],
                 "goals_against": row["FTAG"],
+                "shots_on_target_for": hst,
+                "shots_on_target_against": ast,
+                "corners_for": hc,
+                "corners_against": ac,
                 "league_code": row["league_code"],
                 "season_code": row["season_code"],
             }
@@ -79,6 +94,10 @@ def build_team_level(df: pd.DataFrame) -> pd.DataFrame:
                 "date": row["Date"],
                 "goals_for": row["FTAG"],
                 "goals_against": row["FTHG"],
+                "shots_on_target_for": ast,
+                "shots_on_target_against": hst,
+                "corners_for": ac,
+                "corners_against": hc,
                 "league_code": row["league_code"],
                 "season_code": row["season_code"],
             }
@@ -99,7 +118,15 @@ def add_form_features(team_df: pd.DataFrame, windows: List[int]) -> pd.DataFrame
     grouped_for = df.groupby("team")["goals_for"]
     grouped_against = df.groupby("team")["goals_against"]
     grouped_diff = df.groupby("team")["goal_diff"]
+    
+    # New stats groups
+    grouped_sot_for = df.groupby("team")["shots_on_target_for"]
+    grouped_sot_against = df.groupby("team")["shots_on_target_against"]
+    grouped_corners_for = df.groupby("team")["corners_for"]
+    grouped_corners_against = df.groupby("team")["corners_against"]
+
     for window in windows:
+        # Goals
         df[f"avg_for_{window}"] = grouped_for.transform(
             lambda s, w=window: s.shift(1).rolling(w, min_periods=1).mean()
         )
@@ -109,6 +136,23 @@ def add_form_features(team_df: pd.DataFrame, windows: List[int]) -> pd.DataFrame
         df[f"avg_diff_{window}"] = grouped_diff.transform(
             lambda s, w=window: s.shift(1).rolling(w, min_periods=1).mean()
         )
+        
+        # Shots on Target
+        df[f"avg_sot_for_{window}"] = grouped_sot_for.transform(
+            lambda s, w=window: s.shift(1).rolling(w, min_periods=1).mean()
+        )
+        df[f"avg_sot_against_{window}"] = grouped_sot_against.transform(
+            lambda s, w=window: s.shift(1).rolling(w, min_periods=1).mean()
+        )
+        
+        # Corners
+        df[f"avg_corners_for_{window}"] = grouped_corners_for.transform(
+            lambda s, w=window: s.shift(1).rolling(w, min_periods=1).mean()
+        )
+        df[f"avg_corners_against_{window}"] = grouped_corners_against.transform(
+            lambda s, w=window: s.shift(1).rolling(w, min_periods=1).mean()
+        )
+
     df["recent_goals_for"] = grouped_for.transform(lambda s: s.shift(1).rolling(5, min_periods=1).sum())
     df["recent_goals_against"] = grouped_against.transform(
         lambda s: s.shift(1).rolling(5, min_periods=1).sum()
@@ -124,7 +168,11 @@ def wide_features(team_df: pd.DataFrame, prefix: str) -> pd.DataFrame:
         "goal_diff",
         "recent_goals_for",
         "recent_goals_against",
-    ] + [col for col in team_df.columns if any(col.startswith(key) for key in ["avg_for_", "avg_against_", "avg_diff_"])]
+    ] + [col for col in team_df.columns if any(col.startswith(key) for key in [
+        "avg_for_", "avg_against_", "avg_diff_",
+        "avg_sot_for_", "avg_sot_against_",
+        "avg_corners_for_", "avg_corners_against_"
+    ])]
     subset = team_df.loc[:, columns_to_keep]
     renamed = subset.add_prefix(prefix + "_")
     renamed.rename(columns={f"{prefix}_match_id": "match_id"}, inplace=True)

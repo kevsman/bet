@@ -54,6 +54,11 @@ def select_feature_columns(df: pd.DataFrame) -> List[str]:
             "away_matches_played",
         }:
             candidates.append(col)
+    
+    # Ensure we don't include NaN columns if some leagues don't have shot data
+    # But for now, we assume they do or we handle NaNs (PoissonRegressor handles NaNs? No, need imputation or drop)
+    # The prepare_dataset script drops rows with NaNs in feature cols.
+    
     return sorted(candidates)
 
 
