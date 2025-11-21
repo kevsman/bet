@@ -1,0 +1,20 @@
+date,time,home_team,away_team,league,tv_channel,over_1_5,under_1_5,over_2_5,under_2_5,over_3_5,under_3_5
+2025-11-22,14:00,"uid=37_222 heading ""Alaves"" level=""2""","uid=37_223 heading ""Celta Vigo"" level=""2""","uid=37_224 StaticText ""Spania - Primera Division""",,1.42,2.75,2.25,1.6,4.2,1.2
+2025-11-22,16:15,"uid=37_245 heading ""Barcelona"" level=""2""","uid=37_246 heading ""Athletic Club Bilbao"" level=""2""","uid=37_247 StaticText ""Spania - Primera Division""",,1.14,5.2,1.48,2.55,2.25,1.6
+2025-11-22,18:30,"uid=37_268 heading ""Osasuna"" level=""2""","uid=37_269 heading ""Real Sociedad"" level=""2""","uid=37_270 StaticText ""Spania - Primera Division""",,1.42,2.75,2.25,1.6,4.2,1.2
+2025-11-22,21:00,"uid=37_291 heading ""Villarreal"" level=""2""","uid=37_292 heading ""Mallorca"" level=""2""","uid=37_293 StaticText ""Spania - Primera Division""",,1.18,4.5,1.62,2.2,2.55,1.48
+2025-11-23,14:00,"uid=37_314 heading ""Real Oviedo"" level=""2""","uid=37_315 heading ""Rayo Vallecano"" level=""2""","uid=37_316 StaticText ""Spania - Primera Division""",,1.4,2.8,2.2,1.62,4.1,1.22
+2025-11-23,16:15,"uid=37_337 heading ""Real Betis"" level=""2""","uid=37_338 heading ""Girona"" level=""2""","uid=37_339 StaticText ""Spania - Primera Division""",,1.18,4.5,1.58,2.3,2.5,1.5
+2025-11-23,18:30,"uid=37_360 heading ""Getafe"" level=""2""","uid=37_361 heading ""Atletico Madrid"" level=""2""","uid=37_362 StaticText ""Spania - Primera Division""",,1.48,2.55,2.5,1.5,4.8,1.16
+2025-11-23,21:00,"uid=37_383 heading ""Elche"" level=""2""","uid=37_384 heading ""Real Madrid"" level=""2""","uid=37_385 StaticText ""Spania - Primera Division""",,1.13,5.4,1.45,2.65,2.15,1.65
+2025-11-24,21:00,"uid=37_406 heading ""Espanyol"" level=""2""","uid=37_407 heading ""Sevilla"" level=""2""","uid=37_408 StaticText ""Spania - Primera Division""",,1.32,3.2,1.97,1.77,3.45,1.28
+2025-11-21,21:15,"uid=37_449 heading ""Unionistas de Salamanca CF"" level=""2""","uid=37_450 heading ""Real Madrid B"" level=""2""","uid=37_451 StaticText ""Spain Primera RFEF Group 1 - Spain""",,1.45,2.35,,,,
+2025-11-22,16:15,"uid=37_470 heading ""Merida AD"" level=""2""","uid=37_471 heading ""Real Aviles"" level=""2""","uid=37_472 StaticText ""Spain Primera RFEF Group 1 - Spain""",,,,2.05,1.58,,
+2025-11-22,16:15,"uid=37_491 heading ""Lugo"" level=""2""","uid=37_492 heading ""Pontevedra"" level=""2""","uid=37_493 StaticText ""Spain Primera RFEF Group 1 - Spain""",,1.5,2.2,,,,
+2025-11-22,18:30,"uid=37_512 heading ""Arenas Club de Getxo"" level=""2""","uid=37_513 heading ""Tenerife"" level=""2""","uid=37_514 StaticText ""Spain Primera RFEF Group 1 - Spain""",,1.45,2.3,,,,
+2025-11-22,18:30,"uid=37_533 heading ""CD Guadalajara"" level=""2""","uid=37_534 heading ""Athletic Bilbao B"" level=""2""","uid=37_535 StaticText ""Spain Primera RFEF Group 1 - Spain""",,1.45,2.3,,,,
+2025-11-22,18:30,"uid=37_554 heading ""Arenteiro"" level=""2""","uid=37_555 heading ""Ourense CF"" level=""2""","uid=37_556 StaticText ""Spain Primera RFEF Group 1 - Spain""",,1.5,2.2,,,,
+2025-11-23,12:00,"uid=37_575 heading ""Celta Vigo B"" level=""2""","uid=37_576 heading ""Ponferradina"" level=""2""","uid=37_577 StaticText ""Spain Primera RFEF Group 1 - Spain""",,,,2.2,1.5,,
+2025-11-23,16:00,"uid=37_596 heading ""Zamora CF"" level=""2""","uid=37_597 heading ""Talavera CF"" level=""2""","uid=37_598 StaticText ""Spain Primera RFEF Group 1 - Spain""",,,,1.95,1.65,,
+2025-11-23,16:00,"uid=37_617 heading ""Barakaldo CF"" level=""2""","uid=37_618 heading ""Racing Club Ferrol"" level=""2""","uid=37_619 StaticText ""Spain Primera RFEF Group 1 - Spain""",,1.5,2.2,,,,
+2025-11-23,18:30,"uid=37_638 heading ""Cacereno"" level=""2""","uid=37_639 heading ""Osasuna B"" level=""2""","uid=37_640 StaticText ""Spain Primera RFEF Group 1 - Spain""",,1.48,2.25,,,,

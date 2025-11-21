@@ -1,0 +1,10 @@
+date,time,home_team,away_team,league,tv_channel,over_1_5,under_1_5,over_2_5,under_2_5,over_3_5,under_3_5
+2025-11-22,15:30,"uid=32_232 heading ""Augsburg"" level=""2""","uid=32_233 heading ""Hamburger SV"" level=""2""","uid=32_234 StaticText ""Tyskland - Bundesliga""",,1.2,4.0,1.67,2.1,2.6,1.45
+2025-11-22,15:30,"uid=32_253 heading ""Bayern München"" level=""2""","uid=32_254 heading ""Freiburg"" level=""2""","uid=32_255 StaticText ""Tyskland - Bundesliga""",,1.09,6.1,1.32,3.05,1.85,1.87
+2025-11-22,15:30,"uid=32_276 heading ""1. FC Heidenheim"" level=""2""","uid=32_277 heading ""Borussia Mönchengladbach"" level=""2""","uid=32_278 StaticText ""Tyskland - Bundesliga""",,1.2,4.2,1.62,2.15,2.5,1.47
+2025-11-22,15:30,"uid=32_297 heading ""VfL Wolfsburg"" level=""2""","uid=32_298 heading ""Bayer Leverkusen"" level=""2""","uid=32_299 StaticText ""Tyskland - Bundesliga""",,1.17,4.4,1.57,2.25,2.4,1.52
+2025-11-22,15:30,"uid=32_318 heading ""Borussia Dortmund"" level=""2""","uid=32_319 heading ""VfB Stuttgart"" level=""2""","uid=32_320 StaticText ""Tyskland - Bundesliga""",,1.15,4.7,1.52,2.4,2.25,1.57
+2025-11-22,18:30,"uid=32_339 heading ""FC Köln"" level=""2""","uid=32_340 heading ""Eintracht Frankfurt"" level=""2""","uid=32_341 StaticText ""Tyskland - Bundesliga""",,1.15,4.8,1.5,2.4,2.2,1.6
+2025-11-23,15:30,"uid=32_362 heading ""RB Leipzig"" level=""2""","uid=32_363 heading ""Werder Bremen"" level=""2""","uid=32_364 StaticText ""Tyskland - Bundesliga""",,1.09,6.2,1.32,3.1,1.8,1.9
+2025-11-23,17:30,"uid=32_385 heading ""FC St. Pauli"" level=""2""","uid=32_386 heading ""Union Berlin"" level=""2""","uid=32_387 StaticText ""Tyskland - Bundesliga""",,1.35,3.0,2.05,1.67,3.55,1.25
+2025-11-28,20:30,"uid=32_408 heading ""Borussia Mönchengladbach"" level=""2""","uid=32_409 heading ""RB Leipzig"" level=""2""","uid=32_410 StaticText ""Tyskland - Bundesliga""",,,,,,,

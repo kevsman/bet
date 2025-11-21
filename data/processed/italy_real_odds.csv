@@ -1,0 +1,10 @@
+date,time,home_team,away_team,league,tv_channel,over_1_5,under_1_5,over_2_5,under_2_5,over_3_5,under_3_5
+2025-11-22,15:00,"uid=40_248 heading ""US Avellino"" level=""2""","uid=40_249 heading ""Empoli FC"" level=""2""","uid=40_250 StaticText ""Serie B - Italy""",,1.35,2.85,2.1,1.62,3.65,1.22
+2025-11-22,15:00,"uid=40_271 heading ""Virtus Entella"" level=""2""","uid=40_272 heading ""Palermo FC"" level=""2""","uid=40_273 StaticText ""Serie B - Italy""",,1.37,2.8,2.15,1.6,3.75,1.22
+2025-11-22,15:00,"uid=40_294 heading ""Carrarese Calcio"" level=""2""","uid=40_295 heading ""Reggiana 1919"" level=""2""","uid=40_296 StaticText ""Serie B - Italy""",,1.32,3.0,2.0,1.7,3.4,1.25
+2025-11-22,17:15,"uid=40_317 heading ""Calcio Padova"" level=""2""","uid=40_318 heading ""Venezia FC"" level=""2""","uid=40_319 StaticText ""Serie B - Italy""",,1.35,2.8,2.1,1.62,3.7,1.22
+2025-11-22,19:30,"uid=40_340 heading ""SSC Bari"" level=""2""","uid=40_341 heading ""Frosinone Calcio"" level=""2""","uid=40_342 StaticText ""Serie B - Italy""",,1.32,3.0,2.0,1.7,3.4,1.25
+2025-11-23,15:00,"uid=40_363 heading ""Modena FC"" level=""2""","uid=40_364 heading ""FC Sudtirol Bolzano"" level=""2""","uid=40_365 StaticText ""Serie B - Italy""",,1.35,2.9,2.05,1.65,3.55,1.22
+2025-11-23,15:00,"uid=40_384 heading ""Mantova 1911"" level=""2""","uid=40_385 heading ""Spezia Calcio"" level=""2""","uid=40_386 StaticText ""Serie B - Italy""",,1.35,2.85,2.1,1.62,3.65,1.22
+2025-11-23,17:15,"uid=40_405 heading ""AC Monza"" level=""2""","uid=40_406 heading ""Cesena FC"" level=""2""","uid=40_407 StaticText ""Serie B - Italy""",,1.4,2.7,2.2,1.57,3.9,1.2
+2025-11-24,20:30,"uid=40_428 heading ""Sampdoria Genoa"" level=""2""","uid=40_429 heading ""Juve Stabia"" level=""2""","uid=40_430 StaticText ""Serie B - Italy""",,1.45,2.5,2.4,1.5,4.3,1.17

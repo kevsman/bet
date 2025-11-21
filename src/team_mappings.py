@@ -39,12 +39,130 @@ PREMIER_LEAGUE_TEAMS = {
     "Wolverhampton Wanderers": "Wolves",
 }
 
-# Add other leagues as needed
-# La Liga, Bundesliga, Serie A, etc.
+# Championship (E1)
+CHAMPIONSHIP_TEAMS = {
+    "Barnsley": "Barnsley",
+    "Birmingham City": "Birmingham",
+    "Blackburn Rovers": "Blackburn",
+    "Blackpool": "Blackpool",
+    "Bristol City": "Bristol City",
+    "Cardiff City": "Cardiff",
+    "Coventry City": "Coventry",
+    "Derby County": "Derby",
+    "Huddersfield Town": "Huddersfield",
+    "Hull City": "Hull",
+    "Middlesbrough": "Middlesbrough",
+    "Millwall": "Millwall",
+    "Norwich City": "Norwich",
+    "Preston North End": "Preston",
+    "Queens Park Rangers": "QPR",
+    "Reading": "Reading",
+    "Sheffield Wednesday": "Sheff Wed",
+    "Stoke City": "Stoke",
+    "Swansea City": "Swansea",
+    "West Bromwich Albion": "West Brom",
+}
+
+# La Liga (SP1)
+LA_LIGA_TEAMS = {
+    "Athletic Club": "Ath Bilbao",
+    "Atlético Madrid": "Ath Madrid",
+    "Barcelona": "Barcelona",
+    "Deportivo Alavés": "Alaves",
+    "Getafe": "Getafe",
+    "Girona": "Girona",
+    "Real Betis": "Betis",
+    "Real Madrid": "Real Madrid",
+    "Real Sociedad": "Sociedad",
+    "Sevilla": "Sevilla",
+    "Valencia": "Valencia",
+    "Villarreal": "Villarreal",
+    "Celta Vigo": "Celta",
+    "Rayo Vallecano": "Vallecano",
+    "Osasuna": "Osasuna",
+    "Espanyol": "Espanol",
+    "Las Palmas": "Las Palmas",
+    "Mallorca": "Mallorca",
+    "Leganés": "Leganes",
+    "Valladolid": "Valladolid",
+}
+
+# Bundesliga (D1)
+BUNDESLIGA_TEAMS = {
+    "Bayern München": "Bayern Munich",
+    "Borussia Dortmund": "Dortmund",
+    "RB Leipzig": "RB Leipzig",
+    "Bayer 04 Leverkusen": "Leverkusen",
+    "Eintracht Frankfurt": "Ein Frankfurt",
+    "VfL Wolfsburg": "Wolfsburg",
+    "Borussia Mönchengladbach": "M'gladbach",
+    "TSG 1899 Hoffenheim": "Hoffenheim",
+    "SC Freiburg": "Freiburg",
+    "VfB Stuttgart": "Stuttgart",
+    "1. FC Union Berlin": "Union Berlin",
+    "1. FC Köln": "FC Koln",
+    "FSV Mainz 05": "Mainz",
+    "FC Augsburg": "Augsburg",
+    "VfL Bochum": "Bochum",
+    "Werder Bremen": "Werder Bremen",
+    "FC St. Pauli": "St Pauli",
+    "Holstein Kiel": "Holstein Kiel",
+    "Heidenheim": "Heidenheim",
+}
+
+# Serie A (I1)
+SERIE_A_TEAMS = {
+    "AC Milan": "Milan",
+    "Inter": "Inter",
+    "Juventus": "Juventus",
+    "Napoli": "Napoli",
+    "AS Roma": "Roma",
+    "Lazio": "Lazio",
+    "Atalanta": "Atalanta",
+    "Fiorentina": "Fiorentina",
+    "Bologna": "Bologna",
+    "Torino": "Torino",
+    "Udinese": "Udinese",
+    "Sassuolo": "Sassuolo",
+    "Empoli": "Empoli",
+    "Cagliari": "Cagliari",
+    "Hellas Verona": "Verona",
+    "Genoa": "Genoa",
+    "Lecce": "Lecce",
+    "Monza": "Monza",
+    "Como": "Como",
+    "Parma": "Parma",
+}
+
+# Ligue 1 (F1)
+LIGUE_1_TEAMS = {
+    "Paris Saint-Germain": "Paris SG",
+    "Marseille": "Marseille",
+    "Lyon": "Lyon",
+    "Monaco": "Monaco",
+    "Lille": "Lille",
+    "Nice": "Nice",
+    "Rennes": "Rennes",
+    "Lens": "Lens",
+    "Montpellier": "Montpellier",
+    "Strasbourg": "Strasbourg",
+    "Nantes": "Nantes",
+    "Reims": "Reims",
+    "Brest": "Brest",
+    "Toulouse": "Toulouse",
+    "Le Havre": "Le Havre",
+    "Auxerre": "Auxerre",
+    "Angers": "Angers",
+    "Saint-Étienne": "St Etienne",
+}
 
 ALL_TEAM_MAPPINGS = {
     **PREMIER_LEAGUE_TEAMS,
-    # Add other leagues here
+    **CHAMPIONSHIP_TEAMS,
+    **LA_LIGA_TEAMS,
+    **BUNDESLIGA_TEAMS,
+    **SERIE_A_TEAMS,
+    **LIGUE_1_TEAMS,
 }
 
 

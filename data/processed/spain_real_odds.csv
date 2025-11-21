@@ -1,0 +1,11 @@
+date,time,home_team,away_team,league,tv_channel,over_1_5,under_1_5,over_2_5,under_2_5,over_3_5,under_3_5
+2025-11-21,21:15,"uid=36_225 heading ""Unionistas de Salamanca CF"" level=""2""","uid=36_226 heading ""Real Madrid B"" level=""2""","uid=36_227 StaticText ""Spain Primera RFEF Group 1 - Spain""",,1.45,2.35,,,,
+2025-11-22,16:15,"uid=36_246 heading ""Merida AD"" level=""2""","uid=36_247 heading ""Real Aviles"" level=""2""","uid=36_248 StaticText ""Spain Primera RFEF Group 1 - Spain""",,,,2.05,1.58,,
+2025-11-22,16:15,"uid=36_267 heading ""Lugo"" level=""2""","uid=36_268 heading ""Pontevedra"" level=""2""","uid=36_269 StaticText ""Spain Primera RFEF Group 1 - Spain""",,1.5,2.2,,,,
+2025-11-22,18:30,"uid=36_288 heading ""Arenas Club de Getxo"" level=""2""","uid=36_289 heading ""Tenerife"" level=""2""","uid=36_290 StaticText ""Spain Primera RFEF Group 1 - Spain""",,1.45,2.3,,,,
+2025-11-22,18:30,"uid=36_309 heading ""CD Guadalajara"" level=""2""","uid=36_310 heading ""Athletic Bilbao B"" level=""2""","uid=36_311 StaticText ""Spain Primera RFEF Group 1 - Spain""",,1.45,2.3,,,,
+2025-11-22,18:30,"uid=36_330 heading ""Arenteiro"" level=""2""","uid=36_331 heading ""Ourense CF"" level=""2""","uid=36_332 StaticText ""Spain Primera RFEF Group 1 - Spain""",,1.5,2.2,,,,
+2025-11-23,12:00,"uid=36_351 heading ""Celta Vigo B"" level=""2""","uid=36_352 heading ""Ponferradina"" level=""2""","uid=36_353 StaticText ""Spain Primera RFEF Group 1 - Spain""",,,,2.2,1.5,,
+2025-11-23,16:00,"uid=36_372 heading ""Zamora CF"" level=""2""","uid=36_373 heading ""Talavera CF"" level=""2""","uid=36_374 StaticText ""Spain Primera RFEF Group 1 - Spain""",,,,1.95,1.65,,
+2025-11-23,16:00,"uid=36_393 heading ""Barakaldo CF"" level=""2""","uid=36_394 heading ""Racing Club Ferrol"" level=""2""","uid=36_395 StaticText ""Spain Primera RFEF Group 1 - Spain""",,1.5,2.2,,,,
+2025-11-23,18:30,"uid=36_414 heading ""Cacereno"" level=""2""","uid=36_415 heading ""Osasuna B"" level=""2""","uid=36_416 StaticText ""Spain Primera RFEF Group 1 - Spain""",,1.48,2.25,,,,
