@@ -1,0 +1,391 @@
+"""
+Generate HTML report for Norsk Tipping betting recommendations.
+
+This script reads the recommendations CSV and creates a visual HTML report
+with the betting opportunities, sorted by edge percentage.
+"""
+
+from datetime import datetime
+from pathlib import Path
+import pandas as pd
+
+
+def generate_html_report(
+    recommendations_path: Path = Path("data/processed/upcoming_recommendations.csv"),
+    output_path: Path = Path("betting_report.html"),
+) -> None:
+    """Generate HTML report from recommendations."""
+    
+    # Read recommendations
+    df = pd.read_csv(recommendations_path)
+    
+    if df.empty:
+        print("No recommendations found.")
+        return
+    
+    # Sort by edge (descending)
+    df = df.sort_values("edge", ascending=False)
+    
+    # Remove duplicates based on match_id
+    df = df.drop_duplicates(subset=["match_id"], keep="first")
+    
+    # Calculate total stake
+    total_stake = df["stake_fraction"].sum() * 100
+    
+    # Generate HTML
+    html = f"""<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Norsk Tipping Betting Recommendations</title>
+    <style>
+        * {{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }}
+        
+        body {{
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }}
+        
+        .container {{
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }}
+        
+        .header {{
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }}
+        
+        .header h1 {{
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }}
+        
+        .header .subtitle {{
+            font-size: 1.1em;
+            opacity: 0.9;
+        }}
+        
+        .header .timestamp {{
+            margin-top: 15px;
+            font-size: 0.9em;
+            opacity: 0.8;
+        }}
+        
+        .summary {{
+            background: #f8f9fa;
+            padding: 30px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            border-bottom: 3px solid #e9ecef;
+        }}
+        
+        .summary-card {{
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }}
+        
+        .summary-card .label {{
+            color: #6c757d;
+            font-size: 0.9em;
+            margin-bottom: 5px;
+        }}
+        
+        .summary-card .value {{
+            color: #1e3c72;
+            font-size: 2em;
+            font-weight: bold;
+        }}
+        
+        .recommendations {{
+            padding: 30px;
+        }}
+        
+        .recommendation {{
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }}
+        
+        .recommendation:hover {{
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+            transform: translateY(-2px);
+        }}
+        
+        .recommendation.high-value {{
+            border-color: #28a745;
+            background: linear-gradient(to right, #f8fff9 0%, white 100%);
+        }}
+        
+        .recommendation.medium-value {{
+            border-color: #ffc107;
+            background: linear-gradient(to right, #fffef8 0%, white 100%);
+        }}
+        
+        .match-header {{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }}
+        
+        .match-teams {{
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #1e3c72;
+        }}
+        
+        .match-league {{
+            font-size: 0.9em;
+            color: #6c757d;
+            background: #e9ecef;
+            padding: 5px 15px;
+            border-radius: 20px;
+        }}
+        
+        .prediction {{
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }}
+        
+        .prediction-type {{
+            font-size: 1.2em;
+            font-weight: bold;
+            padding: 10px 20px;
+            border-radius: 8px;
+            color: white;
+        }}
+        
+        .prediction-type.over {{
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }}
+        
+        .prediction-type.under {{
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }}
+        
+        .odds {{
+            font-size: 1.1em;
+            color: #495057;
+        }}
+        
+        .metrics {{
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }}
+        
+        .metric {{
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+        }}
+        
+        .metric .label {{
+            color: #6c757d;
+            font-size: 0.85em;
+            margin-bottom: 5px;
+        }}
+        
+        .metric .value {{
+            font-size: 1.3em;
+            font-weight: bold;
+        }}
+        
+        .metric.edge {{
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+        }}
+        
+        .metric.edge .value {{
+            color: #28a745;
+            font-size: 1.8em;
+        }}
+        
+        .metric.stake .value {{
+            color: #007bff;
+        }}
+        
+        .metric.probability .value {{
+            color: #6610f2;
+        }}
+        
+        .metric.total .value {{
+            color: #fd7e14;
+        }}
+        
+        .footer {{
+            background: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+            color: #6c757d;
+            font-size: 0.9em;
+            border-top: 3px solid #e9ecef;
+        }}
+        
+        .badge {{
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.8em;
+            font-weight: bold;
+            margin-left: 10px;
+        }}
+        
+        .badge.top-pick {{
+            background: #28a745;
+            color: white;
+        }}
+        
+        .badge.strong {{
+            background: #ffc107;
+            color: #000;
+        }}
+        
+        @media (max-width: 768px) {{
+            .header h1 {{
+                font-size: 1.8em;
+            }}
+            
+            .match-teams {{
+                font-size: 1.2em;
+            }}
+            
+            .summary {{
+                grid-template-columns: 1fr;
+            }}
+        }}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎯 Norsk Tipping Betting Recommendations</h1>
+            <div class="subtitle">AI-Powered Value Betting Analysis</div>
+            <div class="timestamp">Generated: {datetime.now().strftime("%B %d, %Y at %H:%M")}</div>
+        </div>
+        
+        <div class="summary">
+            <div class="summary-card">
+                <div class="label">Total Recommendations</div>
+                <div class="value">{len(df)}</div>
+            </div>
+            <div class="summary-card">
+                <div class="label">Total Stake</div>
+                <div class="value">{total_stake:.1f}%</div>
+            </div>
+            <div class="summary-card">
+                <div class="label">Avg Edge</div>
+                <div class="value">{df['edge'].mean() * 100:.1f}%</div>
+            </div>
+            <div class="summary-card">
+                <div class="label">Best Edge</div>
+                <div class="value">{df['edge'].max() * 100:.1f}%</div>
+            </div>
+        </div>
+        
+        <div class="recommendations">
+"""
+    
+    # Add each recommendation
+    for idx, row in df.iterrows():
+        edge_pct = row["edge"] * 100
+        prob_pct = row["probability"] * 100
+        stake_pct = row["stake_fraction"] * 100
+        
+        # Determine value class
+        if edge_pct >= 30:
+            value_class = "high-value"
+            badge = '<span class="badge top-pick">⭐ TOP PICK</span>'
+        elif edge_pct >= 15:
+            value_class = "medium-value"
+            badge = '<span class="badge strong">💪 STRONG</span>'
+        else:
+            value_class = ""
+            badge = ""
+        
+        # Prediction type
+        pred_type = row["selection"].title()
+        pred_class = pred_type.lower()
+        
+        html += f"""
+            <div class="recommendation {value_class}">
+                <div class="match-header">
+                    <div>
+                        <div class="match-teams">{row['home_team']} vs {row['away_team']}</div>
+                        <div class="match-league">{row['league_code']} • {row['date'][:10]}</div>
+                    </div>
+                    {badge}
+                </div>
+                
+                <div class="prediction">
+                    <div class="prediction-type {pred_class}">{pred_type} {row['line']}</div>
+                    <div class="odds">@ {row['odds']:.2f}</div>
+                </div>
+                
+                <div class="metrics">
+                    <div class="metric edge">
+                        <div class="label">Edge</div>
+                        <div class="value">{edge_pct:.1f}%</div>
+                    </div>
+                    <div class="metric probability">
+                        <div class="label">Win Probability</div>
+                        <div class="value">{prob_pct:.1f}%</div>
+                    </div>
+                    <div class="metric stake">
+                        <div class="label">Recommended Stake</div>
+                        <div class="value">{stake_pct:.1f}%</div>
+                    </div>
+                    <div class="metric total">
+                        <div class="label">Model Total Goals</div>
+                        <div class="value">{row['model_total']:.2f}</div>
+                    </div>
+                </div>
+            </div>
+"""
+    
+    html += f"""
+        </div>
+        
+        <div class="footer">
+            <p>⚠️ Bet responsibly. These are model predictions and do not guarantee profits.</p>
+            <p>Stakes are calculated using Kelly Criterion based on model edge.</p>
+        </div>
+    </div>
+</body>
+</html>
+"""
+    
+    # Write HTML file
+    output_path.write_text(html, encoding="utf-8")
+    print(f"\n✅ HTML report generated: {output_path.absolute()}")
+    print(f"📊 {len(df)} recommendations | Total stake: {total_stake:.1f}% of bankroll")
+
+
+if __name__ == "__main__":
+    generate_html_report()
