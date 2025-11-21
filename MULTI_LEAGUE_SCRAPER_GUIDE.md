@@ -5,6 +5,7 @@ Complete automation for scraping odds from all supported leagues on Norsk Tippin
 ## Overview
 
 This scraper automatically:
+
 1. ✅ Configures three dropdown menus (O/U 1.5, 2.5, 3.5 goals)
 2. ✅ Clicks through each country section
 3. ✅ Collects odds for all supported leagues
@@ -13,26 +14,32 @@ This scraper automatically:
 ## Supported Leagues
 
 ### England
+
 - **E0** - Premier League
 - **E1** - Championship
 
 ### Spain (Spania)
+
 - **SP1** - La Liga
 - **SP2** - Segunda División
 
 ### Germany (Tyskland)
+
 - **D1** - Bundesliga
 - **D2** - 2. Bundesliga
 
 ### Italy (Italia)
+
 - **I1** - Serie A
 - **I2** - Serie B
 
 ### France (Frankrike)
+
 - **F1** - Ligue 1
 - **F2** - Ligue 2
 
 ### Scotland (Skottland)
+
 - **SC0** - Premiership
 - **SC1** - Championship
 
@@ -79,6 +86,7 @@ For each country, execute this sequence:
 4. **Take snapshot** and save to file
 
 #### England
+
 ```
 take_snapshot() → get button UID
 click(uid="<england_button>")
@@ -87,6 +95,7 @@ take_snapshot() → save to data/snapshots/england_snapshot.txt
 ```
 
 #### Spain (Spania)
+
 ```
 take_snapshot() → get button UID
 click(uid="<spania_button>")
@@ -95,6 +104,7 @@ take_snapshot() → save to data/snapshots/spain_snapshot.txt
 ```
 
 #### Germany (Tyskland)
+
 ```
 take_snapshot() → get button UID
 click(uid="<tyskland_button>")
@@ -103,6 +113,7 @@ take_snapshot() → save to data/snapshots/germany_snapshot.txt
 ```
 
 #### Italy (Italia)
+
 ```
 take_snapshot() → get button UID
 click(uid="<italia_button>")
@@ -111,6 +122,7 @@ take_snapshot() → save to data/snapshots/italy_snapshot.txt
 ```
 
 #### France (Frankrike)
+
 ```
 take_snapshot() → get button UID
 click(uid="<frankrike_button>")
@@ -119,6 +131,7 @@ take_snapshot() → save to data/snapshots/france_snapshot.txt
 ```
 
 #### Scotland (Skottland)
+
 ```
 take_snapshot() → get button UID
 click(uid="<skottland_button>")
@@ -135,6 +148,7 @@ python auto_scrape_leagues.py
 ```
 
 This will:
+
 - Parse all snapshot files
 - Combine odds from all leagues
 - Save to `data/processed/all_leagues_odds.csv`
@@ -166,34 +180,37 @@ bet/
 
 The combined CSV file contains:
 
-| Column | Description |
-|--------|-------------|
-| Date | Match date (YYYY-MM-DD) |
-| Time | Match time (HH:MM) |
-| HomeTeam | Home team name (normalized) |
-| AwayTeam | Away team name (normalized) |
-| League | League name |
-| Over_1.5 | Over 1.5 goals odds |
-| Under_1.5 | Under 1.5 goals odds |
-| Over_2.5 | Over 2.5 goals odds |
-| Under_2.5 | Under 2.5 goals odds |
-| Over_3.5 | Over 3.5 goals odds |
-| Under_3.5 | Under 3.5 goals odds |
+| Column    | Description                 |
+| --------- | --------------------------- |
+| Date      | Match date (YYYY-MM-DD)     |
+| Time      | Match time (HH:MM)          |
+| HomeTeam  | Home team name (normalized) |
+| AwayTeam  | Away team name (normalized) |
+| League    | League name                 |
+| Over_1.5  | Over 1.5 goals odds         |
+| Under_1.5 | Under 1.5 goals odds        |
+| Over_2.5  | Over 2.5 goals odds         |
+| Under_2.5 | Under 2.5 goals odds        |
+| Over_3.5  | Over 3.5 goals odds         |
+| Under_3.5 | Under 3.5 goals odds        |
 
 ## Important Notes
 
 ### Dropdown Configuration
+
 - **Must be done first** - without this, only default markets will show
 - Use `fill_form` to fill all three at once (more reliable)
 - Dropdowns configure the page to show O/U 1.5, 2.5, 3.5 markets
 
 ### Country Clicking
+
 - Countries are in collapsed state by default
 - Must click expand button for each country
 - Wait for league text to confirm expansion
 - Take snapshot after expansion completes
 
 ### Snapshot Saving
+
 - Save each snapshot to the correct filename
 - Use `data/snapshots/` directory
 - Filename format: `<country>_snapshot.txt`
@@ -201,15 +218,19 @@ The combined CSV file contains:
 ## Troubleshooting
 
 ### Problem: Dropdowns not configured
+
 **Solution:** Always take a snapshot first to get UIDs, then use `fill_form` to fill all three at once
 
 ### Problem: Country won't expand
+
 **Solution:** Take a snapshot to verify button UID, ensure you're clicking the "Utvide" (expand) button
 
 ### Problem: No odds data
+
 **Solution:** Verify dropdowns were configured before clicking countries
 
 ### Problem: Snapshot timeout
+
 **Solution:** Increase timeout value (default 5000ms), some countries may load slower
 
 ## Next Steps
@@ -217,11 +238,13 @@ The combined CSV file contains:
 After scraping all leagues:
 
 1. **Convert to football-data.org format:**
+
    ```bash
    python convert_norsk_tipping.py
    ```
 
 2. **Score fixtures:**
+
    ```bash
    python score_fixtures.py
    ```

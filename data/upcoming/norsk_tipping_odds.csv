@@ -1,4 +1,85 @@
 date,time,home_team,away_team,league,tv_channel,over_1_5,under_1_5,over_2_5,under_2_5,over_3_5,under_3_5
-2025-11-22,13:30,Burnley,Chelsea,England - Premier League,TV3+,1.23,3.9,1.75,2.0,2.9,1.38
-2025-11-22,16:00,Real Madrid,Barcelona,Spain - La Liga,,1.15,5.2,1.5,2.55,2.2,1.65
-2025-11-22,18:30,Bayern Munich,Dortmund,Germany - Bundesliga,,1.18,4.8,1.55,2.35,2.3,1.58
+2025-11-22,13:30,Burnley,Chelsea,England - Premier League,,1.22,4.1,1.67,2.1,2.75,1.42
+2025-11-22,16:00,Wolves,Crystal Palace,England - Premier League,,1.33,3.15,2.0,1.75,3.55,1.27
+2025-11-22,16:00,Fulham,Sunderland,England - Premier League,,1.38,2.9,2.15,1.65,3.95,1.22
+2025-11-22,16:00,Brighton,Brentford,England - Premier League,,1.22,4.1,1.67,2.1,2.7,1.43
+2025-11-22,16:00,Liverpool,Nott'm Forest,England - Premier League,,1.14,5.2,1.5,2.5,2.25,1.6
+2025-11-22,16:00,Bournemouth,West Ham,England - Premier League,,1.23,3.9,1.75,2.0,2.85,1.4
+2025-11-22,18:30,Newcastle,Man City,England - Premier League,,1.22,4.0,1.72,2.05,2.75,1.42
+2025-11-23,15:00,Leeds,Aston Villa,England - Premier League,,1.37,2.95,2.1,1.67,3.9,1.23
+2025-11-23,17:30,Arsenal,Tottenham,England - Premier League,,1.25,3.7,1.8,1.95,3.05,1.35
+2025-11-24,21:00,Man United,Everton,England - Premier League,,1.23,3.9,1.72,2.05,2.8,1.4
+2025-11-29,16:00,Sunderland,Bournemouth,England - Premier League,,,,,,,
+2025-11-29,16:00,Man City,Leeds,England - Premier League,,,,,,,
+2025-11-29,16:00,Brentford,Burnley,England - Premier League,,,,,,,
+2025-11-29,18:30,Everton,Newcastle,England - Premier League,,,,,,,
+2025-11-22,17:00,Lens,Strasbourg Alsace,Frankrike - Ligue 1,,1.18,4.3,1.6,2.2,2.45,1.5
+2025-11-22,19:00,Rennes,AS Monaco,Frankrike - Ligue 1,,1.15,4.6,1.52,2.35,2.3,1.55
+2025-11-22,21:05,Paris SG,Le Havre,Frankrike - Ligue 1,,1.14,5.0,1.45,2.55,2.15,1.62
+2025-11-23,15:00,Auxerre,Olympique Lyon,Frankrike - Ligue 1,,1.27,3.35,1.87,1.82,3.15,1.32
+2025-11-23,17:15,Toulouse,Angers SCO,Frankrike - Ligue 1,,1.32,3.15,1.95,1.75,3.35,1.27
+2025-11-23,17:15,Stade Brest 29,FC Metz,Frankrike - Ligue 1,,1.25,3.65,1.77,1.95,2.85,1.37
+2025-11-23,17:15,FC Nantes,FC Lorient,Frankrike - Ligue 1,,1.32,3.15,1.95,1.75,3.35,1.27
+2025-11-23,20:45,Lille OSC,Paris FC,Frankrike - Ligue 1,,1.2,4.0,1.65,2.1,2.6,1.45
+2025-11-28,20:45,FC Metz,Rennes,Frankrike - Ligue 1,,,,,,,
+2025-11-22,15:30,Augsburg,Hamburger SV,Tyskland - Bundesliga,,1.2,4.0,1.67,2.1,2.6,1.45
+2025-11-22,15:30,Bayern Munich,Freiburg,Tyskland - Bundesliga,,1.09,6.1,1.32,3.05,1.85,1.87
+2025-11-22,15:30,1. FC Heidenheim,M'gladbach,Tyskland - Bundesliga,,1.2,4.2,1.62,2.15,2.5,1.47
+2025-11-22,15:30,Wolfsburg,Bayer Leverkusen,Tyskland - Bundesliga,,1.17,4.4,1.57,2.25,2.4,1.52
+2025-11-22,15:30,Dortmund,Stuttgart,Tyskland - Bundesliga,,1.15,4.7,1.52,2.4,2.25,1.57
+2025-11-22,18:30,FC Köln,Ein Frankfurt,Tyskland - Bundesliga,,1.15,4.8,1.5,2.4,2.2,1.6
+2025-11-23,15:30,RB Leipzig,Werder Bremen,Tyskland - Bundesliga,,1.09,6.2,1.32,3.1,1.8,1.9
+2025-11-23,17:30,St Pauli,Union Berlin,Tyskland - Bundesliga,,1.35,3.0,2.05,1.67,3.55,1.25
+2025-11-28,20:30,M'gladbach,RB Leipzig,Tyskland - Bundesliga,,,,,,,
+2025-11-22,15:00,US Avellino,Empoli FC,Serie B - Italy,,1.35,2.85,2.1,1.62,3.65,1.22
+2025-11-22,15:00,Virtus Entella,Palermo FC,Serie B - Italy,,1.37,2.8,2.15,1.6,3.75,1.22
+2025-11-22,15:00,Carrarese Calcio,Reggiana 1919,Serie B - Italy,,1.32,3.0,2.0,1.7,3.4,1.25
+2025-11-22,17:15,Calcio Padova,Venezia FC,Serie B - Italy,,1.35,2.8,2.1,1.62,3.7,1.22
+2025-11-22,19:30,SSC Bari,Frosinone Calcio,Serie B - Italy,,1.32,3.0,2.0,1.7,3.4,1.25
+2025-11-23,15:00,Modena FC,FC Sudtirol Bolzano,Serie B - Italy,,1.35,2.9,2.05,1.65,3.55,1.22
+2025-11-23,15:00,Mantova 1911,Spezia Calcio,Serie B - Italy,,1.35,2.85,2.1,1.62,3.65,1.22
+2025-11-23,17:15,AC Monza,Cesena FC,Serie B - Italy,,1.4,2.7,2.2,1.57,3.9,1.2
+2025-11-24,20:30,Sampdoria Genoa,Juve Stabia,Serie B - Italy,,1.45,2.5,2.4,1.5,4.3,1.17
+2025-11-22,14:00,Alaves,Celta,Spania - Primera Division,,1.42,2.75,2.25,1.6,4.2,1.2
+2025-11-22,16:15,Barcelona,Athletic Club Bilbao,Spania - Primera Division,,1.14,5.2,1.48,2.55,2.25,1.6
+2025-11-22,18:30,Osasuna,Sociedad,Spania - Primera Division,,1.42,2.75,2.25,1.6,4.2,1.2
+2025-11-22,21:00,Villarreal,Mallorca,Spania - Primera Division,,1.18,4.5,1.62,2.2,2.55,1.48
+2025-11-23,14:00,Real Oviedo,Vallecano,Spania - Primera Division,,1.4,2.8,2.2,1.62,4.1,1.22
+2025-11-23,16:15,Betis,Girona,Spania - Primera Division,,1.18,4.5,1.58,2.3,2.5,1.5
+2025-11-23,18:30,Getafe,Atletico Madrid,Spania - Primera Division,,1.48,2.55,2.5,1.5,4.8,1.16
+2025-11-23,21:00,Elche,Real Madrid,Spania - Primera Division,,1.13,5.4,1.45,2.65,2.15,1.65
+2025-11-24,21:00,Espanol,Sevilla,Spania - Primera Division,,1.32,3.2,1.97,1.77,3.45,1.28
+2025-11-21,21:15,Unionistas de Salamanca CF,Real Madrid B,Spain Primera RFEF Group 1 - Spain,,1.45,2.35,,,,
+2025-11-22,16:15,Merida AD,Real Aviles,Spain Primera RFEF Group 1 - Spain,,,,2.05,1.58,,
+2025-11-22,16:15,Lugo,Pontevedra,Spain Primera RFEF Group 1 - Spain,,1.5,2.2,,,,
+2025-11-22,18:30,Arenas Club de Getxo,Tenerife,Spain Primera RFEF Group 1 - Spain,,1.45,2.3,,,,
+2025-11-22,18:30,CD Guadalajara,Athletic Bilbao B,Spain Primera RFEF Group 1 - Spain,,1.45,2.3,,,,
+2025-11-22,18:30,Arenteiro,Ourense CF,Spain Primera RFEF Group 1 - Spain,,1.5,2.2,,,,
+2025-11-23,12:00,Celta Vigo B,Ponferradina,Spain Primera RFEF Group 1 - Spain,,,,2.2,1.5,,
+2025-11-23,16:00,Zamora CF,Talavera CF,Spain Primera RFEF Group 1 - Spain,,,,1.95,1.65,,
+2025-11-23,16:00,Barakaldo CF,Racing Club Ferrol,Spain Primera RFEF Group 1 - Spain,,1.5,2.2,,,,
+2025-11-23,18:30,Cacereno,Osasuna B,Spain Primera RFEF Group 1 - Spain,,1.48,2.25,,,,
+2025-11-21,21:15,Unionistas de Salamanca CF,Real Madrid B,Spain Primera RFEF Group 1 - Spain,,1.45,2.35,,,,
+2025-11-22,16:15,Merida AD,Real Aviles,Spain Primera RFEF Group 1 - Spain,,,,2.05,1.58,,
+2025-11-22,16:15,Lugo,Pontevedra,Spain Primera RFEF Group 1 - Spain,,1.5,2.2,,,,
+2025-11-22,18:30,Arenas Club de Getxo,Tenerife,Spain Primera RFEF Group 1 - Spain,,1.45,2.3,,,,
+2025-11-22,18:30,CD Guadalajara,Athletic Bilbao B,Spain Primera RFEF Group 1 - Spain,,1.45,2.3,,,,
+2025-11-22,18:30,Arenteiro,Ourense CF,Spain Primera RFEF Group 1 - Spain,,1.5,2.2,,,,
+2025-11-23,12:00,Celta Vigo B,Ponferradina,Spain Primera RFEF Group 1 - Spain,,,,2.2,1.5,,
+2025-11-23,16:00,Zamora CF,Talavera CF,Spain Primera RFEF Group 1 - Spain,,,,1.95,1.65,,
+2025-11-23,16:00,Barakaldo CF,Racing Club Ferrol,Spain Primera RFEF Group 1 - Spain,,1.5,2.2,,,,
+2025-11-23,18:30,Cacereno,Osasuna B,Spain Primera RFEF Group 1 - Spain,,1.48,2.25,,,,
+2025-11-22,13:30,Burnley,Chelsea,England - Premier League,,1.22,4.1,1.67,2.1,2.75,1.42
+2025-11-22,16:00,Wolves,Crystal Palace,England - Premier League,,1.33,3.15,2.0,1.75,3.55,1.27
+2025-11-22,16:00,Fulham,Sunderland,England - Premier League,,1.38,2.9,2.15,1.65,3.95,1.22
+2025-11-22,16:00,Brighton,Brentford,England - Premier League,,1.22,4.1,1.67,2.1,2.7,1.43
+2025-11-22,16:00,Liverpool,Nott'm Forest,England - Premier League,,1.14,5.2,1.5,2.5,2.25,1.6
+2025-11-22,16:00,Bournemouth,West Ham,England - Premier League,,1.23,3.9,1.75,2.0,2.85,1.4
+2025-11-22,18:30,Newcastle,Man City,England - Premier League,,1.22,4.0,1.72,2.05,2.75,1.42
+2025-11-23,15:00,Leeds,Aston Villa,England - Premier League,,1.37,2.95,2.1,1.67,3.9,1.23
+2025-11-23,17:30,Arsenal,Tottenham,England - Premier League,,1.25,3.7,1.8,1.95,3.05,1.35
+2025-11-24,21:00,Man United,Everton,England - Premier League,,1.23,3.9,1.72,2.05,2.8,1.4
+2025-11-29,16:00,Sunderland,Bournemouth,England - Premier League,,,,,,,
+2025-11-29,16:00,Man City,Leeds,England - Premier League,,,,,,,
+2025-11-29,16:00,Brentford,Burnley,England - Premier League,,,,,,,
+2025-11-29,18:30,Everton,Newcastle,England - Premier League,,,,,,,

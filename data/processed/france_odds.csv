@@ -1,10 +1,10 @@
 date,time,home_team,away_team,league,tv_channel,over_1_5,under_1_5,over_2_5,under_2_5,over_3_5,under_3_5
-2025-11-22,17:00,"uid=43_244 heading ""Lens"" level=""2""","uid=43_245 heading ""Strasbourg Alsace"" level=""2""","uid=43_246 StaticText ""Frankrike - Ligue 1""",,1.18,4.3,1.6,2.2,2.45,1.5
-2025-11-22,19:00,"uid=43_265 heading ""Rennes"" level=""2""","uid=43_266 heading ""AS Monaco"" level=""2""","uid=43_267 StaticText ""Frankrike - Ligue 1""",,1.15,4.6,1.52,2.35,2.3,1.55
-2025-11-22,21:05,"uid=43_286 heading ""Paris Saint-Germain"" level=""2""","uid=43_287 heading ""Le Havre"" level=""2""","uid=43_288 StaticText ""Frankrike - Ligue 1""",,1.14,5.0,1.45,2.55,2.15,1.62
-2025-11-23,15:00,"uid=43_307 heading ""Auxerre"" level=""2""","uid=43_308 heading ""Olympique Lyon"" level=""2""","uid=43_309 StaticText ""Frankrike - Ligue 1""",,1.27,3.35,1.87,1.82,3.15,1.32
-2025-11-23,17:15,"uid=43_328 heading ""Toulouse"" level=""2""","uid=43_329 heading ""Angers SCO"" level=""2""","uid=43_330 StaticText ""Frankrike - Ligue 1""",,1.32,3.15,1.95,1.75,3.35,1.27
-2025-11-23,17:15,"uid=43_349 heading ""Stade Brest 29"" level=""2""","uid=43_350 heading ""FC Metz"" level=""2""","uid=43_351 StaticText ""Frankrike - Ligue 1""",,1.25,3.65,1.77,1.95,2.85,1.37
-2025-11-23,17:15,"uid=43_370 heading ""FC Nantes"" level=""2""","uid=43_371 heading ""FC Lorient"" level=""2""","uid=43_372 StaticText ""Frankrike - Ligue 1""",,1.32,3.15,1.95,1.75,3.35,1.27
-2025-11-23,20:45,"uid=43_391 heading ""Lille OSC"" level=""2""","uid=43_392 heading ""Paris FC"" level=""2""","uid=43_393 StaticText ""Frankrike - Ligue 1""",,1.2,4.0,1.65,2.1,2.6,1.45
-2025-11-28,20:45,"uid=43_412 heading ""FC Metz"" level=""2""","uid=43_413 heading ""Rennes"" level=""2""","uid=43_414 StaticText ""Frankrike - Ligue 1""",,,,,,,
+2025-11-22,17:00,Lens,Strasbourg Alsace,Frankrike - Ligue 1,,1.18,4.3,1.6,2.2,2.45,1.5
+2025-11-22,19:00,Rennes,AS Monaco,Frankrike - Ligue 1,,1.15,4.6,1.52,2.35,2.3,1.55
+2025-11-22,21:05,Paris SG,Le Havre,Frankrike - Ligue 1,,1.14,5.0,1.45,2.55,2.15,1.62
+2025-11-23,15:00,Auxerre,Olympique Lyon,Frankrike - Ligue 1,,1.27,3.35,1.87,1.82,3.15,1.32
+2025-11-23,17:15,Toulouse,Angers SCO,Frankrike - Ligue 1,,1.32,3.15,1.95,1.75,3.35,1.27
+2025-11-23,17:15,Stade Brest 29,FC Metz,Frankrike - Ligue 1,,1.25,3.65,1.77,1.95,2.85,1.37
+2025-11-23,17:15,FC Nantes,FC Lorient,Frankrike - Ligue 1,,1.32,3.15,1.95,1.75,3.35,1.27
+2025-11-23,20:45,Lille OSC,Paris FC,Frankrike - Ligue 1,,1.2,4.0,1.65,2.1,2.6,1.45
+2025-11-28,20:45,FC Metz,Rennes,Frankrike - Ligue 1,,,,,,,

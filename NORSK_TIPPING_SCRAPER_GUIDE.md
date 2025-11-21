@@ -8,16 +8,17 @@ The scraper now supports **multiple European leagues** with automatic team name 
 
 ### ✅ Fully Mapped Leagues
 
-| League | Code | Teams Mapped |
-|--------|------|--------------|
-| **England - Premier League** | E0 | 27 teams |
-| **England - Championship** | E1 | 20+ teams |
-| **Spain - La Liga** | SP1 | 20 teams |
-| **Germany - Bundesliga** | D1 | 18 teams |
-| **Italy - Serie A** | I1 | 20 teams |
-| **France - Ligue 1** | F1 | 18 teams |
+| League                       | Code | Teams Mapped |
+| ---------------------------- | ---- | ------------ |
+| **England - Premier League** | E0   | 27 teams     |
+| **England - Championship**   | E1   | 20+ teams    |
+| **Spain - La Liga**          | SP1  | 20 teams     |
+| **Germany - Bundesliga**     | D1   | 18 teams     |
+| **Italy - Serie A**          | I1   | 20 teams     |
+| **France - Ligue 1**         | F1   | 18 teams     |
 
 ### Additional Supported Leagues
+
 - England League One (E2), League Two (E3)
 - Spain Segunda Division (SP2)
 - Germany 2. Bundesliga (D2)
@@ -45,6 +46,7 @@ Using the MCP Chrome DevTools, navigate to each league you want to scrape:
 ### Step 2: Select Market Dropdowns
 
 For each league page, select the 3 dropdown markets:
+
 - **Totalt antall mål - over/under 1.5**
 - **Totalt antall mål - over/under 2.5**
 - **Totalt antall mål - over/under 3.5**
@@ -71,7 +73,7 @@ Over 1.5, odds 1.23
 
 Lør. 22/11 16:00
 Real Madrid
-Barcelona  
+Barcelona
 Spain - La Liga
 ...
 """
@@ -84,6 +86,7 @@ python extract_current_odds.py
 ```
 
 This will:
+
 - Normalize all team names (e.g., "Bayern München" → "Bayern Munich")
 - Map league names to codes (e.g., "Spain - La Liga" → "SP1")
 - Extract all odds for all three lines (1.5, 2.5, 3.5)
@@ -103,18 +106,18 @@ The scraper automatically normalizes Norwegian/full team names to match the trai
 
 ### Examples
 
-| Norsk Tipping | football-data.co.uk |
-|---------------|---------------------|
-| Manchester City | Man City |
-| Manchester United | Man United |
-| Wolverhampton Wanderers | Wolves |
-| Nottingham Forest | Nott'm Forest |
-| Brighton and Hove Albion | Brighton |
-| Athletic Club | Ath Bilbao |
-| Atlético Madrid | Ath Madrid |
-| Bayern München | Bayern Munich |
-| Paris Saint-Germain | Paris SG |
-| AC Milan | Milan |
+| Norsk Tipping            | football-data.co.uk |
+| ------------------------ | ------------------- |
+| Manchester City          | Man City            |
+| Manchester United        | Man United          |
+| Wolverhampton Wanderers  | Wolves              |
+| Nottingham Forest        | Nott'm Forest       |
+| Brighton and Hove Albion | Brighton            |
+| Athletic Club            | Ath Bilbao          |
+| Atlético Madrid          | Ath Madrid          |
+| Bayern München           | Bayern Munich       |
+| Paris Saint-Germain      | Paris SG            |
+| AC Milan                 | Milan               |
 
 ## Unmapped Teams
 
@@ -125,6 +128,7 @@ Warning: No mapping found for 'Team Name', using as-is
 ```
 
 To add the mapping:
+
 1. Open `src/team_mappings.py`
 2. Find the correct league dictionary (e.g., `LA_LIGA_TEAMS`)
 3. Add the mapping: `"Norwegian Name": "Training Data Name"`

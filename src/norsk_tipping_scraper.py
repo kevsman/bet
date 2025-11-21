@@ -24,6 +24,21 @@ from .config import get_config
 from .team_mappings import normalize_team_name
 
 
+def extract_text_from_uid(uid_line: str) -> str:
+    """
+    Extract clean text from UID line.
+    
+    Example:
+        'uid=25_192 heading "Burnley" level="2"' -> 'Burnley'
+        'uid=25_194 StaticText "England - Premier League"' -> 'England - Premier League'
+    """
+    # Match text within quotes
+    match = re.search(r'"([^"]+)"', uid_line)
+    if match:
+        return match.group(1)
+    return uid_line.strip()
+
+
 @dataclass
 class MatchOdds:
     """Represents a football match with over/under odds."""
@@ -123,19 +138,19 @@ class SnapshotParser:
                     # Next line should be home team (heading level 2)
                     i += 1
                     if i < len(lines) and lines[i].strip():
-                        raw_home = lines[i].strip()
+                        raw_home = extract_text_from_uid(lines[i].strip())
                         match_data.home_team = normalize_team_name(raw_home)
                     
                     # Next line should be away team
                     i += 1
                     if i < len(lines) and lines[i].strip():
-                        raw_away = lines[i].strip()
+                        raw_away = extract_text_from_uid(lines[i].strip())
                         match_data.away_team = normalize_team_name(raw_away)
                     
                     # Next line should be league
                     i += 1
                     if i < len(lines) and lines[i].strip():
-                        match_data.league = lines[i].strip()
+                        match_data.league = extract_text_from_uid(lines[i].strip())
                     
                     # Skip empty line and potential TV channel
                     i += 1
