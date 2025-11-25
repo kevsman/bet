@@ -237,6 +237,10 @@ def main():
 
     # Generate HTML
     print("Generating HTML report...")
+    
+    # Get top 5 for featured section
+    top_5 = unique_recs[:5]
+    
     html = f'''<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -247,141 +251,263 @@ def main():
         * {{ box-sizing: border-box; margin: 0; padding: 0; }}
         body {{ 
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); 
-            color: #fff; 
+            background: #0f0f0f;
+            color: #e0e0e0; 
             min-height: 100vh; 
-            padding: 20px; 
         }}
-        .container {{ max-width: 1200px; margin: 0 auto; }}
+        .header {{
+            background: linear-gradient(135deg, #1a1a2e 0%, #0f3460 100%);
+            padding: 40px 20px;
+            text-align: center;
+            border-bottom: 1px solid #333;
+        }}
         h1 {{ 
-            text-align: center; 
-            margin-bottom: 10px; 
-            font-size: 2.5em; 
-            background: linear-gradient(90deg, #00d9ff, #00ff88); 
-            -webkit-background-clip: text; 
-            -webkit-text-fill-color: transparent; 
+            font-size: 2.2em; 
+            color: #fff;
+            margin-bottom: 8px;
         }}
-        .subtitle {{ text-align: center; color: #888; margin-bottom: 30px; }}
-        .stats-bar {{ 
-            display: flex; 
-            justify-content: center; 
-            gap: 40px; 
-            margin-bottom: 30px; 
-            flex-wrap: wrap; 
+        .subtitle {{ color: #888; font-size: 0.95em; }}
+        .container {{ max-width: 1400px; margin: 0 auto; padding: 30px 20px; }}
+        
+        /* Stats Row */
+        .stats-row {{
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
         }}
-        .stat {{ 
-            text-align: center; 
-            background: rgba(255,255,255,0.05); 
-            padding: 15px 25px; 
-            border-radius: 10px; 
+        .stat-box {{
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
         }}
-        .stat-value {{ font-size: 2em; font-weight: bold; color: #00ff88; }}
-        .stat-label {{ color: #888; font-size: 0.9em; }}
-        .section {{ margin-bottom: 40px; }}
-        .section-title {{ 
-            font-size: 1.5em; 
-            margin-bottom: 15px; 
-            padding-left: 10px; 
-            border-left: 4px solid #00d9ff; 
+        .stat-box .value {{ font-size: 2.5em; font-weight: 700; color: #4ade80; }}
+        .stat-box .label {{ color: #888; font-size: 0.85em; margin-top: 5px; }}
+        
+        /* Top 5 Section */
+        .top-picks {{
+            background: linear-gradient(135deg, #1e3a5f 0%, #1a1a2e 100%);
+            border: 1px solid #2563eb;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 40px;
         }}
-        .card {{ 
-            background: rgba(255,255,255,0.05); 
-            border-radius: 12px; 
-            padding: 20px; 
-            margin-bottom: 15px; 
-            border: 1px solid rgba(255,255,255,0.1); 
-            transition: transform 0.2s, box-shadow 0.2s; 
+        .top-picks h2 {{
+            color: #60a5fa;
+            font-size: 1.3em;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }}
-        .card:hover {{ 
-            transform: translateY(-2px); 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3); 
+        .top-list {{
+            display: grid;
+            gap: 12px;
         }}
-        .card-header {{ 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            margin-bottom: 15px; 
-            flex-wrap: wrap; 
-            gap: 10px; 
+        .top-item {{
+            display: grid;
+            grid-template-columns: 40px 1fr auto auto auto;
+            gap: 15px;
+            align-items: center;
+            background: rgba(0,0,0,0.3);
+            padding: 15px 20px;
+            border-radius: 8px;
+            border-left: 4px solid #4ade80;
         }}
-        .match-info {{ display: flex; flex-direction: column; }}
-        .match-teams {{ font-size: 1.3em; font-weight: bold; }}
-        .match-meta {{ color: #888; font-size: 0.9em; }}
-        .edge-badge {{ 
-            background: linear-gradient(135deg, #00ff88, #00d9ff); 
-            color: #000; 
-            padding: 8px 16px; 
-            border-radius: 20px; 
-            font-weight: bold; 
-            font-size: 1.1em; 
+        .top-item:nth-child(1) {{ border-left-color: #fbbf24; }}
+        .top-item:nth-child(2) {{ border-left-color: #94a3b8; }}
+        .top-item:nth-child(3) {{ border-left-color: #b45309; }}
+        .rank {{
+            font-size: 1.5em;
+            font-weight: 700;
+            color: #fff;
         }}
-        .card-body {{ 
-            display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); 
-            gap: 15px; 
+        .top-match {{
+            display: flex;
+            flex-direction: column;
         }}
-        .metric {{ 
-            background: rgba(0,0,0,0.2); 
-            padding: 12px; 
-            border-radius: 8px; 
-            text-align: center; 
+        .top-match .teams {{ font-weight: 600; color: #fff; }}
+        .top-match .meta {{ font-size: 0.8em; color: #888; }}
+        .top-bet {{
+            background: #4ade80;
+            color: #000;
+            padding: 6px 14px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.9em;
         }}
-        .metric-value {{ font-size: 1.4em; font-weight: bold; color: #00d9ff; }}
-        .metric-label {{ color: #888; font-size: 0.8em; margin-top: 4px; }}
-        .bet-type {{ 
-            background: #ff6b6b; 
-            color: #fff; 
-            padding: 4px 12px; 
-            border-radius: 15px; 
-            font-size: 0.9em; 
-            display: inline-block; 
+        .top-bet.under {{ background: #60a5fa; }}
+        .top-odds {{
+            font-size: 1.3em;
+            font-weight: 700;
+            color: #fff;
         }}
-        .bet-type.over {{ background: #00ff88; color: #000; }}
-        .bet-type.under {{ background: #00d9ff; color: #000; }}
+        .top-edge {{
+            background: #4ade80;
+            color: #000;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-weight: 700;
+        }}
+        
+        /* All Bets Section */
+        .section-header {{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }}
+        .section-header h2 {{
+            font-size: 1.3em;
+            color: #fff;
+        }}
+        .date-group {{
+            margin-bottom: 30px;
+        }}
+        .date-label {{
+            background: #2563eb;
+            color: #fff;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 0.9em;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 15px;
+        }}
+        
+        /* Table Layout */
+        .bets-table {{
+            width: 100%;
+            border-collapse: collapse;
+            background: #1a1a1a;
+            border-radius: 8px;
+            overflow: hidden;
+        }}
+        .bets-table th {{
+            background: #252525;
+            color: #888;
+            font-weight: 600;
+            font-size: 0.75em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 14px 16px;
+            text-align: left;
+            border-bottom: 1px solid #333;
+        }}
+        .bets-table td {{
+            padding: 16px;
+            border-bottom: 1px solid #2a2a2a;
+        }}
+        .bets-table tr:hover {{ background: #222; }}
+        .bets-table .match-cell {{
+            display: flex;
+            flex-direction: column;
+        }}
+        .bets-table .teams {{ font-weight: 600; color: #fff; }}
+        .bets-table .time {{ font-size: 0.8em; color: #666; }}
+        .bet-tag {{
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 4px;
+            font-size: 0.85em;
+            font-weight: 600;
+        }}
+        .bet-tag.over {{ background: rgba(74, 222, 128, 0.2); color: #4ade80; }}
+        .bet-tag.under {{ background: rgba(96, 165, 250, 0.2); color: #60a5fa; }}
+        .odds-cell {{ font-weight: 700; color: #fff; font-size: 1.1em; }}
+        .prob-cell {{ color: #888; }}
+        .edge-cell {{ 
+            color: #4ade80; 
+            font-weight: 700;
+        }}
+        .stake-cell {{
+            background: rgba(74, 222, 128, 0.1);
+            color: #4ade80;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 0.9em;
+        }}
+        
         .footer {{ 
             text-align: center; 
-            color: #666; 
-            margin-top: 40px; 
-            padding: 20px; 
-            border-top: 1px solid rgba(255,255,255,0.1); 
+            color: #555; 
+            margin-top: 50px; 
+            padding: 30px;
+            border-top: 1px solid #222;
+            font-size: 0.85em;
         }}
-        .no-bets {{
-            text-align: center;
-            padding: 60px 20px;
-            color: #888;
-        }}
-        .no-bets h2 {{ color: #fff; margin-bottom: 10px; }}
-        @media (max-width: 600px) {{ 
-            .card-body {{ grid-template-columns: 1fr 1fr; }} 
-            h1 {{ font-size: 1.8em; }} 
+        .footer p {{ margin: 5px 0; }}
+        
+        @media (max-width: 900px) {{
+            .stats-row {{ grid-template-columns: 1fr; }}
+            .top-item {{ 
+                grid-template-columns: 40px 1fr;
+                gap: 10px;
+            }}
+            .top-item > *:nth-child(n+3) {{
+                grid-column: 2;
+            }}
+            .bets-table {{ font-size: 0.9em; }}
+            .bets-table th, .bets-table td {{ padding: 10px 8px; }}
         }}
     </style>
 </head>
 <body>
+    <div class="header">
+        <h1>Value Bets Report</h1>
+        <p class="subtitle">Generated {datetime.now().strftime('%Y-%m-%d %H:%M')} | Norsk Tipping Odds</p>
+    </div>
+    
     <div class="container">
-        <h1>⚽ Value Bets</h1>
-        <p class="subtitle">Generated from Norsk Tipping odds | {datetime.now().strftime('%Y-%m-%d %H:%M')}</p>
-        
-        <div class="stats-bar">
-            <div class="stat">
-                <div class="stat-value">{len(unique_recs)}</div>
-                <div class="stat-label">Value Bets Found</div>
+        <div class="stats-row">
+            <div class="stat-box">
+                <div class="value">{len(unique_recs)}</div>
+                <div class="label">Value Bets Found</div>
             </div>
-            <div class="stat">
-                <div class="stat-value">{len(odds_df)}</div>
-                <div class="stat-label">Matches Analyzed</div>
+            <div class="stat-box">
+                <div class="value">{len(odds_df)}</div>
+                <div class="label">Matches Analyzed</div>
             </div>
-            <div class="stat">
-                <div class="stat-value">{sum(r["kelly"] for r in unique_recs)*100:.1f}%</div>
-                <div class="stat-label">Total Stake</div>
+            <div class="stat-box">
+                <div class="value">{sum(r["kelly"] for r in unique_recs)*100:.1f}%</div>
+                <div class="label">Total Recommended Stake</div>
+            </div>
+        </div>
+'''
+
+    # Top 5 Section
+    if top_5:
+        html += '''
+        <div class="top-picks">
+            <h2>🏆 Top 5 Recommendations</h2>
+            <div class="top-list">
+'''
+        for i, r in enumerate(top_5, 1):
+            bet_class = 'under' if 'Under' in r['bet'] else ''
+            html += f'''
+                <div class="top-item">
+                    <div class="rank">#{i}</div>
+                    <div class="top-match">
+                        <span class="teams">{r['home_team']} vs {r['away_team']}</span>
+                        <span class="meta">{r['date']} {r['time']} • {r['country']}</span>
+                    </div>
+                    <div class="top-bet {bet_class}">{r['bet']}</div>
+                    <div class="top-odds">@{r['odds']:.2f}</div>
+                    <div class="top-edge">+{r['edge']*100:.1f}%</div>
+                </div>
+'''
+        html += '''
             </div>
         </div>
 '''
 
     if not unique_recs:
         html += '''
-        <div class="no-bets">
-            <h2>No Value Bets Found</h2>
+        <div style="text-align: center; padding: 60px 20px; color: #888;">
+            <h2 style="color: #fff; margin-bottom: 10px;">No Value Bets Found</h2>
             <p>No bets with >5% edge were identified in the current odds.</p>
         </div>
 '''
@@ -391,55 +517,57 @@ def main():
         for r in unique_recs:
             by_date[r['date']].append(r)
 
-        for date in sorted(by_date.keys()):
-            recs = by_date[date]
-            html += f'''
-        <div class="section">
-            <h2 class="section-title">📅 {date}</h2>
+        html += '''
+        <div class="section-header">
+            <h2>All Value Bets</h2>
+        </div>
 '''
-            for r in sorted(recs, key=lambda x: -x['edge']):
+
+        for date in sorted(by_date.keys()):
+            recs = sorted(by_date[date], key=lambda x: -x['edge'])
+            html += f'''
+        <div class="date-group">
+            <div class="date-label">📅 {date}</div>
+            <table class="bets-table">
+                <thead>
+                    <tr>
+                        <th>Match</th>
+                        <th>Selection</th>
+                        <th>Odds</th>
+                        <th>Model</th>
+                        <th>Prob</th>
+                        <th>Edge</th>
+                        <th>Stake</th>
+                    </tr>
+                </thead>
+                <tbody>
+'''
+            for r in recs:
                 bet_class = 'over' if 'Over' in r['bet'] else 'under'
                 html += f'''
-            <div class="card">
-                <div class="card-header">
-                    <div class="match-info">
-                        <div class="match-teams">{r['home_team']} vs {r['away_team']}</div>
-                        <div class="match-meta">🕐 {r['time']} | 🌍 {r['country']}</div>
-                    </div>
-                    <div class="edge-badge">+{r['edge']*100:.1f}% Edge</div>
-                </div>
-                <div class="card-body">
-                    <div class="metric">
-                        <span class="bet-type {bet_class}">{r['bet']}</span>
-                        <div class="metric-label">Selection</div>
-                    </div>
-                    <div class="metric">
-                        <div class="metric-value">{r['odds']:.2f}</div>
-                        <div class="metric-label">Odds</div>
-                    </div>
-                    <div class="metric">
-                        <div class="metric-value">{r['model_total']:.2f}</div>
-                        <div class="metric-label">Model Total</div>
-                    </div>
-                    <div class="metric">
-                        <div class="metric-value">{r['probability']*100:.0f}%</div>
-                        <div class="metric-label">Probability</div>
-                    </div>
-                    <div class="metric">
-                        <div class="metric-value">{r['kelly']*100:.1f}%</div>
-                        <div class="metric-label">Stake</div>
-                    </div>
-                </div>
-            </div>
+                    <tr>
+                        <td class="match-cell">
+                            <span class="teams">{r['home_team']} vs {r['away_team']}</span>
+                            <span class="time">{r['time']} • {r['country']}</span>
+                        </td>
+                        <td><span class="bet-tag {bet_class}">{r['bet']}</span></td>
+                        <td class="odds-cell">{r['odds']:.2f}</td>
+                        <td>{r['model_total']:.2f}</td>
+                        <td class="prob-cell">{r['probability']*100:.0f}%</td>
+                        <td class="edge-cell">+{r['edge']*100:.1f}%</td>
+                        <td><span class="stake-cell">{r['kelly']*100:.1f}%</span></td>
+                    </tr>
 '''
             html += '''
+                </tbody>
+            </table>
         </div>
 '''
 
     html += '''
         <div class="footer">
-            <p>⚙️ Powered by Poisson regression model trained on historical match data</p>
-            <p>📊 Minimum edge threshold: 5% | Kelly criterion: 25% fractional</p>
+            <p>Powered by Poisson regression model trained on historical match data</p>
+            <p>Minimum edge threshold: 5% | Kelly criterion: 25% fractional | Max stake: 5%</p>
         </div>
     </div>
 </body>
