@@ -757,6 +757,8 @@ def main():
                         <th>Match</th>
                         <th>Selection</th>
                         <th>Odds</th>
+                        <th>Model</th>
+                        <th>Prob</th>
                         <th>Edge</th>
                         <th>Stake</th>
                         <th>Winnings</th>
@@ -775,6 +777,8 @@ def main():
                         </td>
                         <td><span class="bet-tag {bet_class}">{r['bet']}</span></td>
                         <td class="odds-cell">{r['odds']:.2f}</td>
+                        <td>{r['model_total']:.2f}</td>
+                        <td class="prob-cell">{r['probability']*100:.0f}%</td>
                         <td class="edge-cell">+{r['edge']*100:.1f}%</td>
                         <td class="stake-cell" id="stake-{bet_idx}">-</td>
                         <td class="winnings-cell" id="win-{bet_idx}">-</td>
@@ -843,16 +847,16 @@ def main():
                     stake = totalKelly > 0 ? (bet.kelly / totalKelly) * totalBet : 0;
                 }}
                 
-                const winnings = stake * bet.odds;
-                const profit = winnings - stake;
+                const payout = stake * bet.odds;  // Total return if win
+                const profit = payout - stake;     // Net profit if win
                 const ev = (bet.probability * profit) - ((1 - bet.probability) * stake);
                 
                 totalStake += stake;
-                totalPotentialWin += winnings;
+                totalPotentialWin += payout;
                 totalExpectedValue += ev;
                 
                 document.getElementById('stake-' + bet.id).textContent = stake.toFixed(0) + ' kr';
-                document.getElementById('win-' + bet.id).textContent = winnings.toFixed(0) + ' kr';
+                document.getElementById('win-' + bet.id).textContent = payout.toFixed(0) + ' kr (+' + profit.toFixed(0) + ')';
             }});
             
             // Update summary
