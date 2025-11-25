@@ -241,6 +241,23 @@ def main():
     # Get top 5 for featured section
     top_5 = unique_recs[:5]
     
+    # Generate bet data for JavaScript
+    import json
+    bets_json = json.dumps([{
+        'id': i,
+        'home_team': r['home_team'],
+        'away_team': r['away_team'],
+        'date': r['date'],
+        'time': r['time'],
+        'country': r['country'],
+        'bet': r['bet'],
+        'odds': r['odds'],
+        'model_total': r['model_total'],
+        'probability': r['probability'],
+        'edge': r['edge'],
+        'kelly': r['kelly']
+    } for i, r in enumerate(unique_recs)])
+    
     html = f'''<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -269,12 +286,136 @@ def main():
         .subtitle {{ color: #888; font-size: 0.95em; }}
         .container {{ max-width: 1400px; margin: 0 auto; padding: 30px 20px; }}
         
+        /* Betting Controls */
+        .betting-controls {{
+            background: linear-gradient(135deg, #1a2e1a 0%, #0f1f0f 100%);
+            border: 1px solid #4ade80;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 30px;
+        }}
+        .betting-controls h2 {{
+            color: #4ade80;
+            font-size: 1.3em;
+            margin-bottom: 20px;
+        }}
+        .controls-row {{
+            display: flex;
+            flex-wrap: wrap;
+            gap: 25px;
+            align-items: center;
+            margin-bottom: 20px;
+        }}
+        .control-group {{
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }}
+        .control-group label {{
+            color: #888;
+            font-size: 0.85em;
+        }}
+        .control-group input[type="number"] {{
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 6px;
+            padding: 10px 14px;
+            color: #fff;
+            font-size: 1.1em;
+            width: 150px;
+        }}
+        .control-group input[type="number"]:focus {{
+            outline: none;
+            border-color: #4ade80;
+        }}
+        .toggle-group {{
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }}
+        .toggle-switch {{
+            position: relative;
+            width: 50px;
+            height: 26px;
+        }}
+        .toggle-switch input {{
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }}
+        .toggle-slider {{
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #333;
+            transition: .3s;
+            border-radius: 26px;
+        }}
+        .toggle-slider:before {{
+            position: absolute;
+            content: "";
+            height: 20px;
+            width: 20px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .3s;
+            border-radius: 50%;
+        }}
+        .toggle-switch input:checked + .toggle-slider {{
+            background-color: #4ade80;
+        }}
+        .toggle-switch input:checked + .toggle-slider:before {{
+            transform: translateX(24px);
+        }}
+        .toggle-labels {{
+            display: flex;
+            gap: 8px;
+            font-size: 0.9em;
+        }}
+        .toggle-labels span {{
+            color: #666;
+        }}
+        .toggle-labels span.active {{
+            color: #4ade80;
+            font-weight: 600;
+        }}
+        
+        /* Summary Box */
+        .betting-summary {{
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            background: rgba(0,0,0,0.3);
+            padding: 20px;
+            border-radius: 8px;
+        }}
+        .summary-item {{
+            text-align: center;
+        }}
+        .summary-item .value {{
+            font-size: 1.8em;
+            font-weight: 700;
+            color: #4ade80;
+        }}
+        .summary-item .value.winnings {{
+            color: #fbbf24;
+        }}
+        .summary-item .label {{
+            color: #888;
+            font-size: 0.8em;
+            margin-top: 4px;
+        }}
+        
         /* Stats Row */
         .stats-row {{
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 20px;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
         }}
         .stat-box {{
             background: #1a1a1a;
@@ -363,6 +504,22 @@ def main():
             font-size: 1.3em;
             color: #fff;
         }}
+        .select-buttons {{
+            display: flex;
+            gap: 10px;
+        }}
+        .select-btn {{
+            background: #333;
+            border: none;
+            color: #fff;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.85em;
+        }}
+        .select-btn:hover {{
+            background: #444;
+        }}
         .date-group {{
             margin-bottom: 30px;
         }}
@@ -392,15 +549,16 @@ def main():
             font-size: 0.75em;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            padding: 14px 16px;
+            padding: 14px 12px;
             text-align: left;
             border-bottom: 1px solid #333;
         }}
         .bets-table td {{
-            padding: 16px;
+            padding: 14px 12px;
             border-bottom: 1px solid #2a2a2a;
         }}
         .bets-table tr:hover {{ background: #222; }}
+        .bets-table tr.selected {{ background: rgba(74, 222, 128, 0.1); }}
         .bets-table .match-cell {{
             display: flex;
             flex-direction: column;
@@ -423,12 +581,21 @@ def main():
             font-weight: 700;
         }}
         .stake-cell {{
-            background: rgba(74, 222, 128, 0.1);
             color: #4ade80;
-            padding: 4px 10px;
-            border-radius: 4px;
             font-weight: 600;
             font-size: 0.9em;
+        }}
+        .winnings-cell {{
+            color: #fbbf24;
+            font-weight: 600;
+        }}
+        
+        /* Checkbox styling */
+        .bet-checkbox {{
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            accent-color: #4ade80;
         }}
         
         .footer {{ 
@@ -452,6 +619,7 @@ def main():
             }}
             .bets-table {{ font-size: 0.9em; }}
             .bets-table th, .bets-table td {{ padding: 10px 8px; }}
+            .controls-row {{ flex-direction: column; align-items: flex-start; }}
         }}
     </style>
 </head>
@@ -462,6 +630,54 @@ def main():
     </div>
     
     <div class="container">
+        <!-- Betting Controls -->
+        <div class="betting-controls">
+            <h2>💰 Bet Calculator</h2>
+            <div class="controls-row">
+                <div class="control-group">
+                    <label>Total Amount to Bet (kr)</label>
+                    <input type="number" id="totalBet" value="1000" min="0" step="100" onchange="updateCalculations()">
+                </div>
+                <div class="control-group">
+                    <label>Stake Mode</label>
+                    <div class="toggle-group">
+                        <span class="toggle-labels">
+                            <span id="labelProportional" class="active">Proportional</span>
+                        </span>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="fixedMode" onchange="updateCalculations()">
+                            <span class="toggle-slider"></span>
+                        </label>
+                        <span class="toggle-labels">
+                            <span id="labelFixed">Fixed</span>
+                        </span>
+                    </div>
+                </div>
+                <div class="control-group" id="fixedAmountGroup" style="display: none;">
+                    <label>Fixed Amount per Bet (kr)</label>
+                    <input type="number" id="fixedAmount" value="100" min="0" step="10" onchange="updateCalculations()">
+                </div>
+            </div>
+            <div class="betting-summary">
+                <div class="summary-item">
+                    <div class="value" id="selectedCount">0</div>
+                    <div class="label">Bets Selected</div>
+                </div>
+                <div class="summary-item">
+                    <div class="value" id="totalStake">0 kr</div>
+                    <div class="label">Total Stake</div>
+                </div>
+                <div class="summary-item">
+                    <div class="value winnings" id="potentialWinnings">0 kr</div>
+                    <div class="label">Potential Winnings (if all win)</div>
+                </div>
+                <div class="summary-item">
+                    <div class="value winnings" id="expectedValue">0 kr</div>
+                    <div class="label">Expected Value</div>
+                </div>
+            </div>
+        </div>
+        
         <div class="stats-row">
             <div class="stat-box">
                 <div class="value">{len(unique_recs)}</div>
@@ -520,9 +736,15 @@ def main():
         html += '''
         <div class="section-header">
             <h2>All Value Bets</h2>
+            <div class="select-buttons">
+                <button class="select-btn" onclick="selectAll()">Select All</button>
+                <button class="select-btn" onclick="selectNone()">Select None</button>
+                <button class="select-btn" onclick="selectTop5()">Select Top 5</button>
+            </div>
         </div>
 '''
-
+        
+        bet_idx = 0
         for date in sorted(by_date.keys()):
             recs = sorted(by_date[date], key=lambda x: -x['edge'])
             html += f'''
@@ -531,13 +753,13 @@ def main():
             <table class="bets-table">
                 <thead>
                     <tr>
+                        <th style="width: 40px;"></th>
                         <th>Match</th>
                         <th>Selection</th>
                         <th>Odds</th>
-                        <th>Model</th>
-                        <th>Prob</th>
                         <th>Edge</th>
                         <th>Stake</th>
+                        <th>Winnings</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -545,31 +767,120 @@ def main():
             for r in recs:
                 bet_class = 'over' if 'Over' in r['bet'] else 'under'
                 html += f'''
-                    <tr>
+                    <tr id="row-{bet_idx}" data-bet-id="{bet_idx}">
+                        <td><input type="checkbox" class="bet-checkbox" data-id="{bet_idx}" onchange="updateCalculations()"></td>
                         <td class="match-cell">
                             <span class="teams">{r['home_team']} vs {r['away_team']}</span>
                             <span class="time">{r['time']} • {r['country']}</span>
                         </td>
                         <td><span class="bet-tag {bet_class}">{r['bet']}</span></td>
                         <td class="odds-cell">{r['odds']:.2f}</td>
-                        <td>{r['model_total']:.2f}</td>
-                        <td class="prob-cell">{r['probability']*100:.0f}%</td>
                         <td class="edge-cell">+{r['edge']*100:.1f}%</td>
-                        <td><span class="stake-cell">{r['kelly']*100:.1f}%</span></td>
+                        <td class="stake-cell" id="stake-{bet_idx}">-</td>
+                        <td class="winnings-cell" id="win-{bet_idx}">-</td>
                     </tr>
 '''
+                bet_idx += 1
             html += '''
                 </tbody>
             </table>
         </div>
 '''
 
-    html += '''
+    html += f'''
         <div class="footer">
             <p>Powered by Poisson regression model trained on historical match data</p>
             <p>Minimum edge threshold: 5% | Kelly criterion: 25% fractional | Max stake: 5%</p>
         </div>
     </div>
+    
+    <script>
+        const betsData = {bets_json};
+        
+        function updateCalculations() {{
+            const totalBet = parseFloat(document.getElementById('totalBet').value) || 0;
+            const fixedMode = document.getElementById('fixedMode').checked;
+            const fixedAmount = parseFloat(document.getElementById('fixedAmount').value) || 0;
+            
+            // Update toggle labels
+            document.getElementById('labelProportional').className = fixedMode ? '' : 'active';
+            document.getElementById('labelFixed').className = fixedMode ? 'active' : '';
+            document.getElementById('fixedAmountGroup').style.display = fixedMode ? 'block' : 'none';
+            
+            // Get selected bets
+            const checkboxes = document.querySelectorAll('.bet-checkbox');
+            const selectedBets = [];
+            let totalKelly = 0;
+            
+            checkboxes.forEach(cb => {{
+                const row = document.getElementById('row-' + cb.dataset.id);
+                if (cb.checked) {{
+                    selectedBets.push(betsData[parseInt(cb.dataset.id)]);
+                    totalKelly += betsData[parseInt(cb.dataset.id)].kelly;
+                    row.classList.add('selected');
+                }} else {{
+                    row.classList.remove('selected');
+                }}
+            }});
+            
+            // Calculate stakes and winnings
+            let totalStake = 0;
+            let totalPotentialWin = 0;
+            let totalExpectedValue = 0;
+            
+            // Reset all cells
+            betsData.forEach((bet, i) => {{
+                document.getElementById('stake-' + i).textContent = '-';
+                document.getElementById('win-' + i).textContent = '-';
+            }});
+            
+            selectedBets.forEach(bet => {{
+                let stake;
+                if (fixedMode) {{
+                    stake = fixedAmount;
+                }} else {{
+                    // Proportional to Kelly
+                    stake = totalKelly > 0 ? (bet.kelly / totalKelly) * totalBet : 0;
+                }}
+                
+                const winnings = stake * bet.odds;
+                const profit = winnings - stake;
+                const ev = (bet.probability * profit) - ((1 - bet.probability) * stake);
+                
+                totalStake += stake;
+                totalPotentialWin += winnings;
+                totalExpectedValue += ev;
+                
+                document.getElementById('stake-' + bet.id).textContent = stake.toFixed(0) + ' kr';
+                document.getElementById('win-' + bet.id).textContent = winnings.toFixed(0) + ' kr';
+            }});
+            
+            // Update summary
+            document.getElementById('selectedCount').textContent = selectedBets.length;
+            document.getElementById('totalStake').textContent = totalStake.toFixed(0) + ' kr';
+            document.getElementById('potentialWinnings').textContent = totalPotentialWin.toFixed(0) + ' kr';
+            document.getElementById('expectedValue').textContent = (totalExpectedValue >= 0 ? '+' : '') + totalExpectedValue.toFixed(0) + ' kr';
+        }}
+        
+        function selectAll() {{
+            document.querySelectorAll('.bet-checkbox').forEach(cb => cb.checked = true);
+            updateCalculations();
+        }}
+        
+        function selectNone() {{
+            document.querySelectorAll('.bet-checkbox').forEach(cb => cb.checked = false);
+            updateCalculations();
+        }}
+        
+        function selectTop5() {{
+            const checkboxes = document.querySelectorAll('.bet-checkbox');
+            checkboxes.forEach((cb, i) => cb.checked = i < 5);
+            updateCalculations();
+        }}
+        
+        // Initialize
+        updateCalculations();
+    </script>
 </body>
 </html>
 '''
