@@ -25,7 +25,16 @@ OPTIONAL_COLUMNS = [
 def load_raw_frames(cfg: AppConfig) -> List[pd.DataFrame]:
     frames: List[pd.DataFrame] = []
     for csv_path in sorted(cfg.raw_dir.glob("*.csv")):
-        df = pd.read_csv(csv_path, on_bad_lines="skip", low_memory=False)
+        try:
+            # Try UTF-8 first, fall back to latin-1 for Windows-encoded files
+            try:
+                df = pd.read_csv(csv_path, on_bad_lines="skip", low_memory=False, encoding="utf-8")
+            except UnicodeDecodeError:
+                df = pd.read_csv(csv_path, on_bad_lines="skip", low_memory=False, encoding="latin-1")
+        except Exception as e:
+            print(f"Error reading {csv_path.name}: {e}")
+            continue
+            
         if df.empty:
             continue
         missing = [col for col in REQUIRED_COLUMNS if col not in df.columns]

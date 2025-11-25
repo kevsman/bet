@@ -10,6 +10,7 @@ class LeagueConfig:
     code: str
     name: str
     season_codes: List[str]
+    is_extra: bool = False  # True for leagues using the /new/ URL structure
 
 
 @dataclass
@@ -46,11 +47,12 @@ class AppConfig:
     models_dir: Path = Path("models")
     leagues: List[LeagueConfig] = field(
         default_factory=lambda: [
+            # Main leagues (seasonal URL structure)
             LeagueConfig("E0", "Premier League", ["2122", "2223", "2324", "2425", "2526"]),
             LeagueConfig("E1", "Championship", ["2122", "2223", "2324", "2425", "2526"]),
             LeagueConfig("E2", "League One", ["2122", "2223", "2324", "2425", "2526"]),
             LeagueConfig("E3", "League Two", ["2122", "2223", "2324", "2425", "2526"]),
-            LeagueConfig("E4", "Conference", ["2122", "2223", "2324", "2425", "2526"]),
+            LeagueConfig("EC", "National League", ["2122", "2223", "2324", "2425", "2526"]),
             LeagueConfig("SC0", "Scottish Premiership", ["2122", "2223", "2324", "2425", "2526"]),
             LeagueConfig("SC1", "Scottish Championship", ["2122", "2223", "2324", "2425", "2526"]),
             LeagueConfig("SC2", "Scottish League One", ["2122", "2223", "2324", "2425", "2526"]),
@@ -68,7 +70,23 @@ class AppConfig:
             LeagueConfig("P1", "Primeira Liga", ["2122", "2223", "2324", "2425", "2526"]),
             LeagueConfig("T1", "Turkish Super Lig", ["2122", "2223", "2324", "2425", "2526"]),
             LeagueConfig("G1", "Greek Super League", ["2122", "2223", "2324", "2425", "2526"]),
-            LeagueConfig("N2", "Eerste Divisie", ["2122", "2223", "2324", "2425", "2526"]),
+            # Extra leagues (single-file URL structure with different column names)
+            LeagueConfig("AUT", "Austrian Bundesliga", [], is_extra=True),
+            LeagueConfig("SWZ", "Swiss Super League", [], is_extra=True),
+            LeagueConfig("DNK", "Danish Superliga", [], is_extra=True),
+            LeagueConfig("SWE", "Swedish Allsvenskan", [], is_extra=True),
+            LeagueConfig("NOR", "Norwegian Eliteserien", [], is_extra=True),
+            LeagueConfig("FIN", "Finnish Veikkausliiga", [], is_extra=True),
+            LeagueConfig("POL", "Polish Ekstraklasa", [], is_extra=True),
+            LeagueConfig("ROU", "Romanian Liga 1", [], is_extra=True),
+            LeagueConfig("RUS", "Russian Premier League", [], is_extra=True),
+            LeagueConfig("JPN", "Japanese J-League", [], is_extra=True),
+            LeagueConfig("ARG", "Argentina Primera Division", [], is_extra=True),
+            LeagueConfig("BRA", "Brazil Serie A", [], is_extra=True),
+            LeagueConfig("MEX", "Mexican Liga MX", [], is_extra=True),
+            LeagueConfig("USA", "MLS", [], is_extra=True),
+            LeagueConfig("CHN", "Chinese Super League", [], is_extra=True),
+            LeagueConfig("IRL", "Irish Premier Division", [], is_extra=True),
         ]
     )
     model: ModelConfig = field(default_factory=ModelConfig)
