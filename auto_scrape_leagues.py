@@ -7,9 +7,9 @@ import os
 import sys
 
 # Add src to path
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'src'))
+sys.path.insert(0, os.path.dirname(__file__))
 
-from norsk_tipping_scraper import parse_snapshot_to_csv
+from src.norsk_tipping_scraper import parse_snapshot_to_csv
 import pandas as pd
 
 
