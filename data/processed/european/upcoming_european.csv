@@ -1,0 +1,16 @@
+Date,HomeTeam,AwayTeam,competition_code,round,pred_home_goals,pred_away_goals,pred_total_goals,over_2_5_prob,under_2_5_prob,home_euro_experience,away_euro_experience
+2024-12-10,Liverpool,Girona,UCL,League Phase MD6,1.34,0.41,1.74,0.254,0.746,23,5
+2024-12-10,RB Leipzig,Aston Villa,UCL,League Phase MD6,1.23,0.68,1.91,0.299,0.701,12,10
+2024-12-10,Monaco,Arsenal,UCL,League Phase MD6,0.98,1.28,2.26,0.394,0.606,5,10
+2024-12-10,Sporting CP,Club Brugge,UCL,League Phase MD6,0.53,1.79,2.32,0.41,0.59,7,6
+2024-12-11,Barcelona,Borussia Dortmund,UCL,League Phase MD6,1.12,0.88,2.0,0.324,0.676,12,17
+2024-12-11,Manchester City,Juventus,UCL,League Phase MD6,1.22,0.43,1.66,0.231,0.769,25,6
+2024-12-11,Bayern Munich,Shakhtar Donetsk,UCL,League Phase MD6,3.04,0.36,3.4,0.661,0.339,22,7
+2024-12-11,Real Madrid,Atalanta,UCL,League Phase MD6,1.36,0.43,1.79,0.267,0.733,28,9
+2024-12-11,Atletico Madrid,Slovan Bratislava,UCL,League Phase MD6,2.52,0.65,3.17,0.613,0.387,14,5
+2024-12-11,PSG,Salzburg,UCL,League Phase MD6,2.43,0.43,2.86,0.545,0.455,17,9
+2024-12-11,Inter Milan,Bayer Leverkusen,UCL,League Phase MD6,1.92,0.59,2.51,0.459,0.541,17,6
+2024-12-12,Tottenham,Rangers,UEL,League Phase MD6,1.57,1.02,2.59,0.478,0.522,6,2
+2024-12-12,Roma,Braga,UEL,League Phase MD6,2.02,0.81,2.84,0.539,0.461,3,2
+2024-12-12,Lazio,Ajax,UEL,League Phase MD6,2.1,1.02,3.12,0.604,0.396,8,6
+2024-12-12,Athletic Bilbao,Lyon,UEL,League Phase MD6,1.66,0.96,2.62,0.486,0.514,4,3
