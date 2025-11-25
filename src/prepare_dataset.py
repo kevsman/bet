@@ -122,6 +122,11 @@ def rolling_average(series: pd.Series, window: int) -> pd.Series:
     return series.shift(1).rolling(window, min_periods=1).mean()
 
 
+def exponential_weighted_average(series: pd.Series, span: int) -> pd.Series:
+    """Calculate exponentially weighted average with recency bias."""
+    return series.shift(1).ewm(span=span, min_periods=1).mean()
+
+
 def add_form_features(team_df: pd.DataFrame, windows: List[int]) -> pd.DataFrame:
     df = team_df.copy()
     grouped_for = df.groupby("team")["goals_for"]
@@ -135,7 +140,7 @@ def add_form_features(team_df: pd.DataFrame, windows: List[int]) -> pd.DataFrame
     grouped_corners_against = df.groupby("team")["corners_against"]
 
     for window in windows:
-        # Goals
+        # Goals - standard rolling average
         df[f"avg_for_{window}"] = grouped_for.transform(
             lambda s, w=window: s.shift(1).rolling(w, min_periods=1).mean()
         )
@@ -144,6 +149,14 @@ def add_form_features(team_df: pd.DataFrame, windows: List[int]) -> pd.DataFrame
         )
         df[f"avg_diff_{window}"] = grouped_diff.transform(
             lambda s, w=window: s.shift(1).rolling(w, min_periods=1).mean()
+        )
+        
+        # Goals - exponentially weighted (recency bias)
+        df[f"ema_for_{window}"] = grouped_for.transform(
+            lambda s, w=window: s.shift(1).ewm(span=w, min_periods=1).mean()
+        )
+        df[f"ema_against_{window}"] = grouped_against.transform(
+            lambda s, w=window: s.shift(1).ewm(span=w, min_periods=1).mean()
         )
         
         # Shots on Target
@@ -179,6 +192,7 @@ def wide_features(team_df: pd.DataFrame, prefix: str) -> pd.DataFrame:
         "recent_goals_against",
     ] + [col for col in team_df.columns if any(col.startswith(key) for key in [
         "avg_for_", "avg_against_", "avg_diff_",
+        "ema_for_", "ema_against_",  # Exponentially weighted averages
         "avg_sot_for_", "avg_sot_against_",
         "avg_corners_for_", "avg_corners_against_"
     ])]
@@ -195,6 +209,36 @@ def best_available_odds(df: pd.DataFrame, suffix: str) -> pd.Series:
     return df[candidates].apply(pd.to_numeric, errors="coerce").max(axis=1)
 
 
+def compute_league_averages(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Compute expanding league averages for goals.
+    Uses only past data (no lookahead) to calculate league-specific scoring rates.
+    """
+    df = df.sort_values("Date").copy()
+    
+    # Calculate expanding mean of goals per league (using only past matches)
+    df["league_avg_home_goals"] = df.groupby("league_code")["FTHG"].transform(
+        lambda x: x.shift(1).expanding(min_periods=10).mean()
+    )
+    df["league_avg_away_goals"] = df.groupby("league_code")["FTAG"].transform(
+        lambda x: x.shift(1).expanding(min_periods=10).mean()
+    )
+    df["league_avg_total_goals"] = df.groupby("league_code")["total_goals"].transform(
+        lambda x: x.shift(1).expanding(min_periods=10).mean()
+    )
+    
+    # Fill early matches with overall league average from training data
+    overall_home = df["FTHG"].mean()
+    overall_away = df["FTAG"].mean()
+    overall_total = df["total_goals"].mean()
+    
+    df["league_avg_home_goals"] = df["league_avg_home_goals"].fillna(overall_home)
+    df["league_avg_away_goals"] = df["league_avg_away_goals"].fillna(overall_away)
+    df["league_avg_total_goals"] = df["league_avg_total_goals"].fillna(overall_total)
+    
+    return df
+
+
 def create_dataset(cfg: AppConfig) -> pd.DataFrame:
     frames = load_raw_frames(cfg)
     if not frames:
@@ -202,6 +246,9 @@ def create_dataset(cfg: AppConfig) -> pd.DataFrame:
     combined = parse_dates(pd.concat(frames, ignore_index=True))
     combined = attach_match_ids(combined)
     combined.sort_values("Date", inplace=True)
+    
+    # Add league-specific average goals (computed from historical data)
+    combined = compute_league_averages(combined)
 
     combined["best_over_odds"] = best_available_odds(combined, ">2.5")
     combined["best_under_odds"] = best_available_odds(combined, "<2.5")

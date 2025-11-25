@@ -45,10 +45,19 @@ def load_dataset(cfg: AppConfig) -> pd.DataFrame:
 def select_feature_columns(df: pd.DataFrame) -> List[str]:
     candidates = []
     for col in df.columns:
+        # Rolling averages (goals, shots, corners)
         if col.startswith("home_avg_") or col.startswith("away_avg_"):
             candidates.append(col)
+        # Exponential weighted averages (recency weighting)
+        elif col.startswith("home_ema_") or col.startswith("away_ema_"):
+            candidates.append(col)
+        # Recent sums
         elif col.startswith("home_recent_") or col.startswith("away_recent_"):
             candidates.append(col)
+        # League-specific averages
+        elif col.startswith("league_avg_"):
+            candidates.append(col)
+        # Match count features
         elif col in {
             "home_matches_played",
             "away_matches_played",
