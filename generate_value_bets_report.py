@@ -121,11 +121,34 @@ def main():
     def map_team(name):
         return team_mapping.get(name, name)
 
-    def prob_under(line, total_lambda):
-        return poisson.cdf(int(line), total_lambda)
+    # Bivariate Poisson functions for accurate probability calculation
+    def bivariate_prob_under(line, home_xg, away_xg):
+        """Calculate P(total goals <= line) using bivariate Poisson."""
+        prob = 0.0
+        for h in range(10):
+            for a in range(10):
+                if h + a <= line:
+                    prob += poisson.pmf(h, home_xg) * poisson.pmf(a, away_xg)
+        return prob
 
-    def prob_over(line, total_lambda):
-        return 1 - prob_under(line, total_lambda)
+    def bivariate_prob_over(line, home_xg, away_xg):
+        """Calculate P(total goals > line) using bivariate Poisson."""
+        return 1 - bivariate_prob_under(line, home_xg, away_xg)
+
+    # Leagues to search
+    LEAGUES = ['E0', 'E1', 'E2', 'E3', 'E4', 'D1', 'D2', 'SP1', 'SP2', 'I1', 'I2', 'F1', 'F2', 'SC0', 'SC1', 'N1', 'B1', 'P1', 'T1', 'G1']
+
+    def get_team_avg_features(team_name, is_home=True, n_matches=5):
+        """Get average features from last N home/away matches for a team."""
+        for league in LEAGUES:
+            if is_home:
+                matches = dataset[(dataset['league_code'] == league) & (dataset['HomeTeam'] == team_name)]
+            else:
+                matches = dataset[(dataset['league_code'] == league) & (dataset['AwayTeam'] == team_name)]
+            
+            if len(matches) >= 3:
+                return matches.tail(n_matches)[features].mean(), league
+        return None, None
 
     # Calculate recommendations
     print("Calculating value bets...")
@@ -135,37 +158,19 @@ def main():
         home = map_team(row['home_team'])
         away = map_team(row['away_team'])
         
-        home_row = None
-        away_row = None
-        for league in ['E0', 'E1', 'E2', 'E3', 'E4', 'D1', 'D2', 'SP1', 'SP2', 'I1', 'I2', 'F1', 'F2', 'SC0', 'SC1', 'N1', 'B1', 'P1', 'T1', 'G1']:
-            if home_row is None:
-                home_row = home_map.get((league, home))
-            if away_row is None:
-                away_row = away_map.get((league, away))
+        # Get averaged features
+        home_feats, home_league = get_team_avg_features(home, is_home=True)
+        away_feats, away_league = get_team_avg_features(away, is_home=False)
         
-        if home_row is None or away_row is None:
+        if home_feats is None or away_feats is None:
             continue
         
-        feature_values = []
-        skip = False
-        for col in features:
-            if col.startswith('home_'):
-                val = home_row.get(col, np.nan)
-            elif col.startswith('away_'):
-                val = away_row.get(col, np.nan)
-            else:
-                val = home_row.get(col, np.nan)
-            if pd.isna(val):
-                skip = True
-                break
-            feature_values.append(val)
-        
-        if skip:
+        if home_feats.isna().any() or away_feats.isna().any():
             continue
         
-        X = pd.DataFrame([feature_values], columns=features)
-        pred_home = float(np.clip(home_model.predict(X)[0], 0.1, 5.0))
-        pred_away = float(np.clip(away_model.predict(X)[0], 0.1, 5.0))
+        # Predict using full feature vectors
+        pred_home = float(np.clip(home_model.predict([home_feats])[0], 0.1, 5.0))
+        pred_away = float(np.clip(away_model.predict([away_feats])[0], 0.1, 5.0))
         total = pred_home + pred_away
         
         for line in [1.5, 2.5, 3.5]:
@@ -177,8 +182,9 @@ def main():
             if pd.isna(over_odds) or pd.isna(under_odds):
                 continue
             
-            p_over = prob_over(line, total)
-            p_under = prob_under(line, total)
+            # Use bivariate Poisson for accurate probabilities
+            p_over = bivariate_prob_over(line, pred_home, pred_away)
+            p_under = bivariate_prob_under(line, pred_home, pred_away)
             implied_over = 1 / over_odds
             implied_under = 1 / under_odds
             edge_over = p_over - implied_over

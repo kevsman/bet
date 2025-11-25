@@ -16,14 +16,25 @@ with open('models/features.txt', 'r') as f:
 dataset = pd.read_csv('data/processed/match_dataset.csv', parse_dates=['Date'], low_memory=False)
 dataset = dataset.sort_values('Date')
 
-# Build team feature maps (most recent stats for each team)
-home_map = {}
-away_map = {}
-for _, row in dataset.iterrows():
-    home_key = (row.get('league_code', 'unknown'), row['HomeTeam'])
-    away_key = (row.get('league_code', 'unknown'), row['AwayTeam'])
-    home_map[home_key] = row
-    away_map[away_key] = row
+# Build indices for quick team lookups
+LEAGUES = ['E0', 'E1', 'E2', 'E3', 'E4', 'D1', 'D2', 'SP1', 'SP2', 'I1', 'I2', 'F1', 'F2', 'SC0', 'SC1', 'N1', 'B1', 'P1', 'T1', 'G1']
+
+def get_team_avg_features(team_name, is_home=True, n_matches=5):
+    """Get average features from last N home/away matches for a team.
+    
+    This is more robust than using a single match's features because
+    it smooths out variance from individual match fluctuations.
+    """
+    for league in LEAGUES:
+        if is_home:
+            matches = dataset[(dataset['league_code'] == league) & (dataset['HomeTeam'] == team_name)]
+        else:
+            matches = dataset[(dataset['league_code'] == league) & (dataset['AwayTeam'] == team_name)]
+        
+        if len(matches) >= 3:  # Need at least 3 matches for reliability
+            return matches.tail(n_matches)[features].mean(), league
+    
+    return None, None
 
 # Load fresh Norsk Tipping odds
 odds_df = pd.read_csv('data/upcoming/norsk_tipping_odds.csv')
@@ -63,6 +74,7 @@ team_mapping = {
     'Holstein Kiel': 'Holstein Kiel',
     'Atletico Madrid': 'Ath Madrid',
     'Athletic Club Bilbao': 'Ath Bilbao',
+    'Atalanta BC': 'Atalanta',
     'Real Sociedad': 'Sociedad',
     'Real Betis': 'Betis',
     'Celta Vigo': 'Celta',
@@ -103,6 +115,9 @@ team_mapping = {
     'Montpellier HSC': 'Montpellier',
     'Stade de Reims': 'Reims',
     'PSV Eindhoven': 'PSV',
+    'Olympiakos': 'Olympiakos',
+    'Real Madrid': 'Real Madrid',
+    'Inter': 'Inter',
     'Ajax': 'Ajax',
     'Feyenoord': 'Feyenoord',
     'AZ Alkmaar': 'AZ Alkmaar',
@@ -121,11 +136,23 @@ team_mapping = {
 def map_team(name):
     return team_mapping.get(name, name)
 
-def prob_under(line, total_lambda):
-    return poisson.cdf(int(line), total_lambda)
+def bivariate_prob_under(line, home_xg, away_xg):
+    """Calculate P(total goals <= line) using bivariate Poisson.
+    
+    This is more accurate than single-lambda Poisson because it
+    properly models home and away goals as independent Poisson processes.
+    """
+    prob = 0.0
+    max_goals = 10  # Sum over reasonable range
+    for h in range(max_goals):
+        for a in range(max_goals):
+            if h + a <= line:
+                prob += poisson.pmf(h, home_xg) * poisson.pmf(a, away_xg)
+    return prob
 
-def prob_over(line, total_lambda):
-    return 1 - prob_under(line, total_lambda)
+def bivariate_prob_over(line, home_xg, away_xg):
+    """Calculate P(total goals > line) using bivariate Poisson."""
+    return 1 - bivariate_prob_under(line, home_xg, away_xg)
 
 # Try to find matches in our dataset
 recommendations = []
@@ -134,42 +161,23 @@ for _, row in odds_df.iterrows():
     home = map_team(row['home_team'])
     away = map_team(row['away_team'])
     
-    # Try to find team in dataset (check multiple league codes)
-    home_row = None
-    away_row = None
+    # Get averaged features from last 5 home/away matches (more robust)
+    home_feats, home_league = get_team_avg_features(home, is_home=True)
+    away_feats, away_league = get_team_avg_features(away, is_home=False)
     
-    for league in ['E0', 'E1', 'E2', 'E3', 'E4', 'D1', 'D2', 'SP1', 'SP2', 'I1', 'I2', 'F1', 'F2', 'SC0', 'SC1', 'N1', 'B1', 'P1', 'T1', 'G1']:
-        if home_row is None:
-            home_row = home_map.get((league, home))
-        if away_row is None:
-            away_row = away_map.get((league, away))
-    
-    if home_row is None or away_row is None:
+    if home_feats is None or away_feats is None:
         continue
     
-    # Build features
-    feature_values = []
-    skip = False
-    for col in features:
-        if col.startswith('home_'):
-            val = home_row.get(col, np.nan)
-        elif col.startswith('away_'):
-            val = away_row.get(col, np.nan)
-        else:
-            val = home_row.get(col, np.nan)
-        if pd.isna(val):
-            skip = True
-            break
-        feature_values.append(val)
-    
-    if skip:
+    # Check for any missing features
+    if home_feats.isna().any() or away_feats.isna().any():
         continue
     
-    X = pd.DataFrame([feature_values], columns=features)
-    
-    # Predict
-    pred_home = float(np.clip(home_model.predict(X)[0], 0.1, 5.0))
-    pred_away = float(np.clip(away_model.predict(X)[0], 0.1, 5.0))
+    # Predict using the full feature vectors directly
+    # home_feats contains the home team's performance when playing at HOME
+    # away_feats contains the away team's performance when playing AWAY
+    # Each model expects the full feature vector from that context
+    pred_home = float(np.clip(home_model.predict([home_feats])[0], 0.1, 5.0))
+    pred_away = float(np.clip(away_model.predict([away_feats])[0], 0.1, 5.0))
     total = pred_home + pred_away
     
     # Check for value bets
@@ -184,8 +192,8 @@ for _, row in odds_df.iterrows():
         if pd.isna(over_odds) or pd.isna(under_odds):
             continue
         
-        p_over = prob_over(line, total)
-        p_under = prob_under(line, total)
+        p_over = bivariate_prob_over(line, pred_home, pred_away)
+        p_under = bivariate_prob_under(line, pred_home, pred_away)
         
         # Calculate edge
         implied_over = 1 / over_odds
