@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Norsk Tipping Betting Recommendations</title>
+    <title>European Competition Betting Recommendations</title>
     <style>
         * {
             margin: 0;
@@ -13,7 +13,7 @@
         
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
             min-height: 100vh;
             padding: 20px;
         }
@@ -28,7 +28,7 @@
         }
         
         .header {
-            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            background: linear-gradient(135deg, #0f3460 0%, #16213e 100%);
             color: white;
             padding: 40px;
             text-align: center;
@@ -67,459 +67,574 @@
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
         
+        .summary-card .value {
+            font-size: 2em;
+            font-weight: bold;
+            color: #0f3460;
+        }
+        
         .summary-card .label {
             color: #6c757d;
-            font-size: 0.9em;
+            margin-top: 5px;
+        }
+        
+        .section-title {
+            padding: 30px;
+            padding-bottom: 0;
+            font-size: 1.5em;
+            color: #333;
+        }
+        
+        .top-picks {
+            padding: 30px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
+        }
+        
+        .pick-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 15px;
+            padding: 25px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .pick-card.rank-1 {
+            background: linear-gradient(135deg, #f5af19 0%, #f12711 100%);
+        }
+        
+        .pick-card.rank-2 {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+        }
+        
+        .pick-card.rank-3 {
+            background: linear-gradient(135deg, #4776E6 0%, #8E54E9 100%);
+        }
+        
+        .pick-card .rank {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+        
+        .pick-card .match {
+            font-size: 1.3em;
+            font-weight: bold;
             margin-bottom: 5px;
         }
         
-        .summary-card .value {
-            color: #1e3c72;
+        .pick-card .league {
+            opacity: 0.8;
+            font-size: 0.9em;
+            margin-bottom: 15px;
+        }
+        
+        .pick-card .bet-type {
+            background: rgba(255,255,255,0.2);
+            display: inline-block;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        
+        .pick-card .stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .pick-card .stat {
+            text-align: center;
+        }
+        
+        .pick-card .stat .value {
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+        
+        .pick-card .stat .label {
+            font-size: 0.8em;
+            opacity: 0.8;
+        }
+        
+        .all-bets {
+            padding: 30px;
+        }
+        
+        .bet-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .bet-table th {
+            background: #0f3460;
+            color: white;
+            padding: 15px;
+            text-align: left;
+        }
+        
+        .bet-table td {
+            padding: 15px;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .bet-table tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .bet-table .ev-positive {
+            color: #28a745;
+            font-weight: bold;
+        }
+        
+        .bet-table .bet-type {
+            background: #e3f2fd;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.9em;
+        }
+        
+        .calculator {
+            background: #f8f9fa;
+            padding: 30px;
+            margin: 30px;
+            border-radius: 15px;
+        }
+        
+        .calculator h3 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+        
+        .calculator-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        
+        .calculator input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 1.1em;
+        }
+        
+        .calculator input:focus {
+            border-color: #0f3460;
+            outline: none;
+        }
+        
+        .calculator .result {
+            background: #0f3460;
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        .calculator .result .amount {
             font-size: 2em;
             font-weight: bold;
         }
         
-        .recommendations {
-            padding: 30px;
-        }
-        
-        .recommendation {
-            background: white;
-            border: 2px solid #e9ecef;
-            border-radius: 10px;
-            padding: 25px;
-            margin-bottom: 20px;
-            transition: all 0.3s ease;
-        }
-        
-        .recommendation:hover {
-            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
-            transform: translateY(-2px);
-        }
-        
-        .recommendation.high-value {
-            border-color: #28a745;
-            background: linear-gradient(to right, #f8fff9 0%, white 100%);
-        }
-        
-        .recommendation.medium-value {
-            border-color: #ffc107;
-            background: linear-gradient(to right, #fffef8 0%, white 100%);
-        }
-        
-        .match-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        
-        .match-teams {
-            font-size: 1.5em;
-            font-weight: bold;
-            color: #1e3c72;
-        }
-        
-        .match-league {
-            font-size: 0.9em;
-            color: #6c757d;
-            background: #e9ecef;
-            padding: 5px 15px;
-            border-radius: 20px;
-        }
-        
-        .prediction {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 15px;
-            flex-wrap: wrap;
-        }
-        
-        .prediction-type {
-            font-size: 1.2em;
-            font-weight: bold;
-            padding: 10px 20px;
-            border-radius: 8px;
-            color: white;
-        }
-        
-        .prediction-type.over {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-        }
-        
-        .prediction-type.under {
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-        }
-        
-        .odds {
-            font-size: 1.1em;
-            color: #495057;
-        }
-        
-        .metrics {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 15px;
-            margin-top: 15px;
-        }
-        
-        .metric {
-            background: #f8f9fa;
-            padding: 15px;
-            border-radius: 8px;
-        }
-        
-        .metric .label {
-            color: #6c757d;
-            font-size: 0.85em;
-            margin-bottom: 5px;
-        }
-        
-        .metric .value {
-            font-size: 1.3em;
-            font-weight: bold;
-        }
-        
-        .metric.edge {
-            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
-        }
-        
-        .metric.edge .value {
-            color: #28a745;
-            font-size: 1.8em;
-        }
-        
-        .metric.stake .value {
-            color: #007bff;
-        }
-        
-        .metric.probability .value {
-            color: #6610f2;
-        }
-        
-        .metric.total .value {
-            color: #fd7e14;
-        }
-        
         .footer {
-            background: #f8f9fa;
-            padding: 20px;
-            text-align: center;
-            color: #6c757d;
-            font-size: 0.9em;
-            border-top: 3px solid #e9ecef;
-        }
-        
-        .badge {
-            display: inline-block;
-            padding: 5px 12px;
-            border-radius: 15px;
-            font-size: 0.8em;
-            font-weight: bold;
-            margin-left: 10px;
-        }
-        
-        .badge.top-pick {
-            background: #28a745;
+            background: #1a1a2e;
             color: white;
+            padding: 30px;
+            text-align: center;
         }
         
-        .badge.strong {
-            background: #ffc107;
-            color: #000;
-        }
-        
-        @media (max-width: 768px) {
-            .header h1 {
-                font-size: 1.8em;
-            }
-            
-            .match-teams {
-                font-size: 1.2em;
-            }
-            
-            .summary {
-                grid-template-columns: 1fr;
-            }
+        .footer p {
+            margin: 5px 0;
+            opacity: 0.8;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>🎯 Norsk Tipping Betting Recommendations</h1>
-            <div class="subtitle">AI-Powered Value Betting Analysis</div>
-            <div class="timestamp">Generated: November 27, 2025 at 14:23</div>
+            <h1>⚽ European Competition Bets</h1>
+            <div class="subtitle">UCL • Europa League • Conference League</div>
+            <div class="timestamp">Generated: 2025-11-27 16:22</div>
         </div>
         
         <div class="summary">
             <div class="summary-card">
-                <div class="label">Total Recommendations</div>
-                <div class="value">7</div>
+                <div class="value">16</div>
+                <div class="label">Value Bets Found</div>
             </div>
             <div class="summary-card">
+                <div class="value">32</div>
+                <div class="label">Matches Analyzed</div>
+            </div>
+            <div class="summary-card">
+                <div class="value">47.6%</div>
                 <div class="label">Total Stake</div>
-                <div class="value">6.7%</div>
             </div>
             <div class="summary-card">
-                <div class="label">Avg Edge</div>
-                <div class="value">12.0%</div>
-            </div>
-            <div class="summary-card">
-                <div class="label">Best Edge</div>
-                <div class="value">23.5%</div>
+                <div class="value">14.4%</div>
+                <div class="label">Avg Expected Value</div>
             </div>
         </div>
         
-        <div class="recommendations">
+        <h2 class="section-title">🏆 Top 5 Picks</h2>
+        <div class="top-picks">
 
-            <div class="recommendation medium-value">
-                <div class="match-header">
-                    <div>
-                        <div class="match-teams">RB Leipzig vs Werder Bremen</div>
-                        <div class="match-league">D1 • 2025-11-23</div>
+            <div class="pick-card rank-1">
+                <div class="rank">#1</div>
+                <div class="match">Nottingham Forest vs Malmö FF</div>
+                <div class="league">Internasjonal Klubb - UEFA Europa League</div>
+                <div class="bet-type">Under 2.5 @ 2.30</div>
+                <div class="stats">
+                    <div class="stat">
+                        <div class="value">+33.3%</div>
+                        <div class="label">EV</div>
                     </div>
-                    <span class="badge strong">💪 STRONG</span>
-                </div>
-                
-                <div class="prediction">
-                    <div class="prediction-type under">Under 2.5</div>
-                    <div class="odds">@ 3.10</div>
-                </div>
-                
-                <div class="metrics">
-                    <div class="metric edge">
-                        <div class="label">Edge</div>
-                        <div class="value">23.5%</div>
+                    <div class="stat">
+                        <div class="value">2.30</div>
+                        <div class="label">Odds</div>
                     </div>
-                    <div class="metric probability">
-                        <div class="label">Win Probability</div>
-                        <div class="value">39.9%</div>
+                    <div class="stat">
+                        <div class="value">58%</div>
+                        <div class="label">Probability</div>
                     </div>
-                    <div class="metric stake">
-                        <div class="label">Recommended Stake</div>
-                        <div class="value">1.7%</div>
-                    </div>
-                    <div class="metric total">
-                        <div class="label">Model Total Goals</div>
-                        <div class="value">3.10</div>
+                    <div class="stat">
+                        <div class="value">2.4</div>
+                        <div class="label">Pred Goals</div>
                     </div>
                 </div>
             </div>
 
-            <div class="recommendation medium-value">
-                <div class="match-header">
-                    <div>
-                        <div class="match-teams">Liverpool vs Nott'm Forest</div>
-                        <div class="match-league">E0 • 2025-11-22</div>
+            <div class="pick-card rank-2">
+                <div class="rank">#2</div>
+                <div class="match">Lech Poznan vs Lausanne</div>
+                <div class="league">UEFA Conference League - Europe</div>
+                <div class="bet-type">Under 2.5 @ 2.60</div>
+                <div class="stats">
+                    <div class="stat">
+                        <div class="value">+29.7%</div>
+                        <div class="label">EV</div>
                     </div>
-                    <span class="badge strong">💪 STRONG</span>
-                </div>
-                
-                <div class="prediction">
-                    <div class="prediction-type under">Under 1.5</div>
-                    <div class="odds">@ 5.20</div>
-                </div>
-                
-                <div class="metrics">
-                    <div class="metric edge">
-                        <div class="label">Edge</div>
-                        <div class="value">18.0%</div>
+                    <div class="stat">
+                        <div class="value">2.60</div>
+                        <div class="label">Odds</div>
                     </div>
-                    <div class="metric probability">
-                        <div class="label">Win Probability</div>
-                        <div class="value">22.7%</div>
+                    <div class="stat">
+                        <div class="value">50%</div>
+                        <div class="label">Probability</div>
                     </div>
-                    <div class="metric stake">
-                        <div class="label">Recommended Stake</div>
-                        <div class="value">0.6%</div>
-                    </div>
-                    <div class="metric total">
-                        <div class="label">Model Total Goals</div>
-                        <div class="value">2.82</div>
+                    <div class="stat">
+                        <div class="value">2.7</div>
+                        <div class="label">Pred Goals</div>
                     </div>
                 </div>
             </div>
 
-            <div class="recommendation ">
-                <div class="match-header">
-                    <div>
-                        <div class="match-teams">Arsenal vs Tottenham</div>
-                        <div class="match-league">E0 • 2025-11-23</div>
+            <div class="pick-card rank-3">
+                <div class="rank">#3</div>
+                <div class="match">Fiorentina vs AEK Athens</div>
+                <div class="league">UEFA Conference League - Europe</div>
+                <div class="bet-type">Over 2.5 @ 1.85</div>
+                <div class="stats">
+                    <div class="stat">
+                        <div class="value">+27.5%</div>
+                        <div class="label">EV</div>
                     </div>
-                    
-                </div>
-                
-                <div class="prediction">
-                    <div class="prediction-type over">Over 3.5</div>
-                    <div class="odds">@ 3.05</div>
-                </div>
-                
-                <div class="metrics">
-                    <div class="metric edge">
-                        <div class="label">Edge</div>
-                        <div class="value">14.1%</div>
+                    <div class="stat">
+                        <div class="value">1.85</div>
+                        <div class="label">Odds</div>
                     </div>
-                    <div class="metric probability">
-                        <div class="label">Win Probability</div>
-                        <div class="value">37.4%</div>
+                    <div class="stat">
+                        <div class="value">69%</div>
+                        <div class="label">Probability</div>
                     </div>
-                    <div class="metric stake">
-                        <div class="label">Recommended Stake</div>
-                        <div class="value">1.0%</div>
-                    </div>
-                    <div class="metric total">
-                        <div class="label">Model Total Goals</div>
-                        <div class="value">3.09</div>
+                    <div class="stat">
+                        <div class="value">3.6</div>
+                        <div class="label">Pred Goals</div>
                     </div>
                 </div>
             </div>
 
-            <div class="recommendation ">
-                <div class="match-header">
-                    <div>
-                        <div class="match-teams">Dortmund vs Stuttgart</div>
-                        <div class="match-league">D1 • 2025-11-22</div>
+            <div class="pick-card ">
+                <div class="rank">#4</div>
+                <div class="match">Breidablik vs Samsunspor</div>
+                <div class="league">UEFA Conference League - Europe</div>
+                <div class="bet-type">Under 2.5 @ 2.15</div>
+                <div class="stats">
+                    <div class="stat">
+                        <div class="value">+20.7%</div>
+                        <div class="label">EV</div>
                     </div>
-                    
-                </div>
-                
-                <div class="prediction">
-                    <div class="prediction-type under">Under 2.5</div>
-                    <div class="odds">@ 2.40</div>
-                </div>
-                
-                <div class="metrics">
-                    <div class="metric edge">
-                        <div class="label">Edge</div>
-                        <div class="value">10.9%</div>
+                    <div class="stat">
+                        <div class="value">2.15</div>
+                        <div class="label">Odds</div>
                     </div>
-                    <div class="metric probability">
-                        <div class="label">Win Probability</div>
-                        <div class="value">46.2%</div>
+                    <div class="stat">
+                        <div class="value">56%</div>
+                        <div class="label">Probability</div>
                     </div>
-                    <div class="metric stake">
-                        <div class="label">Recommended Stake</div>
-                        <div class="value">1.2%</div>
-                    </div>
-                    <div class="metric total">
-                        <div class="label">Model Total Goals</div>
-                        <div class="value">2.89</div>
+                    <div class="stat">
+                        <div class="value">2.4</div>
+                        <div class="label">Pred Goals</div>
                     </div>
                 </div>
             </div>
 
-            <div class="recommendation ">
-                <div class="match-header">
-                    <div>
-                        <div class="match-teams">Man United vs Everton</div>
-                        <div class="match-league">E0 • 2025-11-24</div>
+            <div class="pick-card ">
+                <div class="rank">#5</div>
+                <div class="match">Genk vs FC Basel</div>
+                <div class="league">Uefa Europa League Vinnerspill</div>
+                <div class="bet-type">Under 2.5 @ 2.20</div>
+                <div class="stats">
+                    <div class="stat">
+                        <div class="value">+19.3%</div>
+                        <div class="label">EV</div>
                     </div>
-                    
-                </div>
-                
-                <div class="prediction">
-                    <div class="prediction-type under">Under 2.5</div>
-                    <div class="odds">@ 2.05</div>
-                </div>
-                
-                <div class="metrics">
-                    <div class="metric edge">
-                        <div class="label">Edge</div>
-                        <div class="value">7.3%</div>
+                    <div class="stat">
+                        <div class="value">2.20</div>
+                        <div class="label">Odds</div>
                     </div>
-                    <div class="metric probability">
-                        <div class="label">Win Probability</div>
-                        <div class="value">52.3%</div>
+                    <div class="stat">
+                        <div class="value">54%</div>
+                        <div class="label">Probability</div>
                     </div>
-                    <div class="metric stake">
-                        <div class="label">Recommended Stake</div>
-                        <div class="value">1.0%</div>
-                    </div>
-                    <div class="metric total">
-                        <div class="label">Model Total Goals</div>
-                        <div class="value">2.65</div>
+                    <div class="stat">
+                        <div class="value">2.5</div>
+                        <div class="label">Pred Goals</div>
                     </div>
                 </div>
             </div>
 
-            <div class="recommendation ">
-                <div class="match-header">
-                    <div>
-                        <div class="match-teams">St Pauli vs Union Berlin</div>
-                        <div class="match-league">D1 • 2025-11-23</div>
-                    </div>
-                    
+        </div>
+        
+        <div class="calculator">
+            <h3>💰 Bet Calculator</h3>
+            <div class="calculator-grid">
+                <div>
+                    <label>Your Bankroll (kr)</label>
+                    <input type="number" id="bankroll" value="1000" onchange="calculateStakes()">
                 </div>
-                
-                <div class="prediction">
-                    <div class="prediction-type over">Over 2.5</div>
-                    <div class="odds">@ 2.05</div>
-                </div>
-                
-                <div class="metrics">
-                    <div class="metric edge">
-                        <div class="label">Edge</div>
-                        <div class="value">5.1%</div>
-                    </div>
-                    <div class="metric probability">
-                        <div class="label">Win Probability</div>
-                        <div class="value">51.3%</div>
-                    </div>
-                    <div class="metric stake">
-                        <div class="label">Recommended Stake</div>
-                        <div class="value">0.7%</div>
-                    </div>
-                    <div class="metric total">
-                        <div class="label">Model Total Goals</div>
-                        <div class="value">2.72</div>
-                    </div>
+                <div>
+                    <label>Kelly Fraction</label>
+                    <input type="number" id="kellyFraction" value="0.25" step="0.05" onchange="calculateStakes()">
                 </div>
             </div>
-
-            <div class="recommendation ">
-                <div class="match-header">
-                    <div>
-                        <div class="match-teams">Bayern Munich vs Freiburg</div>
-                        <div class="match-league">D1 • 2025-11-22</div>
-                    </div>
-                    
-                </div>
-                
-                <div class="prediction">
-                    <div class="prediction-type under">Under 2.5</div>
-                    <div class="odds">@ 3.05</div>
-                </div>
-                
-                <div class="metrics">
-                    <div class="metric edge">
-                        <div class="label">Edge</div>
-                        <div class="value">5.0%</div>
-                    </div>
-                    <div class="metric probability">
-                        <div class="label">Win Probability</div>
-                        <div class="value">34.4%</div>
-                    </div>
-                    <div class="metric stake">
-                        <div class="label">Recommended Stake</div>
-                        <div class="value">0.4%</div>
-                    </div>
-                    <div class="metric total">
-                        <div class="label">Model Total Goals</div>
-                        <div class="value">3.69</div>
-                    </div>
-                </div>
+            <div class="result">
+                <div>Recommended Total Stake</div>
+                <div class="amount" id="totalStake">-</div>
             </div>
+        </div>
+        
+        <h2 class="section-title">📊 All Value Bets</h2>
+        <div class="all-bets">
+            <table class="bet-table">
+                <thead>
+                    <tr>
+                        <th>Match</th>
+                        <th>Competition</th>
+                        <th>Bet</th>
+                        <th>Odds</th>
+                        <th>Prob</th>
+                        <th>EV</th>
+                        <th>Goals</th>
+                    </tr>
+                </thead>
+                <tbody>
 
+                    <tr>
+                        <td><strong>Nottingham Forest</strong> vs Malmö FF</td>
+                        <td>Internasjonal Klubb - UEFA Europa League</td>
+                        <td><span class="bet-type">Under 2.5</span></td>
+                        <td>2.30</td>
+                        <td>58%</td>
+                        <td class="ev-positive">+33.3%</td>
+                        <td>2.36</td>
+                    </tr>
+
+                    <tr>
+                        <td><strong>Lech Poznan</strong> vs Lausanne</td>
+                        <td>UEFA Conference League</td>
+                        <td><span class="bet-type">Under 2.5</span></td>
+                        <td>2.60</td>
+                        <td>50%</td>
+                        <td class="ev-positive">+29.7%</td>
+                        <td>2.68</td>
+                    </tr>
+
+                    <tr>
+                        <td><strong>Fiorentina</strong> vs AEK Athens</td>
+                        <td>UEFA Conference League</td>
+                        <td><span class="bet-type">Over 2.5</span></td>
+                        <td>1.85</td>
+                        <td>69%</td>
+                        <td class="ev-positive">+27.5%</td>
+                        <td>3.56</td>
+                    </tr>
+
+                    <tr>
+                        <td><strong>Breidablik</strong> vs Samsunspor</td>
+                        <td>UEFA Conference League</td>
+                        <td><span class="bet-type">Under 2.5</span></td>
+                        <td>2.15</td>
+                        <td>56%</td>
+                        <td class="ev-positive">+20.7%</td>
+                        <td>2.43</td>
+                    </tr>
+
+                    <tr>
+                        <td><strong>Genk</strong> vs FC Basel</td>
+                        <td>Uefa Europa League Vinnerspill</td>
+                        <td><span class="bet-type">Under 2.5</span></td>
+                        <td>2.20</td>
+                        <td>54%</td>
+                        <td class="ev-positive">+19.3%</td>
+                        <td>2.51</td>
+                    </tr>
+
+                    <tr>
+                        <td><strong>Rangers</strong> vs Braga</td>
+                        <td>Internasjonal Klubb - UEFA Europa League</td>
+                        <td><span class="bet-type">Over 2.5</span></td>
+                        <td>1.82</td>
+                        <td>65%</td>
+                        <td class="ev-positive">+18.3%</td>
+                        <td>3.35</td>
+                    </tr>
+
+                    <tr>
+                        <td><strong>Shamrock Rovers</strong> vs Shakhtar Donetsk</td>
+                        <td>UEFA Conference League</td>
+                        <td><span class="bet-type">Under 2.5</span></td>
+                        <td>1.95</td>
+                        <td>59%</td>
+                        <td class="ev-positive">+15.8%</td>
+                        <td>2.31</td>
+                    </tr>
+
+                    <tr>
+                        <td><strong>Aston Villa</strong> vs Young Boys</td>
+                        <td>Internasjonal Klubb - UEFA Europa League</td>
+                        <td><span class="bet-type">Under 2.5</span></td>
+                        <td>2.85</td>
+                        <td>40%</td>
+                        <td class="ev-positive">+15.2%</td>
+                        <td>3.09</td>
+                    </tr>
+
+                    <tr>
+                        <td><strong>Go Ahead Eagles</strong> vs Stuttgart</td>
+                        <td>Internasjonal Klubb - UEFA Europa League</td>
+                        <td><span class="bet-type">Under 2.5</span></td>
+                        <td>2.50</td>
+                        <td>46%</td>
+                        <td class="ev-positive">+14.8%</td>
+                        <td>2.84</td>
+                    </tr>
+
+                    <tr>
+                        <td><strong>HNK Rijeka</strong> vs AEK Larnaca</td>
+                        <td>UEFA Conference League</td>
+                        <td><span class="bet-type">Over 2.5</span></td>
+                        <td>1.97</td>
+                        <td>56%</td>
+                        <td class="ev-positive">+10.7%</td>
+                        <td>2.93</td>
+                    </tr>
+
+                    <tr>
+                        <td><strong>Roma</strong> vs FC Midtjylland</td>
+                        <td>Internasjonal Klubb - UEFA Europa League</td>
+                        <td><span class="bet-type">Over 2.5</span></td>
+                        <td>1.58</td>
+                        <td>68%</td>
+                        <td class="ev-positive">+7.0%</td>
+                        <td>3.49</td>
+                    </tr>
+
+                    <tr>
+                        <td><strong>Ludogorets 1947</strong> vs Celta Vigo</td>
+                        <td>Internasjonal Klubb - UEFA Europa League</td>
+                        <td><span class="bet-type">Over 2.5</span></td>
+                        <td>1.87</td>
+                        <td>56%</td>
+                        <td class="ev-positive">+5.1%</td>
+                        <td>2.94</td>
+                    </tr>
+
+                    <tr>
+                        <td><strong>Panathinaikos</strong> vs Sturm Graz</td>
+                        <td>Internasjonal Klubb - UEFA Europa League</td>
+                        <td><span class="bet-type">Under 2.5</span></td>
+                        <td>1.90</td>
+                        <td>55%</td>
+                        <td class="ev-positive">+4.4%</td>
+                        <td>2.48</td>
+                    </tr>
+
+                    <tr>
+                        <td><strong>Røde Stjerne</strong> vs FCSB</td>
+                        <td>Internasjonal Klubb - UEFA Europa League</td>
+                        <td><span class="bet-type">Under 2.5</span></td>
+                        <td>2.15</td>
+                        <td>48%</td>
+                        <td class="ev-positive">+4.0%</td>
+                        <td>2.74</td>
+                    </tr>
+
+                    <tr>
+                        <td><strong>Viktoria Plzen</strong> vs Freiburg</td>
+                        <td>Internasjonal Klubb - UEFA Europa League</td>
+                        <td><span class="bet-type">Over 2.5</span></td>
+                        <td>1.90</td>
+                        <td>55%</td>
+                        <td class="ev-positive">+3.9%</td>
+                        <td>2.87</td>
+                    </tr>
+
+                    <tr>
+                        <td><strong>Zrinjski Mostar</strong> vs Häcken</td>
+                        <td>UEFA Conference League</td>
+                        <td><span class="bet-type">Under 2.5</span></td>
+                        <td>1.85</td>
+                        <td>55%</td>
+                        <td class="ev-positive">+1.1%</td>
+                        <td>2.49</td>
+                    </tr>
+
+                </tbody>
+            </table>
         </div>
         
         <div class="footer">
             <p>⚠️ Bet responsibly. These are model predictions and do not guarantee profits.</p>
-            <p>Stakes are calculated using Kelly Criterion based on model edge.</p>
+            <p>Model uses European history + domestic form data • Data from openfootball + Wikipedia</p>
         </div>
     </div>
+    
+    <script>
+        function calculateStakes() {
+            const bankroll = parseFloat(document.getElementById('bankroll').value) || 0;
+            const kellyFraction = parseFloat(document.getElementById('kellyFraction').value) || 0.25;
+            const totalStakePct = 47.5921;
+            const adjustedStake = bankroll * (totalStakePct / 100) * (kellyFraction / 0.25);
+            document.getElementById('totalStake').textContent = adjustedStake.toFixed(0) + ' kr';
+        }
+        calculateStakes();
+    </script>
 </body>
 </html>

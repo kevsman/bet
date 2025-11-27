@@ -336,19 +336,26 @@ def fetch_xg_data(
     seasons: List[str] = None,
     source: str = "understat",
     output_dir: Path = None,
+    force_refresh: bool = False,
 ) -> pd.DataFrame:
     """
     Main function to fetch xG data for specified leagues and seasons.
+    
+    Uses smart caching: past seasons are only fetched once, current season
+    is always refreshed to get latest matches.
     
     Args:
         leagues: List of league codes (default: top 5 leagues)
         seasons: List of seasons (default: last 3 seasons)
         source: "fbref" or "understat"
         output_dir: Directory to save CSV files
+        force_refresh: If True, re-fetch all seasons regardless of cache
     
     Returns:
         Combined DataFrame with all xG data
     """
+    from datetime import datetime
+    
     if leagues is None:
         leagues = ["E0", "D1", "SP1", "I1", "F1"]
     
@@ -364,30 +371,110 @@ def fetch_xg_data(
     
     output_dir.mkdir(parents=True, exist_ok=True)
     
-    # Select scraper
+    # Check for existing cached data
+    cache_path = output_dir / f"xg_data_{source}.csv"
+    cached_df = None
+    cached_seasons = set()
+    
+    if cache_path.exists() and not force_refresh:
+        try:
+            cached_df = pd.read_csv(cache_path, parse_dates=["Date"])
+            cached_seasons = set(cached_df["season"].astype(str).unique())
+            print(f"Found cached xG data with seasons: {sorted(cached_seasons)}")
+        except Exception as e:
+            print(f"Warning: Could not read cache ({e}), will fetch fresh data")
+            cached_df = None
+    
+    # Determine current season (for Understat, this is the year the season started)
+    # Football seasons run Aug-May, so:
+    # - In Jan-July 2025, current season is "2024" (2024-25 season)
+    # - In Aug-Dec 2025, current season is "2025" (2025-26 season)
+    now = datetime.now()
     if source == "understat":
-        scraper = UnderstatScraper(delay=2.0)
+        if now.month <= 7:
+            current_season = str(now.year - 1)
+        else:
+            current_season = str(now.year)
     else:
-        scraper = FBrefScraper(delay=4.0)  # FBref needs longer delays
+        # FBref uses "2024-2025" format
+        if now.month <= 7:
+            current_season = f"{now.year - 1}-{now.year}"
+        else:
+            current_season = f"{now.year}-{now.year + 1}"
     
-    all_matches = []
+    print(f"Current season: {current_season}")
     
-    for league in leagues:
-        for season in seasons:
-            print(f"\nFetching {league} {season}...")
-            matches = scraper.get_season_matches(league, season)
-            all_matches.extend(matches)
+    # Determine which seasons need fetching
+    # - Past/completed seasons: use cache if available
+    # - Current season: always re-fetch to get latest matches
+    seasons_to_fetch = []
+    for season in seasons:
+        if str(season) == current_season:
+            # Always fetch current season
+            seasons_to_fetch.append(season)
+            print(f"  {season}: Will fetch (current season)")
+        elif str(season) in cached_seasons and not force_refresh:
+            # Use cached data for past seasons
+            print(f"  {season}: Using cached data")
+        else:
+            # Need to fetch this past season
+            seasons_to_fetch.append(season)
+            print(f"  {season}: Will fetch (not in cache)")
     
-    if not all_matches:
-        print("No xG data fetched")
+    # Fetch the seasons we need
+    new_matches = []
+    if seasons_to_fetch:
+        # Select scraper
+        if source == "understat":
+            scraper = UnderstatScraper(delay=2.0)
+        else:
+            scraper = FBrefScraper(delay=4.0)  # FBref needs longer delays
+        
+        for league in leagues:
+            for season in seasons_to_fetch:
+                print(f"\nFetching {league} {season}...")
+                matches = scraper.get_season_matches(league, season)
+                new_matches.extend(matches)
+    
+    # Convert new matches to dataframe
+    new_df = matches_to_dataframe(new_matches) if new_matches else pd.DataFrame()
+    
+    # Combine with cached data (excluding re-fetched seasons)
+    if cached_df is not None and not cached_df.empty:
+        # Keep cached data for seasons we didn't re-fetch
+        seasons_to_keep = [s for s in cached_seasons if s not in [str(x) for x in seasons_to_fetch]]
+        if seasons_to_keep:
+            cached_to_keep = cached_df[cached_df["season"].astype(str).isin(seasons_to_keep)]
+            print(f"\nKeeping {len(cached_to_keep)} cached matches from seasons: {seasons_to_keep}")
+            
+            if not new_df.empty:
+                df = pd.concat([cached_to_keep, new_df], ignore_index=True)
+            else:
+                df = cached_to_keep
+        else:
+            df = new_df
+    else:
+        df = new_df
+    
+    if df.empty:
+        print("No xG data available")
         return pd.DataFrame()
     
-    df = matches_to_dataframe(all_matches)
+    # Sort and clean up
+    df = df.sort_values("Date").reset_index(drop=True)
     
-    # Save to CSV
-    output_path = output_dir / f"xg_data_{source}.csv"
-    df.to_csv(output_path, index=False)
-    print(f"\nSaved {len(df)} matches to {output_path}")
+    # Remove duplicates (in case of overlap)
+    df = df.drop_duplicates(subset=["Date", "HomeTeam", "AwayTeam"], keep="last")
+    
+    # Save combined data to cache
+    df.to_csv(cache_path, index=False)
+    print(f"\nSaved {len(df)} matches to {cache_path}")
+    
+    # Summary by season
+    print("\nxG data by season:")
+    for season in sorted(df["season"].astype(str).unique()):
+        count = len(df[df["season"].astype(str) == season])
+        print(f"  {season}: {count} matches")
     
     return df
 

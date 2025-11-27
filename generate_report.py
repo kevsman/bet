@@ -469,8 +469,8 @@ def generate_european_html_report(
     
     # Write HTML file
     output_path.write_text(html, encoding="utf-8")
-    print(f"\n✅ HTML report generated: {output_path.absolute()}")
-    print(f"📊 {len(value_bets)} value bets | Total stake: {total_stake:.1f}% of bankroll")
+    print(f"\n[OK] HTML report generated: {output_path.absolute()}")
+    print(f"{len(value_bets)} value bets | Total stake: {total_stake:.1f}% of bankroll")
 
 
 def generate_html_report(
@@ -846,8 +846,8 @@ def generate_html_report(
     
     # Write HTML file
     output_path.write_text(html, encoding="utf-8")
-    print(f"\n✅ HTML report generated: {output_path.absolute()}")
-    print(f"📊 {len(df)} recommendations | Total stake: {total_stake:.1f}% of bankroll")
+    print(f"\n[OK] HTML report generated: {output_path.absolute()}")
+    print(f"{len(df)} recommendations | Total stake: {total_stake:.1f}% of bankroll")
 
 
 if __name__ == "__main__":

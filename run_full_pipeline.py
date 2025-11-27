@@ -7,8 +7,9 @@ DOMESTIC LEAGUES PIPELINE (default):
 2. Prepare the dataset with rolling averages
 2b. Fetch xG data from Understat (top 5 leagues)
 3. Train the Poisson regression models
+3b. Train Dixon-Coles model (correlation adjustment for low-scoring games)
 4. Scrape Norsk Tipping odds (via Selenium)
-5. Calculate value bets using the trained model
+5. Calculate value bets using ensemble of both models
 6. Generate the HTML report
 
 EUROPEAN COMPETITIONS PIPELINE (--european flag):
@@ -19,10 +20,10 @@ EUROPEAN COMPETITIONS PIPELINE (--european flag):
 5. Generate European value bets
 
 Usage:
-    python run_full_pipeline.py              # Run domestic leagues pipeline
-    python run_full_pipeline.py --european   # Run European competitions pipeline
-    python run_full_pipeline.py -e           # Short flag for European
-    python run_full_pipeline.py --no-xg      # Skip xG data fetching
+    python run_full_pipeline.py                  # Run full domestic pipeline
+    python run_full_pipeline.py --european       # Run European competitions pipeline
+    python run_full_pipeline.py --no-xg          # Skip xG data fetching
+    python run_full_pipeline.py --no-dixon-coles # Skip Dixon-Coles model
 """
 
 import subprocess
@@ -85,7 +86,7 @@ def step2b_fetch_xg_data():
         current_season_start = current_year
     
     # Fetch last 3 seasons of xG data
-    seasons = [current_season_start - 2, current_season_start - 1, current_season_start]
+    seasons = [str(current_season_start - 2), str(current_season_start - 1), str(current_season_start)]
     print(f"Fetching xG data for seasons: {seasons}")
     
     try:
@@ -102,6 +103,17 @@ def step3_train_models():
     """Train Poisson regression models."""
     from src.models import main as train_main
     train_main()
+
+
+def step3b_train_dixon_coles():
+    """Train Dixon-Coles model for improved predictions."""
+    try:
+        from src.dixon_coles import train_dixon_coles
+        model = train_dixon_coles()
+        return model
+    except Exception as e:
+        print(f"Warning: Dixon-Coles training failed ({e}), continuing with Poisson model only")
+        return None
 
 
 def step4_scrape_odds(headless: bool = True, skip_if_recent: bool = True):
@@ -135,273 +147,29 @@ def step4_scrape_odds(headless: bool = True, skip_if_recent: bool = True):
 
 
 def step5_generate_report():
-    """Calculate value bets and generate HTML report."""
-    # Import the report generator's main logic
-    import pandas as pd
-    import numpy as np
-    import joblib
-    import json
-    from datetime import datetime
-    from collections import defaultdict
-    from scipy.stats import poisson
-    from src.config import get_config
-    from src.team_mappings import normalize_team_name
+    """Calculate value bets and generate HTML report using Dixon-Coles ensemble."""
+    # Use calculate_fresh_recommendations.py which properly handles xG and Dixon-Coles
+    import subprocess
+    import sys
     
-    cfg = get_config()
+    print("Running calculate_fresh_recommendations.py...")
+    result = subprocess.run(
+        [sys.executable, "calculate_fresh_recommendations.py"],
+        capture_output=False
+    )
     
-    # Load models
-    print("Loading models...")
-    home_model = joblib.load(cfg.models_dir / "home_poisson.joblib")
-    away_model = joblib.load(cfg.models_dir / "away_poisson.joblib")
-    feature_cols = (cfg.models_dir / "features.txt").read_text().strip().split("\n")
+    if result.returncode != 0:
+        print("Warning: calculate_fresh_recommendations.py had issues")
     
-    # Load historical data for features
-    print("Loading historical dataset...")
-    dataset_path = cfg.processed_dir / "match_dataset.csv"
-    hist_df = pd.read_csv(dataset_path, low_memory=False)
+    # Generate HTML report
+    print("\nGenerating HTML report...")
+    result = subprocess.run(
+        [sys.executable, "generate_report.py"],
+        capture_output=False
+    )
     
-    # Load odds
-    print("Loading Norsk Tipping odds...")
-    odds_file = cfg.processed_dir / "norsk_tipping_odds.csv"
-    if not odds_file.exists():
-        raise FileNotFoundError(f"No odds file found at {odds_file}")
-    
-    odds_df = pd.read_csv(odds_file)
-    print(f"  Loaded {len(odds_df)} matches")
-    
-    # Team mapping for Norsk Tipping names
-    TEAM_MAPPING = {
-        'Wolverhampton': 'Wolves',
-        'Nottingham': 'Nott\'m Forest',
-        'Man City': 'Manchester City',
-        'Man Utd': 'Manchester Utd',
-        'Newcastle Utd': 'Newcastle',
-        'Tottenham': 'Tottenham',
-        'Brighton': 'Brighton',
-        'Leicester City': 'Leicester',
-        'Ipswich Town': 'Ipswich',
-        'Sheffield Utd': 'Sheffield United',
-        'Leeds': 'Leeds',
-        'Leeds United': 'Leeds',
-        'West Brom': 'West Brom',
-        'Norwich City': 'Norwich',
-        'Stoke City': 'Stoke',
-        'Swansea City': 'Swansea',
-        'Cardiff City': 'Cardiff',
-        'Huddersfield Town': 'Huddersfield',
-        'Atlético Madrid': 'Ath Madrid',
-        'Atletico Madrid': 'Ath Madrid',
-        'Ath Bilbao': 'Ath Bilbao',
-        'Athletic Bilbao': 'Ath Bilbao',
-        'Celta Vigo': 'Celta',
-        'Deportivo La Coruña': 'La Coruna',
-        'Real Betis': 'Betis',
-        'Real Sociedad': 'Sociedad',
-        'Real Valladolid': 'Valladolid',
-        'Rayo Vallecano': 'Vallecano',
-        'Bayern München': 'Bayern Munich',
-        'Bayern Munich': 'Bayern Munich',
-        'Borussia Dortmund': 'Dortmund',
-        'Borussia M\'gladbach': 'M\'gladbach',
-        'Bor. Mönchengladbach': 'M\'gladbach',
-        'Eintracht Frankfurt': 'Ein Frankfurt',
-        'Hertha BSC': 'Hertha',
-        'Hertha Berlin': 'Hertha',
-        'RB Leipzig': 'RB Leipzig',
-        'SC Freiburg': 'Freiburg',
-        'VfB Stuttgart': 'Stuttgart',
-        'VfL Wolfsburg': 'Wolfsburg',
-        'Bayer Leverkusen': 'Leverkusen',
-        '1. FC Köln': 'FC Koln',
-        '1. FC Heidenheim': 'Heidenheim',
-        'FC Augsburg': 'Augsburg',
-        '1. FSV Mainz 05': 'Mainz',
-        'TSG Hoffenheim': 'Hoffenheim',
-        'Paris Saint-Germain': 'Paris SG',
-        'Paris S-G': 'Paris SG',
-        'AS Monaco': 'Monaco',
-        'Olympique Marseille': 'Marseille',
-        'Olympique Lyon': 'Lyon',
-        'OGC Nice': 'Nice',
-        'Stade Rennais': 'Rennes',
-        'RC Lens': 'Lens',
-        'LOSC Lille': 'Lille',
-        'FC Nantes': 'Nantes',
-        'Stade Brestois': 'Brest',
-        'Stade de Reims': 'Reims',
-        'RC Strasbourg': 'Strasbourg',
-        'Juventus': 'Juventus',
-        'Inter': 'Inter',
-        'AC Milan': 'Milan',
-        'AS Roma': 'Roma',
-        'S.S. Lazio': 'Lazio',
-        'SSC Napoli': 'Napoli',
-        'Atalanta BC': 'Atalanta',
-        'ACF Fiorentina': 'Fiorentina',
-        'Torino FC': 'Torino',
-        'Bologna FC': 'Bologna',
-        'Udinese': 'Udinese',
-        'Hellas Verona': 'Verona',
-        'US Sassuolo': 'Sassuolo',
-        'Empoli FC': 'Empoli',
-        'Genoa CFC': 'Genoa',
-        'Cagliari': 'Cagliari',
-        'US Lecce': 'Lecce',
-        'Parma Calcio': 'Parma',
-        'Venezia FC': 'Venezia',
-        'Como 1907': 'Como',
-        'Celtic': 'Celtic',
-        'Rangers': 'Rangers',
-        'Aberdeen': 'Aberdeen',
-        'Hearts': 'Hearts',
-        'Hibernian': 'Hibernian',
-        'St Mirren': 'St Mirren',
-        'Dundee Utd': 'Dundee Utd',
-        'Dundee United': 'Dundee Utd',
-        'Kilmarnock': 'Kilmarnock',
-        'Motherwell': 'Motherwell',
-        'Ross County': 'Ross County',
-        'St Johnstone': 'St Johnstone',
-        'Livingston': 'Livingston',
-    }
-    
-    def map_team(name):
-        if name in TEAM_MAPPING:
-            return TEAM_MAPPING[name]
-        return normalize_team_name(name)
-    
-    def get_team_avg_features(team, is_home, hist_df, feature_cols, n=5):
-        prefix = 'home_' if is_home else 'away_'
-        team_col = 'HomeTeam' if is_home else 'AwayTeam'
-        matches = hist_df[hist_df[team_col] == team].sort_values('Date', ascending=False).head(n)
-        if len(matches) == 0:
-            return None
-        feats = []
-        for col in feature_cols:
-            if col in matches.columns:
-                feats.append(matches[col].mean())
-            else:
-                feats.append(0)
-        return feats
-    
-    def bivariate_prob_over(line, home_xg, away_xg, max_goals=10):
-        prob = 0.0
-        threshold = int(line)
-        for h in range(max_goals + 1):
-            for a in range(max_goals + 1):
-                if h + a > threshold:
-                    prob += poisson.pmf(h, home_xg) * poisson.pmf(a, away_xg)
-        return prob
-    
-    def bivariate_prob_under(line, home_xg, away_xg, max_goals=10):
-        prob = 0.0
-        threshold = int(line)
-        for h in range(max_goals + 1):
-            for a in range(max_goals + 1):
-                if h + a < threshold:
-                    prob += poisson.pmf(h, home_xg) * poisson.pmf(a, away_xg)
-        return prob
-    
-    # Calculate recommendations
-    print("Calculating value bets...")
-    recommendations = []
-    
-    for _, row in odds_df.iterrows():
-        home_team_nt = row['home_team']
-        away_team_nt = row['away_team']
-        home_team = map_team(home_team_nt)
-        away_team = map_team(away_team_nt)
-        
-        home_feats = get_team_avg_features(home_team, True, hist_df, feature_cols)
-        away_feats = get_team_avg_features(away_team, False, hist_df, feature_cols)
-        
-        if home_feats is None or away_feats is None:
-            continue
-        
-        pred_home = home_model.predict([home_feats])[0]
-        pred_away = away_model.predict([away_feats])[0]
-        total = pred_home + pred_away
-        
-        for line in [1.5, 2.5, 3.5]:
-            over_col = f'over_{line}'
-            under_col = f'under_{line}'
-            
-            if over_col not in row or under_col not in row:
-                continue
-            
-            over_odds = row.get(over_col)
-            under_odds = row.get(under_col)
-            
-            if pd.isna(over_odds) or pd.isna(under_odds):
-                continue
-            
-            p_over = bivariate_prob_over(line, pred_home, pred_away)
-            p_under = bivariate_prob_under(line, pred_home, pred_away)
-            implied_over = 1 / over_odds
-            implied_under = 1 / under_odds
-            edge_over = p_over - implied_over
-            edge_under = p_under - implied_under
-            min_edge = 0.05
-            
-            if edge_over > min_edge:
-                kelly = edge_over / (over_odds - 1) if over_odds > 1 else 0
-                ev_per_unit = (p_over * over_odds) - 1
-                recommendations.append({
-                    'date': row['date'],
-                    'time': row['time'],
-                    'home_team': row['home_team'],
-                    'away_team': row['away_team'],
-                    'country': row.get('country', ''),
-                    'bet': f'Over {line}',
-                    'odds': over_odds,
-                    'model_total': total,
-                    'probability': p_over,
-                    'edge': edge_over,
-                    'ev': ev_per_unit,
-                    'kelly': min(kelly * 0.25, 0.05)
-                })
-            
-            if edge_under > min_edge:
-                kelly = edge_under / (under_odds - 1) if under_odds > 1 else 0
-                ev_per_unit = (p_under * under_odds) - 1
-                recommendations.append({
-                    'date': row['date'],
-                    'time': row['time'],
-                    'home_team': row['home_team'],
-                    'away_team': row['away_team'],
-                    'country': row.get('country', ''),
-                    'bet': f'Under {line}',
-                    'odds': under_odds,
-                    'model_total': total,
-                    'probability': p_under,
-                    'edge': edge_under,
-                    'ev': ev_per_unit,
-                    'kelly': min(kelly * 0.25, 0.05)
-                })
-    
-    # Sort by EV and dedupe
-    recommendations = sorted(recommendations, key=lambda x: -x['ev'])
-    seen = set()
-    unique_recs = []
-    for r in recommendations:
-        key = (r['home_team'], r['away_team'], r['bet'])
-        if key not in seen:
-            seen.add(key)
-            unique_recs.append(r)
-    
-    print(f"  Found {len(unique_recs)} value bets")
-    
-    # Save recommendations to CSV
-    if unique_recs:
-        recs_df = pd.DataFrame(unique_recs)
-        recs_df.to_csv(cfg.processed_dir / "value_bets.csv", index=False)
-    
-    # Generate HTML report (using generate_value_bets_report logic)
-    print("Generating HTML report...")
-    
-    # Import and run the report generator
-    from generate_value_bets_report import main as generate_report_main
-    generate_report_main()
+    if result.returncode != 0:
+        print("Warning: generate_report.py had issues")
 
 
 # ============================================================
@@ -525,6 +293,7 @@ def main():
     parser.add_argument("--no-download", action="store_true", help="Skip downloading latest results")
     parser.add_argument("--no-train", action="store_true", help="Skip model training")
     parser.add_argument("--no-xg", action="store_true", help="Skip xG data fetching")
+    parser.add_argument("--no-dixon-coles", action="store_true", help="Skip Dixon-Coles model training")
     parser.add_argument("--no-scrape", action="store_true", help="Skip odds scraping")
     parser.add_argument("--force-scrape", action="store_true", help="Force scrape even if recent")
     parser.add_argument("--headless", action="store_true", default=True, help="Run browser in headless mode")
@@ -568,9 +337,15 @@ def main():
         
         # Step 3: Train models
         if not args.no_train:
-            run_step("Train Models", step3_train_models)
+            run_step("Train Poisson Models", step3_train_models)
         else:
             print("\n[Skipping model training]")
+        
+        # Step 3b: Train Dixon-Coles model
+        if not args.no_train and not args.no_dixon_coles:
+            run_step("Train Dixon-Coles Model", step3b_train_dixon_coles)
+        elif args.no_dixon_coles:
+            print("\n[Skipping Dixon-Coles training]")
         
         # Step 4: Scrape odds
         if not args.no_scrape:

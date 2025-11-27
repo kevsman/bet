@@ -207,13 +207,31 @@ def load_european_model(cfg):
     
     if not home_path.exists() or not away_path.exists():
         print("European model not found. Run 'python run_european.py all' first.")
-        return None, None, None
+        return None, None, None, None
     
     home_model = joblib.load(home_path)
     away_model = joblib.load(away_path)
     feature_cols = features_path.read_text().strip().split("\n")
     
-    return home_model, away_model, feature_cols
+    # Try to load Dixon-Coles model for ensemble
+    dc_model = None
+    dc_path = Path("models/dixon_coles.joblib")
+    if dc_path.exists():
+        try:
+            from src.dixon_coles import DixonColesModel, DixonColesParams
+            loaded = joblib.load(dc_path)
+            if isinstance(loaded, dict):
+                dc_model = DixonColesModel()
+                dc_model.params = loaded.get('params')
+                dc_model.teams = loaded.get('teams', [])
+                dc_model._fitted = loaded.get('_fitted', True)
+            else:
+                dc_model = loaded
+            print("✓ Dixon-Coles model loaded for ensemble")
+        except Exception as e:
+            print(f"Note: Dixon-Coles model not available ({e})")
+    
+    return home_model, away_model, feature_cols, dc_model
 
 
 def load_domestic_data() -> pd.DataFrame | None:
@@ -356,7 +374,7 @@ def main():
     cfg = get_european_config()
     
     # Load model
-    home_model, away_model, feature_cols = load_european_model(cfg)
+    home_model, away_model, feature_cols, dc_model = load_european_model(cfg)
     if home_model is None:
         return
     
@@ -479,13 +497,46 @@ def main():
             # Create feature vector
             X = pd.DataFrame([features])[feature_cols]
             
-            # Predict
+            # Predict with European Poisson model
             pred_home = home_model.predict(X)[0]
             pred_away = away_model.predict(X)[0]
-            pred_total = pred_home + pred_away
+            
+            # Try Dixon-Coles ensemble if available
+            dc_home, dc_away = None, None
+            dc_used = False
+            if dc_model and dc_model._fitted:
+                try:
+                    # Map to DC team names (use original mapped names)
+                    dc_home_name = home_mapped or home_nt
+                    dc_away_name = away_mapped or away_nt
+                    dc_home, dc_away = dc_model.predict_goals(dc_home_name, dc_away_name)
+                    dc_used = True
+                except Exception:
+                    # Team not in DC model, try variations
+                    for h_name in [home_nt, home_mapped]:
+                        for a_name in [away_nt, away_mapped]:
+                            if h_name and a_name:
+                                try:
+                                    dc_home, dc_away = dc_model.predict_goals(h_name, a_name)
+                                    dc_used = True
+                                    break
+                                except Exception:
+                                    continue
+                        if dc_used:
+                            break
+            
+            # Ensemble: average Poisson and Dixon-Coles if both available
+            if dc_used and dc_home is not None and dc_away is not None:
+                final_home = 0.5 * pred_home + 0.5 * dc_home
+                final_away = 0.5 * pred_away + 0.5 * dc_away
+            else:
+                final_home = pred_home
+                final_away = pred_away
+            
+            pred_total = final_home + final_away
             
             # Calculate over probability using bivariate Poisson
-            over_prob = bivariate_poisson_over_prob(pred_home, pred_away, 2.5)
+            over_prob = bivariate_poisson_over_prob(final_home, final_away, 2.5)
             under_prob = 1.0 - over_prob
             
             # Get odds
@@ -503,13 +554,21 @@ def main():
             elif used_domestic_home or used_domestic_away:
                 data_source = "Mix"
             
+            # Add DC indicator
+            if dc_used:
+                data_source += "+DC"
+            
             results.append({
                 "home_team": home_nt,
                 "away_team": away_nt,
                 "league": row["league"],
-                "pred_home": pred_home,
-                "pred_away": pred_away,
+                "pred_home": final_home,
+                "pred_away": final_away,
                 "pred_total": pred_total,
+                "poisson_home": pred_home,
+                "poisson_away": pred_away,
+                "dc_home": dc_home if dc_used else None,
+                "dc_away": dc_away if dc_used else None,
                 "over_prob": over_prob,
                 "under_prob": under_prob,
                 "over_odds": over_odds,
