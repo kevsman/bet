@@ -193,6 +193,7 @@ def main():
             
             if edge_over > min_edge:
                 kelly = edge_over / (over_odds - 1) if over_odds > 1 else 0
+                ev_per_unit = (p_over * over_odds) - 1  # Expected value per 1 kr bet
                 recommendations.append({
                     'date': row['date'],
                     'time': row['time'],
@@ -204,11 +205,13 @@ def main():
                     'model_total': total,
                     'probability': p_over,
                     'edge': edge_over,
+                    'ev': ev_per_unit,
                     'kelly': min(kelly * 0.25, 0.05)
                 })
             
             if edge_under > min_edge:
                 kelly = edge_under / (under_odds - 1) if under_odds > 1 else 0
+                ev_per_unit = (p_under * under_odds) - 1  # Expected value per 1 kr bet
                 recommendations.append({
                     'date': row['date'],
                     'time': row['time'],
@@ -220,11 +223,12 @@ def main():
                     'model_total': total,
                     'probability': p_under,
                     'edge': edge_under,
+                    'ev': ev_per_unit,
                     'kelly': min(kelly * 0.25, 0.05)
                 })
 
-    # Sort by edge and remove duplicates
-    recommendations = sorted(recommendations, key=lambda x: -x['edge'])
+    # Sort by Expected Value (combines edge and odds) and remove duplicates
+    recommendations = sorted(recommendations, key=lambda x: -x['ev'])
     seen = set()
     unique_recs = []
     for r in recommendations:
@@ -255,6 +259,7 @@ def main():
         'model_total': r['model_total'],
         'probability': r['probability'],
         'edge': r['edge'],
+        'ev': r['ev'],
         'kelly': r['kelly']
     } for i, r in enumerate(unique_recs)])
     
@@ -578,6 +583,9 @@ def main():
         .prob-cell {{ color: #888; }}
         .edge-cell {{ 
             color: #4ade80; 
+        }}
+        .ev-cell {{ 
+            color: #fbbf24; 
             font-weight: 700;
         }}
         .stake-cell {{
@@ -698,7 +706,7 @@ def main():
     if top_5:
         html += '''
         <div class="top-picks">
-            <h2>🏆 Top 5 Recommendations</h2>
+            <h2>🏆 Top 5 Recommendations (by Expected Value)</h2>
             <div class="top-list">
 '''
         for i, r in enumerate(top_5, 1):
@@ -712,7 +720,7 @@ def main():
                     </div>
                     <div class="top-bet {bet_class}">{r['bet']}</div>
                     <div class="top-odds">@{r['odds']:.2f}</div>
-                    <div class="top-edge">+{r['edge']*100:.1f}%</div>
+                    <div class="top-edge">EV +{r['ev']*100:.1f}%</div>
                 </div>
 '''
         html += '''
@@ -746,7 +754,7 @@ def main():
         
         bet_idx = 0
         for date in sorted(by_date.keys()):
-            recs = sorted(by_date[date], key=lambda x: -x['edge'])
+            recs = sorted(by_date[date], key=lambda x: -x['ev'])  # Sort by EV within each date
             html += f'''
         <div class="date-group">
             <div class="date-label">📅 {date}</div>
@@ -760,6 +768,7 @@ def main():
                         <th>Model</th>
                         <th>Prob</th>
                         <th>Edge</th>
+                        <th>EV</th>
                         <th>Stake</th>
                         <th>Winnings</th>
                     </tr>
@@ -780,6 +789,7 @@ def main():
                         <td>{r['model_total']:.2f}</td>
                         <td class="prob-cell">{r['probability']*100:.0f}%</td>
                         <td class="edge-cell">+{r['edge']*100:.1f}%</td>
+                        <td class="ev-cell">+{r['ev']*100:.1f}%</td>
                         <td class="stake-cell" id="stake-{bet_idx}">-</td>
                         <td class="winnings-cell" id="win-{bet_idx}">-</td>
                     </tr>

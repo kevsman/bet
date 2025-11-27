@@ -318,6 +318,9 @@
         .prob-cell { color: #888; }
         .edge-cell { 
             color: #4ade80; 
+        }
+        .ev-cell { 
+            color: #fbbf24; 
             font-weight: 700;
         }
         .stake-cell {
@@ -366,7 +369,7 @@
 <body>
     <div class="header">
         <h1>Value Bets Report</h1>
-        <p class="subtitle">Generated 2025-11-25 14:55 | Norsk Tipping Odds</p>
+        <p class="subtitle">Generated 2025-11-25 15:05 | Norsk Tipping Odds</p>
     </div>
     
     <div class="container">
@@ -434,7 +437,7 @@
         </div>
 
         <div class="top-picks">
-            <h2>🏆 Top 5 Recommendations</h2>
+            <h2>🏆 Top 5 Recommendations (by Expected Value)</h2>
             <div class="top-list">
 
                 <div class="top-item">
@@ -445,18 +448,18 @@
                     </div>
                     <div class="top-bet ">Over 3.5</div>
                     <div class="top-odds">@2.80</div>
-                    <div class="top-edge">+29.8%</div>
+                    <div class="top-edge">EV +83.5%</div>
                 </div>
 
                 <div class="top-item">
                     <div class="rank">#2</div>
                     <div class="top-match">
-                        <span class="teams">Arsenal vs Bayern München</span>
-                        <span class="meta">2025-11-26 21:00 • Europa</span>
+                        <span class="teams">Southampton vs Leicester City</span>
+                        <span class="meta">2025-11-25 21:00 • England</span>
                     </div>
-                    <div class="top-bet ">Over 2.5</div>
-                    <div class="top-odds">@1.72</div>
-                    <div class="top-edge">+24.3%</div>
+                    <div class="top-bet under">Under 1.5</div>
+                    <div class="top-odds">@3.70</div>
+                    <div class="top-edge">EV +69.0%</div>
                 </div>
 
                 <div class="top-item">
@@ -467,18 +470,18 @@
                     </div>
                     <div class="top-bet under">Under 2.5</div>
                     <div class="top-odds">@1.97</div>
-                    <div class="top-edge">+21.7%</div>
+                    <div class="top-edge">EV +42.8%</div>
                 </div>
 
                 <div class="top-item">
                     <div class="rank">#4</div>
                     <div class="top-match">
-                        <span class="teams">Southampton vs Leicester City</span>
-                        <span class="meta">2025-11-25 21:00 • England</span>
+                        <span class="teams">Arsenal vs Bayern München</span>
+                        <span class="meta">2025-11-26 21:00 • Europa</span>
                     </div>
-                    <div class="top-bet under">Under 1.5</div>
-                    <div class="top-odds">@3.70</div>
-                    <div class="top-edge">+18.6%</div>
+                    <div class="top-bet ">Over 2.5</div>
+                    <div class="top-odds">@1.72</div>
+                    <div class="top-edge">EV +41.9%</div>
                 </div>
 
                 <div class="top-item">
@@ -489,7 +492,7 @@
                     </div>
                     <div class="top-bet ">Over 3.5</div>
                     <div class="top-odds">@2.30</div>
-                    <div class="top-edge">+17.0%</div>
+                    <div class="top-edge">EV +39.2%</div>
                 </div>
 
             </div>
@@ -516,6 +519,7 @@
                         <th>Model</th>
                         <th>Prob</th>
                         <th>Edge</th>
+                        <th>EV</th>
                         <th>Stake</th>
                         <th>Winnings</th>
                     </tr>
@@ -528,11 +532,12 @@
                             <span class="teams">Southampton vs Leicester City</span>
                             <span class="time">21:00 • England</span>
                         </td>
-                        <td><span class="bet-tag under">Under 2.5</span></td>
-                        <td class="odds-cell">1.97</td>
+                        <td><span class="bet-tag under">Under 1.5</span></td>
+                        <td class="odds-cell">3.70</td>
                         <td>1.82</td>
-                        <td class="prob-cell">73%</td>
-                        <td class="edge-cell">+21.7%</td>
+                        <td class="prob-cell">46%</td>
+                        <td class="edge-cell">+18.6%</td>
+                        <td class="ev-cell">+69.0%</td>
                         <td class="stake-cell" id="stake-0">-</td>
                         <td class="winnings-cell" id="win-0">-</td>
                     </tr>
@@ -543,32 +548,18 @@
                             <span class="teams">Southampton vs Leicester City</span>
                             <span class="time">21:00 • England</span>
                         </td>
-                        <td><span class="bet-tag under">Under 1.5</span></td>
-                        <td class="odds-cell">3.70</td>
+                        <td><span class="bet-tag under">Under 2.5</span></td>
+                        <td class="odds-cell">1.97</td>
                         <td>1.82</td>
-                        <td class="prob-cell">46%</td>
-                        <td class="edge-cell">+18.6%</td>
+                        <td class="prob-cell">73%</td>
+                        <td class="edge-cell">+21.7%</td>
+                        <td class="ev-cell">+42.8%</td>
                         <td class="stake-cell" id="stake-1">-</td>
                         <td class="winnings-cell" id="win-1">-</td>
                     </tr>
 
                     <tr id="row-2" data-bet-id="2">
                         <td><input type="checkbox" class="bet-checkbox" data-id="2" onchange="updateCalculations()"></td>
-                        <td class="match-cell">
-                            <span class="teams">Southampton vs Leicester City</span>
-                            <span class="time">21:00 • England</span>
-                        </td>
-                        <td><span class="bet-tag under">Under 3.5</span></td>
-                        <td class="odds-cell">1.35</td>
-                        <td>1.82</td>
-                        <td class="prob-cell">89%</td>
-                        <td class="edge-cell">+14.7%</td>
-                        <td class="stake-cell" id="stake-2">-</td>
-                        <td class="winnings-cell" id="win-2">-</td>
-                    </tr>
-
-                    <tr id="row-3" data-bet-id="3">
-                        <td><input type="checkbox" class="bet-checkbox" data-id="3" onchange="updateCalculations()"></td>
                         <td class="match-cell">
                             <span class="teams">Ajax vs Benfica</span>
                             <span class="time">18:45 • Europa</span>
@@ -578,42 +569,13 @@
                         <td>3.69</td>
                         <td class="prob-cell">50%</td>
                         <td class="edge-cell">+12.6%</td>
-                        <td class="stake-cell" id="stake-3">-</td>
-                        <td class="winnings-cell" id="win-3">-</td>
+                        <td class="ev-cell">+33.5%</td>
+                        <td class="stake-cell" id="stake-2">-</td>
+                        <td class="winnings-cell" id="win-2">-</td>
                     </tr>
 
-                    <tr id="row-4" data-bet-id="4">
-                        <td><input type="checkbox" class="bet-checkbox" data-id="4" onchange="updateCalculations()"></td>
-                        <td class="match-cell">
-                            <span class="teams">Ajax vs Benfica</span>
-                            <span class="time">18:45 • Europa</span>
-                        </td>
-                        <td><span class="bet-tag over">Over 2.5</span></td>
-                        <td class="odds-cell">1.65</td>
-                        <td>3.69</td>
-                        <td class="prob-cell">71%</td>
-                        <td class="edge-cell">+10.7%</td>
-                        <td class="stake-cell" id="stake-4">-</td>
-                        <td class="winnings-cell" id="win-4">-</td>
-                    </tr>
-
-                    <tr id="row-5" data-bet-id="5">
-                        <td><input type="checkbox" class="bet-checkbox" data-id="5" onchange="updateCalculations()"></td>
-                        <td class="match-cell">
-                            <span class="teams">Manchester City vs Bayer Leverkusen</span>
-                            <span class="time">21:00 • Europa</span>
-                        </td>
-                        <td><span class="bet-tag under">Under 3.5</span></td>
-                        <td class="odds-cell">1.90</td>
-                        <td>3.15</td>
-                        <td class="prob-cell">61%</td>
-                        <td class="edge-cell">+8.6%</td>
-                        <td class="stake-cell" id="stake-5">-</td>
-                        <td class="winnings-cell" id="win-5">-</td>
-                    </tr>
-
-                    <tr id="row-6" data-bet-id="6">
-                        <td><input type="checkbox" class="bet-checkbox" data-id="6" onchange="updateCalculations()"></td>
+                    <tr id="row-3" data-bet-id="3">
+                        <td><input type="checkbox" class="bet-checkbox" data-id="3" onchange="updateCalculations()"></td>
                         <td class="match-cell">
                             <span class="teams">Manchester City vs Bayer Leverkusen</span>
                             <span class="time">21:00 • Europa</span>
@@ -623,6 +585,55 @@
                         <td>3.15</td>
                         <td class="prob-cell">39%</td>
                         <td class="edge-cell">+7.2%</td>
+                        <td class="ev-cell">+22.7%</td>
+                        <td class="stake-cell" id="stake-3">-</td>
+                        <td class="winnings-cell" id="win-3">-</td>
+                    </tr>
+
+                    <tr id="row-4" data-bet-id="4">
+                        <td><input type="checkbox" class="bet-checkbox" data-id="4" onchange="updateCalculations()"></td>
+                        <td class="match-cell">
+                            <span class="teams">Southampton vs Leicester City</span>
+                            <span class="time">21:00 • England</span>
+                        </td>
+                        <td><span class="bet-tag under">Under 3.5</span></td>
+                        <td class="odds-cell">1.35</td>
+                        <td>1.82</td>
+                        <td class="prob-cell">89%</td>
+                        <td class="edge-cell">+14.7%</td>
+                        <td class="ev-cell">+19.9%</td>
+                        <td class="stake-cell" id="stake-4">-</td>
+                        <td class="winnings-cell" id="win-4">-</td>
+                    </tr>
+
+                    <tr id="row-5" data-bet-id="5">
+                        <td><input type="checkbox" class="bet-checkbox" data-id="5" onchange="updateCalculations()"></td>
+                        <td class="match-cell">
+                            <span class="teams">Ajax vs Benfica</span>
+                            <span class="time">18:45 • Europa</span>
+                        </td>
+                        <td><span class="bet-tag over">Over 2.5</span></td>
+                        <td class="odds-cell">1.65</td>
+                        <td>3.69</td>
+                        <td class="prob-cell">71%</td>
+                        <td class="edge-cell">+10.7%</td>
+                        <td class="ev-cell">+17.6%</td>
+                        <td class="stake-cell" id="stake-5">-</td>
+                        <td class="winnings-cell" id="win-5">-</td>
+                    </tr>
+
+                    <tr id="row-6" data-bet-id="6">
+                        <td><input type="checkbox" class="bet-checkbox" data-id="6" onchange="updateCalculations()"></td>
+                        <td class="match-cell">
+                            <span class="teams">Middlesbrough vs Coventry</span>
+                            <span class="time">20:45 • England</span>
+                        </td>
+                        <td><span class="bet-tag over">Over 3.5</span></td>
+                        <td class="odds-cell">3.20</td>
+                        <td>3.05</td>
+                        <td class="prob-cell">36%</td>
+                        <td class="edge-cell">+5.2%</td>
+                        <td class="ev-cell">+16.6%</td>
                         <td class="stake-cell" id="stake-6">-</td>
                         <td class="winnings-cell" id="win-6">-</td>
                     </tr>
@@ -630,14 +641,15 @@
                     <tr id="row-7" data-bet-id="7">
                         <td><input type="checkbox" class="bet-checkbox" data-id="7" onchange="updateCalculations()"></td>
                         <td class="match-cell">
-                            <span class="teams">Middlesbrough vs Coventry</span>
-                            <span class="time">20:45 • England</span>
+                            <span class="teams">Manchester City vs Bayer Leverkusen</span>
+                            <span class="time">21:00 • Europa</span>
                         </td>
-                        <td><span class="bet-tag over">Over 2.5</span></td>
-                        <td class="odds-cell">1.87</td>
-                        <td>3.05</td>
-                        <td class="prob-cell">59%</td>
-                        <td class="edge-cell">+5.3%</td>
+                        <td><span class="bet-tag under">Under 3.5</span></td>
+                        <td class="odds-cell">1.90</td>
+                        <td>3.15</td>
+                        <td class="prob-cell">61%</td>
+                        <td class="edge-cell">+8.6%</td>
+                        <td class="ev-cell">+16.4%</td>
                         <td class="stake-cell" id="stake-7">-</td>
                         <td class="winnings-cell" id="win-7">-</td>
                     </tr>
@@ -648,11 +660,12 @@
                             <span class="teams">Middlesbrough vs Coventry</span>
                             <span class="time">20:45 • England</span>
                         </td>
-                        <td><span class="bet-tag over">Over 3.5</span></td>
-                        <td class="odds-cell">3.20</td>
+                        <td><span class="bet-tag over">Over 2.5</span></td>
+                        <td class="odds-cell">1.87</td>
                         <td>3.05</td>
-                        <td class="prob-cell">36%</td>
-                        <td class="edge-cell">+5.2%</td>
+                        <td class="prob-cell">59%</td>
+                        <td class="edge-cell">+5.3%</td>
+                        <td class="ev-cell">+10.0%</td>
                         <td class="stake-cell" id="stake-8">-</td>
                         <td class="winnings-cell" id="win-8">-</td>
                     </tr>
@@ -673,6 +686,7 @@
                         <th>Model</th>
                         <th>Prob</th>
                         <th>Edge</th>
+                        <th>EV</th>
                         <th>Stake</th>
                         <th>Winnings</th>
                     </tr>
@@ -690,6 +704,7 @@
                         <td>4.49</td>
                         <td class="prob-cell">66%</td>
                         <td class="edge-cell">+29.8%</td>
+                        <td class="ev-cell">+83.5%</td>
                         <td class="stake-cell" id="stake-9">-</td>
                         <td class="winnings-cell" id="win-9">-</td>
                     </tr>
@@ -705,6 +720,7 @@
                         <td>4.49</td>
                         <td class="prob-cell">82%</td>
                         <td class="edge-cell">+24.3%</td>
+                        <td class="ev-cell">+41.9%</td>
                         <td class="stake-cell" id="stake-10">-</td>
                         <td class="winnings-cell" id="win-10">-</td>
                     </tr>
@@ -720,27 +736,13 @@
                         <td>3.51</td>
                         <td class="prob-cell">47%</td>
                         <td class="edge-cell">+12.6%</td>
+                        <td class="ev-cell">+37.2%</td>
                         <td class="stake-cell" id="stake-11">-</td>
                         <td class="winnings-cell" id="win-11">-</td>
                     </tr>
 
                     <tr id="row-12" data-bet-id="12">
                         <td><input type="checkbox" class="bet-checkbox" data-id="12" onchange="updateCalculations()"></td>
-                        <td class="match-cell">
-                            <span class="teams">Arsenal vs Bayern München</span>
-                            <span class="time">21:00 • Europa</span>
-                        </td>
-                        <td><span class="bet-tag over">Over 1.5</span></td>
-                        <td class="odds-cell">1.23</td>
-                        <td>4.49</td>
-                        <td class="prob-cell">94%</td>
-                        <td class="edge-cell">+12.5%</td>
-                        <td class="stake-cell" id="stake-12">-</td>
-                        <td class="winnings-cell" id="win-12">-</td>
-                    </tr>
-
-                    <tr id="row-13" data-bet-id="13">
-                        <td><input type="checkbox" class="bet-checkbox" data-id="13" onchange="updateCalculations()"></td>
                         <td class="match-cell">
                             <span class="teams">Atletico Madrid vs Inter</span>
                             <span class="time">21:00 • Europa</span>
@@ -750,12 +752,13 @@
                         <td>3.51</td>
                         <td class="prob-cell">68%</td>
                         <td class="edge-cell">+11.6%</td>
-                        <td class="stake-cell" id="stake-13">-</td>
-                        <td class="winnings-cell" id="win-13">-</td>
+                        <td class="ev-cell">+20.5%</td>
+                        <td class="stake-cell" id="stake-12">-</td>
+                        <td class="winnings-cell" id="win-12">-</td>
                     </tr>
 
-                    <tr id="row-14" data-bet-id="14">
-                        <td><input type="checkbox" class="bet-checkbox" data-id="14" onchange="updateCalculations()"></td>
+                    <tr id="row-13" data-bet-id="13">
+                        <td><input type="checkbox" class="bet-checkbox" data-id="13" onchange="updateCalculations()"></td>
                         <td class="match-cell">
                             <span class="teams">Olympiakos vs Real Madrid</span>
                             <span class="time">21:00 • Europa</span>
@@ -765,6 +768,23 @@
                         <td>3.83</td>
                         <td class="prob-cell">53%</td>
                         <td class="edge-cell">+8.9%</td>
+                        <td class="ev-cell">+20.0%</td>
+                        <td class="stake-cell" id="stake-13">-</td>
+                        <td class="winnings-cell" id="win-13">-</td>
+                    </tr>
+
+                    <tr id="row-14" data-bet-id="14">
+                        <td><input type="checkbox" class="bet-checkbox" data-id="14" onchange="updateCalculations()"></td>
+                        <td class="match-cell">
+                            <span class="teams">Arsenal vs Bayern München</span>
+                            <span class="time">21:00 • Europa</span>
+                        </td>
+                        <td><span class="bet-tag over">Over 1.5</span></td>
+                        <td class="odds-cell">1.23</td>
+                        <td>4.49</td>
+                        <td class="prob-cell">94%</td>
+                        <td class="edge-cell">+12.5%</td>
+                        <td class="ev-cell">+15.4%</td>
                         <td class="stake-cell" id="stake-14">-</td>
                         <td class="winnings-cell" id="win-14">-</td>
                     </tr>
@@ -780,6 +800,7 @@
                         <td>3.83</td>
                         <td class="prob-cell">74%</td>
                         <td class="edge-cell">+7.0%</td>
+                        <td class="ev-cell">+10.5%</td>
                         <td class="stake-cell" id="stake-15">-</td>
                         <td class="winnings-cell" id="win-15">-</td>
                     </tr>
@@ -795,6 +816,7 @@
                         <td>3.51</td>
                         <td class="prob-cell">86%</td>
                         <td class="edge-cell">+6.5%</td>
+                        <td class="ev-cell">+8.1%</td>
                         <td class="stake-cell" id="stake-16">-</td>
                         <td class="winnings-cell" id="win-16">-</td>
                     </tr>
@@ -815,6 +837,7 @@
                         <th>Model</th>
                         <th>Prob</th>
                         <th>Edge</th>
+                        <th>EV</th>
                         <th>Stake</th>
                         <th>Winnings</th>
                     </tr>
@@ -832,6 +855,7 @@
                         <td>4.20</td>
                         <td class="prob-cell">61%</td>
                         <td class="edge-cell">+17.0%</td>
+                        <td class="ev-cell">+39.2%</td>
                         <td class="stake-cell" id="stake-17">-</td>
                         <td class="winnings-cell" id="win-17">-</td>
                     </tr>
@@ -847,6 +871,7 @@
                         <td>4.20</td>
                         <td class="prob-cell">79%</td>
                         <td class="edge-cell">+12.4%</td>
+                        <td class="ev-cell">+18.5%</td>
                         <td class="stake-cell" id="stake-18">-</td>
                         <td class="winnings-cell" id="win-18">-</td>
                     </tr>
@@ -862,6 +887,7 @@
                         <td>3.29</td>
                         <td class="prob-cell">42%</td>
                         <td class="edge-cell">+6.1%</td>
+                        <td class="ev-cell">+17.0%</td>
                         <td class="stake-cell" id="stake-19">-</td>
                         <td class="winnings-cell" id="win-19">-</td>
                     </tr>
@@ -877,6 +903,7 @@
                         <td>3.29</td>
                         <td class="prob-cell">64%</td>
                         <td class="edge-cell">+5.1%</td>
+                        <td class="ev-cell">+8.6%</td>
                         <td class="stake-cell" id="stake-20">-</td>
                         <td class="winnings-cell" id="win-20">-</td>
                     </tr>
@@ -897,6 +924,7 @@
                         <th>Model</th>
                         <th>Prob</th>
                         <th>Edge</th>
+                        <th>EV</th>
                         <th>Stake</th>
                         <th>Winnings</th>
                     </tr>
@@ -914,6 +942,7 @@
                         <td>2.38</td>
                         <td class="prob-cell">42%</td>
                         <td class="edge-cell">+6.1%</td>
+                        <td class="ev-cell">+16.7%</td>
                         <td class="stake-cell" id="stake-21">-</td>
                         <td class="winnings-cell" id="win-21">-</td>
                     </tr>
@@ -929,6 +958,7 @@
                         <td>2.38</td>
                         <td class="prob-cell">69%</td>
                         <td class="edge-cell">+5.4%</td>
+                        <td class="ev-cell">+8.5%</td>
                         <td class="stake-cell" id="stake-22">-</td>
                         <td class="winnings-cell" id="win-22">-</td>
                     </tr>
@@ -949,6 +979,7 @@
                         <th>Model</th>
                         <th>Prob</th>
                         <th>Edge</th>
+                        <th>EV</th>
                         <th>Stake</th>
                         <th>Winnings</th>
                     </tr>
@@ -961,62 +992,18 @@
                             <span class="teams">Millwall vs Southampton</span>
                             <span class="time">16:00 • England</span>
                         </td>
-                        <td><span class="bet-tag under">Under 2.5</span></td>
-                        <td class="odds-cell">1.85</td>
+                        <td><span class="bet-tag under">Under 1.5</span></td>
+                        <td class="odds-cell">3.45</td>
                         <td>2.20</td>
-                        <td class="prob-cell">62%</td>
-                        <td class="edge-cell">+8.1%</td>
+                        <td class="prob-cell">35%</td>
+                        <td class="edge-cell">+6.4%</td>
+                        <td class="ev-cell">+22.0%</td>
                         <td class="stake-cell" id="stake-23">-</td>
                         <td class="winnings-cell" id="win-23">-</td>
                     </tr>
 
                     <tr id="row-24" data-bet-id="24">
                         <td><input type="checkbox" class="bet-checkbox" data-id="24" onchange="updateCalculations()"></td>
-                        <td class="match-cell">
-                            <span class="teams">Millwall vs Southampton</span>
-                            <span class="time">16:00 • England</span>
-                        </td>
-                        <td><span class="bet-tag under">Under 1.5</span></td>
-                        <td class="odds-cell">3.45</td>
-                        <td>2.20</td>
-                        <td class="prob-cell">35%</td>
-                        <td class="edge-cell">+6.4%</td>
-                        <td class="stake-cell" id="stake-24">-</td>
-                        <td class="winnings-cell" id="win-24">-</td>
-                    </tr>
-
-                    <tr id="row-25" data-bet-id="25">
-                        <td><input type="checkbox" class="bet-checkbox" data-id="25" onchange="updateCalculations()"></td>
-                        <td class="match-cell">
-                            <span class="teams">Olympique Marseille vs Toulouse</span>
-                            <span class="time">21:05 • Frankrike</span>
-                        </td>
-                        <td><span class="bet-tag over">Over 2.5</span></td>
-                        <td class="odds-cell">1.77</td>
-                        <td>3.23</td>
-                        <td class="prob-cell">63%</td>
-                        <td class="edge-cell">+6.2%</td>
-                        <td class="stake-cell" id="stake-25">-</td>
-                        <td class="winnings-cell" id="win-25">-</td>
-                    </tr>
-
-                    <tr id="row-26" data-bet-id="26">
-                        <td><input type="checkbox" class="bet-checkbox" data-id="26" onchange="updateCalculations()"></td>
-                        <td class="match-cell">
-                            <span class="teams">Millwall vs Southampton</span>
-                            <span class="time">16:00 • England</span>
-                        </td>
-                        <td><span class="bet-tag under">Under 3.5</span></td>
-                        <td class="odds-cell">1.32</td>
-                        <td>2.20</td>
-                        <td class="prob-cell">82%</td>
-                        <td class="edge-cell">+6.1%</td>
-                        <td class="stake-cell" id="stake-26">-</td>
-                        <td class="winnings-cell" id="win-26">-</td>
-                    </tr>
-
-                    <tr id="row-27" data-bet-id="27">
-                        <td><input type="checkbox" class="bet-checkbox" data-id="27" onchange="updateCalculations()"></td>
                         <td class="match-cell">
                             <span class="teams">Olympique Marseille vs Toulouse</span>
                             <span class="time">21:05 • Frankrike</span>
@@ -1026,6 +1013,55 @@
                         <td>3.23</td>
                         <td class="prob-cell">41%</td>
                         <td class="edge-cell">+6.0%</td>
+                        <td class="ev-cell">+17.5%</td>
+                        <td class="stake-cell" id="stake-24">-</td>
+                        <td class="winnings-cell" id="win-24">-</td>
+                    </tr>
+
+                    <tr id="row-25" data-bet-id="25">
+                        <td><input type="checkbox" class="bet-checkbox" data-id="25" onchange="updateCalculations()"></td>
+                        <td class="match-cell">
+                            <span class="teams">Millwall vs Southampton</span>
+                            <span class="time">16:00 • England</span>
+                        </td>
+                        <td><span class="bet-tag under">Under 2.5</span></td>
+                        <td class="odds-cell">1.85</td>
+                        <td>2.20</td>
+                        <td class="prob-cell">62%</td>
+                        <td class="edge-cell">+8.1%</td>
+                        <td class="ev-cell">+15.0%</td>
+                        <td class="stake-cell" id="stake-25">-</td>
+                        <td class="winnings-cell" id="win-25">-</td>
+                    </tr>
+
+                    <tr id="row-26" data-bet-id="26">
+                        <td><input type="checkbox" class="bet-checkbox" data-id="26" onchange="updateCalculations()"></td>
+                        <td class="match-cell">
+                            <span class="teams">Olympique Marseille vs Toulouse</span>
+                            <span class="time">21:05 • Frankrike</span>
+                        </td>
+                        <td><span class="bet-tag over">Over 2.5</span></td>
+                        <td class="odds-cell">1.77</td>
+                        <td>3.23</td>
+                        <td class="prob-cell">63%</td>
+                        <td class="edge-cell">+6.2%</td>
+                        <td class="ev-cell">+11.0%</td>
+                        <td class="stake-cell" id="stake-26">-</td>
+                        <td class="winnings-cell" id="win-26">-</td>
+                    </tr>
+
+                    <tr id="row-27" data-bet-id="27">
+                        <td><input type="checkbox" class="bet-checkbox" data-id="27" onchange="updateCalculations()"></td>
+                        <td class="match-cell">
+                            <span class="teams">Millwall vs Southampton</span>
+                            <span class="time">16:00 • England</span>
+                        </td>
+                        <td><span class="bet-tag under">Under 3.5</span></td>
+                        <td class="odds-cell">1.32</td>
+                        <td>2.20</td>
+                        <td class="prob-cell">82%</td>
+                        <td class="edge-cell">+6.1%</td>
+                        <td class="ev-cell">+8.1%</td>
                         <td class="stake-cell" id="stake-27">-</td>
                         <td class="winnings-cell" id="win-27">-</td>
                     </tr>
@@ -1041,7 +1077,7 @@
     </div>
     
     <script>
-        const betsData = [{"id": 0, "home_team": "Arsenal", "away_team": "Bayern M\u00fcnchen", "date": "2025-11-26", "time": "21:00", "country": "Europa", "bet": "Over 3.5", "odds": 2.8, "model_total": 4.486043486745209, "probability": 0.6553438563819015, "edge": 0.29820099923904436, "kelly": 0.041416805449867276}, {"id": 1, "home_team": "Arsenal", "away_team": "Bayern M\u00fcnchen", "date": "2025-11-26", "time": "21:00", "country": "Europa", "bet": "Over 2.5", "odds": 1.72, "model_total": 4.486043486745209, "probability": 0.8248460236195609, "edge": 0.2434506747823516, "kelly": 0.05}, {"id": 2, "home_team": "Southampton", "away_team": "Leicester City", "date": "2025-11-25", "time": "21:00", "country": "England", "bet": "Under 2.5", "odds": 1.97, "model_total": 1.8209437036055005, "probability": 0.725006414457311, "edge": 0.21739220125934144, "kelly": 0.05}, {"id": 3, "home_team": "Southampton", "away_team": "Leicester City", "date": "2025-11-25", "time": "21:00", "country": "England", "bet": "Under 1.5", "odds": 3.7, "model_total": 1.8209437036055005, "probability": 0.4566343909997968, "edge": 0.18636412072952657, "kelly": 0.017255937104585794}, {"id": 4, "home_team": "Feyenoord", "away_team": "Celtic", "date": "2025-11-27", "time": "18:45", "country": "Europa", "bet": "Over 3.5", "odds": 2.3, "model_total": 4.203639430831355, "probability": 0.6052701764971757, "edge": 0.17048756780152352, "kelly": 0.03278607073106222}, {"id": 5, "home_team": "Southampton", "away_team": "Leicester City", "date": "2025-11-25", "time": "21:00", "country": "England", "bet": "Under 3.5", "odds": 1.35, "model_total": 1.8209437036055005, "probability": 0.8879031965702537, "edge": 0.14716245582951304, "kelly": 0.05}, {"id": 6, "home_team": "Ajax", "away_team": "Benfica", "date": "2025-11-25", "time": "18:45", "country": "Europa", "bet": "Over 3.5", "odds": 2.65, "model_total": 3.690477031047263, "probability": 0.5038573355423424, "edge": 0.1264988449763046, "kelly": 0.019166491663076456}, {"id": 7, "home_team": "Atletico Madrid", "away_team": "Inter", "date": "2025-11-26", "time": "21:00", "country": "Europa", "bet": "Over 3.5", "odds": 2.95, "model_total": 3.5079459982374495, "probability": 0.46508098583866797, "edge": 0.12609793499121036, "kelly": 0.016166401921950044}, {"id": 8, "home_team": "Arsenal", "away_team": "Bayern M\u00fcnchen", "date": "2025-11-26", "time": "21:00", "country": "Europa", "bet": "Over 1.5", "odds": 1.23, "model_total": 4.486043486745209, "probability": 0.9381990268205885, "edge": 0.12519089673928774, "kelly": 0.05}, {"id": 9, "home_team": "Feyenoord", "away_team": "Celtic", "date": "2025-11-27", "time": "18:45", "country": "Europa", "bet": "Over 2.5", "odds": 1.5, "model_total": 4.203639430831355, "probability": 0.7902429090442263, "edge": 0.12357624237755971, "kelly": 0.05}, {"id": 10, "home_team": "Atletico Madrid", "away_team": "Inter", "date": "2025-11-26", "time": "21:00", "country": "Europa", "bet": "Over 2.5", "odds": 1.77, "model_total": 3.5079459982374495, "probability": 0.6806199826866641, "edge": 0.11564823127423474, "kelly": 0.0375481270370892}, {"id": 11, "home_team": "Ajax", "away_team": "Benfica", "date": "2025-11-25", "time": "18:45", "country": "Europa", "bet": "Over 2.5", "odds": 1.65, "model_total": 3.690477031047263, "probability": 0.7129517634116249, "edge": 0.10689115735101884, "kelly": 0.04111198359654571}, {"id": 12, "home_team": "Olympiakos", "away_team": "Real Madrid", "date": "2025-11-26", "time": "21:00", "country": "Europa", "bet": "Over 3.5", "odds": 2.25, "model_total": 3.8330424308169793, "probability": 0.5332515357334037, "edge": 0.08880709128895925, "kelly": 0.01776141825779185}, {"id": 13, "home_team": "Manchester City", "away_team": "Bayer Leverkusen", "date": "2025-11-25", "time": "21:00", "country": "Europa", "bet": "Under 3.5", "odds": 1.9, "model_total": 3.154847540613112, "probability": 0.6125845701498487, "edge": 0.0862687806761645, "kelly": 0.023963550187823476}, {"id": 14, "home_team": "Millwall", "away_team": "Southampton", "date": "2025-11-29", "time": "16:00", "country": "England", "bet": "Under 2.5", "odds": 1.85, "model_total": 2.2036912829558273, "probability": 0.6217241229187374, "edge": 0.0811835823781969, "kelly": 0.02387752422888144}, {"id": 15, "home_team": "Manchester City", "away_team": "Bayer Leverkusen", "date": "2025-11-25", "time": "21:00", "country": "Europa", "bet": "Under 2.5", "odds": 3.15, "model_total": 3.154847540613112, "probability": 0.3894067654370535, "edge": 0.07194644797673605, "kelly": 0.008365866043806517}, {"id": 16, "home_team": "Olympiakos", "away_team": "Real Madrid", "date": "2025-11-26", "time": "21:00", "country": "Europa", "bet": "Over 2.5", "odds": 1.5, "model_total": 3.8330424308169793, "probability": 0.7363985545552207, "edge": 0.06973188788855411, "kelly": 0.034865943944277056}, {"id": 17, "home_team": "Atletico Madrid", "away_team": "Inter", "date": "2025-11-26", "time": "21:00", "country": "Europa", "bet": "Over 1.5", "odds": 1.25, "model_total": 3.5079459982374495, "probability": 0.8649492143421337, "edge": 0.06494921434213363, "kelly": 0.05}, {"id": 18, "home_team": "Millwall", "away_team": "Southampton", "date": "2025-11-29", "time": "16:00", "country": "England", "bet": "Under 1.5", "odds": 3.45, "model_total": 2.2036912829558273, "probability": 0.3536711996449119, "edge": 0.06381612718114377, "kelly": 0.006511849712361608}, {"id": 19, "home_team": "Olympique Marseille", "away_team": "Toulouse", "date": "2025-11-29", "time": "21:05", "country": "Frankrike", "bet": "Over 2.5", "odds": 1.77, "model_total": 3.2341183074471758, "probability": 0.6271712106572567, "edge": 0.06219945924482728, "kelly": 0.02019462962494392}, {"id": 20, "home_team": "Millwall", "away_team": "Southampton", "date": "2025-11-29", "time": "16:00", "country": "England", "bet": "Under 3.5", "odds": 1.32, "model_total": 2.2036912829558273, "probability": 0.8186260863818561, "edge": 0.06105032880609851, "kelly": 0.04769556937976445}, {"id": 21, "home_team": "Porto", "away_team": "Nice", "date": "2025-11-27", "time": "18:45", "country": "Europa", "bet": "Over 3.5", "odds": 2.8, "model_total": 3.291375315364424, "probability": 0.4177557679014011, "edge": 0.06061291075854397, "kelly": 0.008418459827575553}, {"id": 22, "home_team": "Getafe", "away_team": "Elche", "date": "2025-11-28", "time": "21:00", "country": "Spania", "bet": "Over 2.5", "odds": 2.75, "model_total": 2.3767666284701825, "probability": 0.424209547113343, "edge": 0.060573183476979375, "kelly": 0.008653311925282767}, {"id": 23, "home_team": "Olympique Marseille", "away_team": "Toulouse", "date": "2025-11-29", "time": "21:05", "country": "Frankrike", "bet": "Over 3.5", "odds": 2.9, "model_total": 3.2341183074471758, "probability": 0.4050670351309045, "edge": 0.0602394489240079, "kelly": 0.007926243279474724}, {"id": 24, "home_team": "Getafe", "away_team": "Elche", "date": "2025-11-28", "time": "21:00", "country": "Spania", "bet": "Over 1.5", "odds": 1.58, "model_total": 2.3767666284701825, "probability": 0.6864661642239356, "edge": 0.05355477181887236, "kelly": 0.0230839533702036}, {"id": 25, "home_team": "Middlesbrough", "away_team": "Coventry", "date": "2025-11-25", "time": "20:45", "country": "England", "bet": "Over 2.5", "odds": 1.87, "model_total": 3.051287844126147, "probability": 0.5882017802297255, "edge": 0.0534424219409555, "kelly": 0.015357017799125142}, {"id": 26, "home_team": "Middlesbrough", "away_team": "Coventry", "date": "2025-11-25", "time": "20:45", "country": "England", "bet": "Over 3.5", "odds": 3.2, "model_total": 3.051287844126147, "probability": 0.36425706776112055, "edge": 0.051757067761120545, "kelly": 0.005881484972854607}, {"id": 27, "home_team": "Porto", "away_team": "Nice", "date": "2025-11-27", "time": "18:45", "country": "Europa", "bet": "Over 2.5", "odds": 1.7, "model_total": 3.291375315364424, "probability": 0.6388385063623825, "edge": 0.05060321224473541, "kelly": 0.018072575801691217}];
+        const betsData = [{"id": 0, "home_team": "Arsenal", "away_team": "Bayern M\u00fcnchen", "date": "2025-11-26", "time": "21:00", "country": "Europa", "bet": "Over 3.5", "odds": 2.8, "model_total": 4.486043486745209, "probability": 0.6553438563819015, "edge": 0.29820099923904436, "ev": 0.8349627978693241, "kelly": 0.041416805449867276}, {"id": 1, "home_team": "Southampton", "away_team": "Leicester City", "date": "2025-11-25", "time": "21:00", "country": "England", "bet": "Under 1.5", "odds": 3.7, "model_total": 1.8209437036055005, "probability": 0.4566343909997968, "edge": 0.18636412072952657, "ev": 0.6895472466992483, "kelly": 0.017255937104585794}, {"id": 2, "home_team": "Southampton", "away_team": "Leicester City", "date": "2025-11-25", "time": "21:00", "country": "England", "bet": "Under 2.5", "odds": 1.97, "model_total": 1.8209437036055005, "probability": 0.725006414457311, "edge": 0.21739220125934144, "ev": 0.42826263648090257, "kelly": 0.05}, {"id": 3, "home_team": "Arsenal", "away_team": "Bayern M\u00fcnchen", "date": "2025-11-26", "time": "21:00", "country": "Europa", "bet": "Over 2.5", "odds": 1.72, "model_total": 4.486043486745209, "probability": 0.8248460236195609, "edge": 0.2434506747823516, "ev": 0.41873516062564486, "kelly": 0.05}, {"id": 4, "home_team": "Feyenoord", "away_team": "Celtic", "date": "2025-11-27", "time": "18:45", "country": "Europa", "bet": "Over 3.5", "odds": 2.3, "model_total": 4.203639430831355, "probability": 0.6052701764971757, "edge": 0.17048756780152352, "ev": 0.3921214059435041, "kelly": 0.03278607073106222}, {"id": 5, "home_team": "Atletico Madrid", "away_team": "Inter", "date": "2025-11-26", "time": "21:00", "country": "Europa", "bet": "Over 3.5", "odds": 2.95, "model_total": 3.5079459982374495, "probability": 0.46508098583866797, "edge": 0.12609793499121036, "ev": 0.3719889082240706, "kelly": 0.016166401921950044}, {"id": 6, "home_team": "Ajax", "away_team": "Benfica", "date": "2025-11-25", "time": "18:45", "country": "Europa", "bet": "Over 3.5", "odds": 2.65, "model_total": 3.690477031047263, "probability": 0.5038573355423424, "edge": 0.1264988449763046, "ev": 0.3352219391872071, "kelly": 0.019166491663076456}, {"id": 7, "home_team": "Manchester City", "away_team": "Bayer Leverkusen", "date": "2025-11-25", "time": "21:00", "country": "Europa", "bet": "Under 2.5", "odds": 3.15, "model_total": 3.154847540613112, "probability": 0.3894067654370535, "edge": 0.07194644797673605, "ev": 0.22663131112671842, "kelly": 0.008365866043806517}, {"id": 8, "home_team": "Millwall", "away_team": "Southampton", "date": "2025-11-29", "time": "16:00", "country": "England", "bet": "Under 1.5", "odds": 3.45, "model_total": 2.2036912829558273, "probability": 0.3536711996449119, "edge": 0.06381612718114377, "ev": 0.220165638774946, "kelly": 0.006511849712361608}, {"id": 9, "home_team": "Atletico Madrid", "away_team": "Inter", "date": "2025-11-26", "time": "21:00", "country": "Europa", "bet": "Over 2.5", "odds": 1.77, "model_total": 3.5079459982374495, "probability": 0.6806199826866641, "edge": 0.11564823127423474, "ev": 0.2046973693553955, "kelly": 0.0375481270370892}, {"id": 10, "home_team": "Olympiakos", "away_team": "Real Madrid", "date": "2025-11-26", "time": "21:00", "country": "Europa", "bet": "Over 3.5", "odds": 2.25, "model_total": 3.8330424308169793, "probability": 0.5332515357334037, "edge": 0.08880709128895925, "ev": 0.19981595540015817, "kelly": 0.01776141825779185}, {"id": 11, "home_team": "Southampton", "away_team": "Leicester City", "date": "2025-11-25", "time": "21:00", "country": "England", "bet": "Under 3.5", "odds": 1.35, "model_total": 1.8209437036055005, "probability": 0.8879031965702537, "edge": 0.14716245582951304, "ev": 0.19866931536984267, "kelly": 0.05}, {"id": 12, "home_team": "Feyenoord", "away_team": "Celtic", "date": "2025-11-27", "time": "18:45", "country": "Europa", "bet": "Over 2.5", "odds": 1.5, "model_total": 4.203639430831355, "probability": 0.7902429090442263, "edge": 0.12357624237755971, "ev": 0.18536436356633956, "kelly": 0.05}, {"id": 13, "home_team": "Ajax", "away_team": "Benfica", "date": "2025-11-25", "time": "18:45", "country": "Europa", "bet": "Over 2.5", "odds": 1.65, "model_total": 3.690477031047263, "probability": 0.7129517634116249, "edge": 0.10689115735101884, "ev": 0.17637040962918116, "kelly": 0.04111198359654571}, {"id": 14, "home_team": "Olympique Marseille", "away_team": "Toulouse", "date": "2025-11-29", "time": "21:05", "country": "Frankrike", "bet": "Over 3.5", "odds": 2.9, "model_total": 3.2341183074471758, "probability": 0.4050670351309045, "edge": 0.0602394489240079, "ev": 0.17469440187962304, "kelly": 0.007926243279474724}, {"id": 15, "home_team": "Porto", "away_team": "Nice", "date": "2025-11-27", "time": "18:45", "country": "Europa", "bet": "Over 3.5", "odds": 2.8, "model_total": 3.291375315364424, "probability": 0.4177557679014011, "edge": 0.06061291075854397, "ev": 0.16971615012392305, "kelly": 0.008418459827575553}, {"id": 16, "home_team": "Getafe", "away_team": "Elche", "date": "2025-11-28", "time": "21:00", "country": "Spania", "bet": "Over 2.5", "odds": 2.75, "model_total": 2.3767666284701825, "probability": 0.424209547113343, "edge": 0.060573183476979375, "ev": 0.16657625456169334, "kelly": 0.008653311925282767}, {"id": 17, "home_team": "Middlesbrough", "away_team": "Coventry", "date": "2025-11-25", "time": "20:45", "country": "England", "bet": "Over 3.5", "odds": 3.2, "model_total": 3.051287844126147, "probability": 0.36425706776112055, "edge": 0.051757067761120545, "ev": 0.16562261683558588, "kelly": 0.005881484972854607}, {"id": 18, "home_team": "Manchester City", "away_team": "Bayer Leverkusen", "date": "2025-11-25", "time": "21:00", "country": "Europa", "bet": "Under 3.5", "odds": 1.9, "model_total": 3.154847540613112, "probability": 0.6125845701498487, "edge": 0.0862687806761645, "ev": 0.16391068328471237, "kelly": 0.023963550187823476}, {"id": 19, "home_team": "Arsenal", "away_team": "Bayern M\u00fcnchen", "date": "2025-11-26", "time": "21:00", "country": "Europa", "bet": "Over 1.5", "odds": 1.23, "model_total": 4.486043486745209, "probability": 0.9381990268205885, "edge": 0.12519089673928774, "ev": 0.15398480298932382, "kelly": 0.05}, {"id": 20, "home_team": "Millwall", "away_team": "Southampton", "date": "2025-11-29", "time": "16:00", "country": "England", "bet": "Under 2.5", "odds": 1.85, "model_total": 2.2036912829558273, "probability": 0.6217241229187374, "edge": 0.0811835823781969, "ev": 0.15018962739966413, "kelly": 0.02387752422888144}, {"id": 21, "home_team": "Olympique Marseille", "away_team": "Toulouse", "date": "2025-11-29", "time": "21:05", "country": "Frankrike", "bet": "Over 2.5", "odds": 1.77, "model_total": 3.2341183074471758, "probability": 0.6271712106572567, "edge": 0.06219945924482728, "ev": 0.11009304286334443, "kelly": 0.02019462962494392}, {"id": 22, "home_team": "Olympiakos", "away_team": "Real Madrid", "date": "2025-11-26", "time": "21:00", "country": "Europa", "bet": "Over 2.5", "odds": 1.5, "model_total": 3.8330424308169793, "probability": 0.7363985545552207, "edge": 0.06973188788855411, "ev": 0.10459783183283111, "kelly": 0.034865943944277056}, {"id": 23, "home_team": "Middlesbrough", "away_team": "Coventry", "date": "2025-11-25", "time": "20:45", "country": "England", "bet": "Over 2.5", "odds": 1.87, "model_total": 3.051287844126147, "probability": 0.5882017802297255, "edge": 0.0534424219409555, "ev": 0.09993732902958663, "kelly": 0.015357017799125142}, {"id": 24, "home_team": "Porto", "away_team": "Nice", "date": "2025-11-27", "time": "18:45", "country": "Europa", "bet": "Over 2.5", "odds": 1.7, "model_total": 3.291375315364424, "probability": 0.6388385063623825, "edge": 0.05060321224473541, "ev": 0.08602546081605023, "kelly": 0.018072575801691217}, {"id": 25, "home_team": "Getafe", "away_team": "Elche", "date": "2025-11-28", "time": "21:00", "country": "Spania", "bet": "Over 1.5", "odds": 1.58, "model_total": 2.3767666284701825, "probability": 0.6864661642239356, "edge": 0.05355477181887236, "ev": 0.08461653947381831, "kelly": 0.0230839533702036}, {"id": 26, "home_team": "Atletico Madrid", "away_team": "Inter", "date": "2025-11-26", "time": "21:00", "country": "Europa", "bet": "Over 1.5", "odds": 1.25, "model_total": 3.5079459982374495, "probability": 0.8649492143421337, "edge": 0.06494921434213363, "ev": 0.08118651792766718, "kelly": 0.05}, {"id": 27, "home_team": "Millwall", "away_team": "Southampton", "date": "2025-11-29", "time": "16:00", "country": "England", "bet": "Under 3.5", "odds": 1.32, "model_total": 2.2036912829558273, "probability": 0.8186260863818561, "edge": 0.06105032880609851, "ev": 0.08058643402405008, "kelly": 0.04769556937976445}];
         
         function updateCalculations() {
             const totalBet = parseFloat(document.getElementById('totalBet').value) || 0;
