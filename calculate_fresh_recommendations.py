@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 from joblib import load
 from scipy.stats import poisson
+from pathlib import Path
 
 # Load models
 home_model = load('models/home_poisson.joblib')
@@ -12,8 +13,18 @@ away_model = load('models/away_poisson.joblib')
 with open('models/features.txt', 'r') as f:
     features = [line.strip() for line in f if line.strip()]
 
-# Load the historical dataset to get team stats
-dataset = pd.read_csv('data/processed/match_dataset.csv', parse_dates=['Date'], low_memory=False)
+# Separate xG features (may not be available for all teams)
+xg_features = [f for f in features if 'xg' in f.lower()]
+core_features = [f for f in features if 'xg' not in f.lower()]
+
+# Load the historical dataset to get team stats (prefer xG-enhanced if available)
+xg_dataset_path = Path('data/processed/match_dataset_with_xg.csv')
+std_dataset_path = Path('data/processed/match_dataset.csv')
+
+if xg_dataset_path.exists():
+    dataset = pd.read_csv(xg_dataset_path, parse_dates=['Date'], low_memory=False)
+else:
+    dataset = pd.read_csv(std_dataset_path, parse_dates=['Date'], low_memory=False)
 dataset = dataset.sort_values('Date')
 
 # Build indices for quick team lookups
@@ -32,7 +43,16 @@ def get_team_avg_features(team_name, is_home=True, n_matches=5):
             matches = dataset[(dataset['league_code'] == league) & (dataset['AwayTeam'] == team_name)]
         
         if len(matches) >= 3:  # Need at least 3 matches for reliability
-            return matches.tail(n_matches)[features].mean(), league
+            # Get available features (handle missing xG columns)
+            available_features = [f for f in features if f in matches.columns]
+            result = matches.tail(n_matches)[available_features].mean()
+            
+            # Fill missing xG features with 0
+            for f in features:
+                if f not in result.index:
+                    result[f] = 0.0
+            
+            return result[features], league  # Return in correct order
     
     return None, None
 

@@ -34,10 +34,19 @@ def assign_splits(df: pd.DataFrame, cfg: AppConfig) -> pd.Series:
 
 
 def load_dataset(cfg: AppConfig) -> pd.DataFrame:
+    # Prefer xG-enhanced dataset if available
+    xg_dataset_path = cfg.processed_dir / "match_dataset_with_xg.csv"
     dataset_path = cfg.processed_dir / "match_dataset.csv"
-    if not dataset_path.exists():
+    
+    if xg_dataset_path.exists():
+        print(f"Loading xG-enhanced dataset from {xg_dataset_path.name}")
+        df = pd.read_csv(xg_dataset_path, parse_dates=["Date"], low_memory=False)
+    elif dataset_path.exists():
+        print(f"Loading standard dataset from {dataset_path.name}")
+        df = pd.read_csv(dataset_path, parse_dates=["Date"], low_memory=False)
+    else:
         raise FileNotFoundError("Processed dataset not found. Run prepare_dataset first.")
-    df = pd.read_csv(dataset_path, parse_dates=["Date"], low_memory=False)
+    
     df["season_code"] = df["season_code"].astype(str)
     return df
 
@@ -56,6 +65,9 @@ def select_feature_columns(df: pd.DataFrame) -> List[str]:
             candidates.append(col)
         # League-specific averages
         elif col.startswith("league_avg_"):
+            candidates.append(col)
+        # xG features (if available)
+        elif col.startswith("home_avg_xg_") or col.startswith("away_avg_xg_"):
             candidates.append(col)
         # Match count features
         elif col in {
@@ -123,7 +135,23 @@ def main() -> None:
     cfg = get_config()
     data = load_dataset(cfg)
     feature_columns = select_feature_columns(data)
-    data = data.dropna(subset=feature_columns)
+    
+    # Separate xG features (may have many NaNs) from core features
+    xg_features = [c for c in feature_columns if 'xg' in c.lower()]
+    core_features = [c for c in feature_columns if 'xg' not in c.lower()]
+    
+    print(f"Total features: {len(feature_columns)} (core: {len(core_features)}, xG: {len(xg_features)})")
+    
+    # Drop rows missing core features
+    data = data.dropna(subset=core_features)
+    
+    # Fill xG features with 0 (will have no effect if model learns they're missing)
+    # or use league averages
+    for col in xg_features:
+        if col in data.columns:
+            data[col] = data[col].fillna(0)
+    
+    print(f"Dataset size after cleaning: {len(data)}")
 
     data["dataset_split"] = assign_splits(data, cfg)
     train_df = data[data["dataset_split"] == "train"]

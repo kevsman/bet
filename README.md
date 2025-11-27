@@ -44,6 +44,14 @@ Both commands will:
 5. Calculate value bets
 6. Generate HTML report (`betting_report.html`)
 
+### Optional: Fetch xG Data (Recommended for Improved Predictions)
+
+```bash
+python fetch_xg_data.py --source understat --seasons 2023 2024
+```
+
+This fetches expected goals (xG) data from Understat for the top 5 leagues. xG measures shot quality and is a powerful predictor of future scoring.
+
 ---
 
 ## Models
@@ -64,10 +72,12 @@ Both commands will:
 
 **Features Used**:
 
--   Rolling 5-game averages: goals scored, goals conceded, shots, shots on target, corners
+-   Rolling averages (3, 5, 10 games): goals scored, goals conceded, total shots, shots on target, corners
 -   Exponential moving averages (EMA) for recency weighting
+-   Shot quality metrics: conversion rate (goals/shots), accuracy (SOT/shots)
 -   League-specific scoring averages
 -   Match count tracking
+-   **xG data** (optional): Expected goals from Understat for top 5 leagues
 
 **Training**: ~4 seasons of historical data per league
 

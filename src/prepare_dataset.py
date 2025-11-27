@@ -17,8 +17,10 @@ REQUIRED_COLUMNS = [
 ]
 
 OPTIONAL_COLUMNS = [
+    "HS", "AS",    # Total Shots
     "HST", "AST",  # Shots on Target
     "HC", "AC",    # Corners
+    "HF", "AF",    # Fouls
 ]
 
 
@@ -72,10 +74,14 @@ def build_team_level(df: pd.DataFrame) -> pd.DataFrame:
     records = []
     for _, row in df.iterrows():
         # Extract optional stats with defaults
+        hs = row.get("HS", np.nan)   # Total shots
+        as_ = row.get("AS", np.nan)  # Total shots (away)
         hst = row.get("HST", np.nan)
         ast = row.get("AST", np.nan)
         hc = row.get("HC", np.nan)
         ac = row.get("AC", np.nan)
+        hf = row.get("HF", np.nan)   # Fouls
+        af = row.get("AF", np.nan)
         
         records.append(
             {
@@ -86,10 +92,14 @@ def build_team_level(df: pd.DataFrame) -> pd.DataFrame:
                 "date": row["Date"],
                 "goals_for": row["FTHG"],
                 "goals_against": row["FTAG"],
+                "shots_for": hs,
+                "shots_against": as_,
                 "shots_on_target_for": hst,
                 "shots_on_target_against": ast,
                 "corners_for": hc,
                 "corners_against": ac,
+                "fouls_for": hf,
+                "fouls_against": af,
                 "league_code": row["league_code"],
                 "season_code": row["season_code"],
             }
@@ -103,10 +113,14 @@ def build_team_level(df: pd.DataFrame) -> pd.DataFrame:
                 "date": row["Date"],
                 "goals_for": row["FTAG"],
                 "goals_against": row["FTHG"],
+                "shots_for": as_,
+                "shots_against": hs,
                 "shots_on_target_for": ast,
                 "shots_on_target_against": hst,
                 "corners_for": ac,
                 "corners_against": hc,
+                "fouls_for": af,
+                "fouls_against": hf,
                 "league_code": row["league_code"],
                 "season_code": row["season_code"],
             }
@@ -115,6 +129,12 @@ def build_team_level(df: pd.DataFrame) -> pd.DataFrame:
     team_df.sort_values("date", inplace=True)
     team_df["matches_played"] = team_df.groupby("team").cumcount()
     team_df["goal_diff"] = team_df["goals_for"] - team_df["goals_against"]
+    
+    # Derived features: conversion rate, shot accuracy
+    team_df["shot_conversion"] = team_df["goals_for"] / team_df["shots_for"].replace(0, np.nan)
+    team_df["shot_accuracy"] = team_df["shots_on_target_for"] / team_df["shots_for"].replace(0, np.nan)
+    team_df["opp_shot_conversion"] = team_df["goals_against"] / team_df["shots_against"].replace(0, np.nan)
+    
     return team_df
 
 
@@ -133,11 +153,18 @@ def add_form_features(team_df: pd.DataFrame, windows: List[int]) -> pd.DataFrame
     grouped_against = df.groupby("team")["goals_against"]
     grouped_diff = df.groupby("team")["goal_diff"]
     
-    # New stats groups
+    # Shot stats groups
+    grouped_shots_for = df.groupby("team")["shots_for"]
+    grouped_shots_against = df.groupby("team")["shots_against"]
     grouped_sot_for = df.groupby("team")["shots_on_target_for"]
     grouped_sot_against = df.groupby("team")["shots_on_target_against"]
     grouped_corners_for = df.groupby("team")["corners_for"]
     grouped_corners_against = df.groupby("team")["corners_against"]
+    
+    # Derived stats groups
+    grouped_conversion = df.groupby("team")["shot_conversion"]
+    grouped_accuracy = df.groupby("team")["shot_accuracy"]
+    grouped_opp_conversion = df.groupby("team")["opp_shot_conversion"]
 
     for window in windows:
         # Goals - standard rolling average
@@ -159,6 +186,14 @@ def add_form_features(team_df: pd.DataFrame, windows: List[int]) -> pd.DataFrame
             lambda s, w=window: s.shift(1).ewm(span=w, min_periods=1).mean()
         )
         
+        # Total Shots (NEW)
+        df[f"avg_shots_for_{window}"] = grouped_shots_for.transform(
+            lambda s, w=window: s.shift(1).rolling(w, min_periods=1).mean()
+        )
+        df[f"avg_shots_against_{window}"] = grouped_shots_against.transform(
+            lambda s, w=window: s.shift(1).rolling(w, min_periods=1).mean()
+        )
+        
         # Shots on Target
         df[f"avg_sot_for_{window}"] = grouped_sot_for.transform(
             lambda s, w=window: s.shift(1).rolling(w, min_periods=1).mean()
@@ -174,9 +209,24 @@ def add_form_features(team_df: pd.DataFrame, windows: List[int]) -> pd.DataFrame
         df[f"avg_corners_against_{window}"] = grouped_corners_against.transform(
             lambda s, w=window: s.shift(1).rolling(w, min_periods=1).mean()
         )
+        
+        # Shot quality metrics (NEW - derived features)
+        df[f"avg_conversion_{window}"] = grouped_conversion.transform(
+            lambda s, w=window: s.shift(1).rolling(w, min_periods=1).mean()
+        )
+        df[f"avg_accuracy_{window}"] = grouped_accuracy.transform(
+            lambda s, w=window: s.shift(1).rolling(w, min_periods=1).mean()
+        )
+        df[f"avg_opp_conversion_{window}"] = grouped_opp_conversion.transform(
+            lambda s, w=window: s.shift(1).rolling(w, min_periods=1).mean()
+        )
 
     df["recent_goals_for"] = grouped_for.transform(lambda s: s.shift(1).rolling(5, min_periods=1).sum())
     df["recent_goals_against"] = grouped_against.transform(
+        lambda s: s.shift(1).rolling(5, min_periods=1).sum()
+    )
+    df["recent_shots_for"] = grouped_shots_for.transform(lambda s: s.shift(1).rolling(5, min_periods=1).sum())
+    df["recent_shots_against"] = grouped_shots_against.transform(
         lambda s: s.shift(1).rolling(5, min_periods=1).sum()
     )
     return df
@@ -190,11 +240,15 @@ def wide_features(team_df: pd.DataFrame, prefix: str) -> pd.DataFrame:
         "goal_diff",
         "recent_goals_for",
         "recent_goals_against",
+        "recent_shots_for",
+        "recent_shots_against",
     ] + [col for col in team_df.columns if any(col.startswith(key) for key in [
         "avg_for_", "avg_against_", "avg_diff_",
         "ema_for_", "ema_against_",  # Exponentially weighted averages
+        "avg_shots_for_", "avg_shots_against_",  # Total shots (NEW)
         "avg_sot_for_", "avg_sot_against_",
-        "avg_corners_for_", "avg_corners_against_"
+        "avg_corners_for_", "avg_corners_against_",
+        "avg_conversion_", "avg_accuracy_", "avg_opp_conversion_",  # Shot quality (NEW)
     ])]
     subset = team_df.loc[:, columns_to_keep]
     renamed = subset.add_prefix(prefix + "_")

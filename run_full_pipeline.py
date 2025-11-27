@@ -5,6 +5,7 @@ Full betting pipeline - runs everything from data fetch to report generation.
 DOMESTIC LEAGUES PIPELINE (default):
 1. Download latest results from football-data.co.uk
 2. Prepare the dataset with rolling averages
+2b. Fetch xG data from Understat (top 5 leagues)
 3. Train the Poisson regression models
 4. Scrape Norsk Tipping odds (via Selenium)
 5. Calculate value bets using the trained model
@@ -21,6 +22,7 @@ Usage:
     python run_full_pipeline.py              # Run domestic leagues pipeline
     python run_full_pipeline.py --european   # Run European competitions pipeline
     python run_full_pipeline.py -e           # Short flag for European
+    python run_full_pipeline.py --no-xg      # Skip xG data fetching
 """
 
 import subprocess
@@ -65,6 +67,35 @@ def step2_prepare_dataset():
     """Prepare the dataset with rolling averages."""
     from src.prepare_dataset import main as prepare_main
     prepare_main()
+
+
+def step2b_fetch_xg_data():
+    """Fetch xG data from Understat and merge with dataset."""
+    from fetch_xg_data import fetch_and_integrate_xg
+    
+    # Get current year to determine seasons
+    current_year = datetime.now().year
+    current_month = datetime.now().month
+    
+    # Football seasons span two calendar years (e.g., 2024-25 season)
+    # If we're in Jan-July, current season started previous year
+    if current_month <= 7:
+        current_season_start = current_year - 1
+    else:
+        current_season_start = current_year
+    
+    # Fetch last 3 seasons of xG data
+    seasons = [current_season_start - 2, current_season_start - 1, current_season_start]
+    print(f"Fetching xG data for seasons: {seasons}")
+    
+    try:
+        result_df = fetch_and_integrate_xg(seasons=seasons)
+        if result_df is not None:
+            print(f"xG data integrated: {len(result_df)} matches with xG features")
+        return result_df
+    except Exception as e:
+        print(f"Warning: xG fetch failed ({e}), continuing with core features only")
+        return None
 
 
 def step3_train_models():
@@ -493,6 +524,7 @@ def main():
                         help="Run European competitions pipeline (UCL/UEL/UECL)")
     parser.add_argument("--no-download", action="store_true", help="Skip downloading latest results")
     parser.add_argument("--no-train", action="store_true", help="Skip model training")
+    parser.add_argument("--no-xg", action="store_true", help="Skip xG data fetching")
     parser.add_argument("--no-scrape", action="store_true", help="Skip odds scraping")
     parser.add_argument("--force-scrape", action="store_true", help="Force scrape even if recent")
     parser.add_argument("--headless", action="store_true", default=True, help="Run browser in headless mode")
@@ -527,6 +559,12 @@ def main():
             run_step("Prepare Dataset", step2_prepare_dataset)
         else:
             print("\n[Skipping dataset preparation]")
+        
+        # Step 2b: Fetch xG data (optional enhancement)
+        if not args.no_train and not args.no_xg:
+            run_step("Fetch xG Data", step2b_fetch_xg_data)
+        elif args.no_xg:
+            print("\n[Skipping xG data fetch]")
         
         # Step 3: Train models
         if not args.no_train:
