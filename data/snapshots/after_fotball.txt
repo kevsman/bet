@@ -10,27 +10,31 @@ Resultatservice
 Statistikksenter
 Alle Sporter
 Fotball
-255
+296
 Ishockey
-32
+15
 Håndball
-21
+16
+Golf
+1
+Alpint
+1
+Langrenn
+3
 Skiskyting
 4
 Formel 1
 5
 Amerikansk fotball
-19
-Bandy
-6
+84
 Basketball
-14
+2
 Snooker
-20
-Curling
-5
-Counter-Strike
 8
+Curling
+10
+Counter-Strike
+4
 Dota 2
 14
 Underholdning
@@ -73,388 +77,13 @@ Begge lag scorer
 Uavgjort tilbakebetales
 1. omgang - HUB
 Europa
-Champions League
-(18)
-Tir. 25/11 18:45
-Ajax
-Benfica
-Internasjonal Klubb - UEFA Champions League
-TV2 Play
-TOTALT ANTALL MÅL - OVER/UNDER 1.5
-Over 1.5
-1.20
-Under 1.5
-4.20
-TOTALT ANTALL MÅL - OVER/UNDER 2.5
-Over 2.5
-1.65
-Under 2.5
-2.15
-TOTALT ANTALL MÅL - OVER/UNDER 3.5
-Over 3.5
-2.65
-Under 3.5
-1.45
-+142
-Tir. 25/11 18:45
-Galatasaray
-Union St Gilloise
-Internasjonal Klubb - UEFA Champions League
-TV2 Play
-TOTALT ANTALL MÅL - OVER/UNDER 1.5
-Over 1.5
-1.15
-Under 1.5
-4.90
-TOTALT ANTALL MÅL - OVER/UNDER 2.5
-Over 2.5
-1.52
-Under 2.5
-2.45
-TOTALT ANTALL MÅL - OVER/UNDER 3.5
-Over 3.5
-2.30
-Under 3.5
-1.58
-+143
-Tir. 25/11 21:00
-Manchester City
-Bayer Leverkusen
-Internasjonal Klubb - UEFA Champions League
-TV2 Play
-TOTALT ANTALL MÅL - OVER/UNDER 1.5
-Over 1.5
-1.08
-Under 1.5
-6.80
-TOTALT ANTALL MÅL - OVER/UNDER 2.5
-Over 2.5
-1.33
-Under 2.5
-3.15
-TOTALT ANTALL MÅL - OVER/UNDER 3.5
-Over 3.5
-1.85
-Under 3.5
-1.90
-+140
-Tir. 25/11 21:00
-Napoli
-FK Qarabag
-Internasjonal Klubb - UEFA Champions League
-TV2 Play
-TOTALT ANTALL MÅL - OVER/UNDER 1.5
-Over 1.5
-1.13
-Under 1.5
-5.50
-TOTALT ANTALL MÅL - OVER/UNDER 2.5
-Over 2.5
-1.45
-Under 2.5
-2.65
-TOTALT ANTALL MÅL - OVER/UNDER 3.5
-Over 3.5
-2.15
-Under 3.5
-1.65
-+143
-Tir. 25/11 21:00
-Marseille
-Newcastle United
-Internasjonal Klubb - UEFA Champions League
-TV2 Sport 1
-TOTALT ANTALL MÅL - OVER/UNDER 1.5
-Over 1.5
-1.23
-Under 1.5
-3.90
-TOTALT ANTALL MÅL - OVER/UNDER 2.5
-Over 2.5
-1.72
-Under 2.5
-2.05
-TOTALT ANTALL MÅL - OVER/UNDER 3.5
-Over 3.5
-2.80
-Under 3.5
-1.40
-+140
-Tir. 25/11 21:00
-Bodø/Glimt
-Juventus
-Internasjonal Klubb - UEFA Champions League
-TV2 Play
-TOTALT ANTALL MÅL - OVER/UNDER 1.5
-Over 1.5
-1.18
-Under 1.5
-4.50
-TOTALT ANTALL MÅL - OVER/UNDER 2.5
-Over 2.5
-1.60
-Under 2.5
-2.25
-TOTALT ANTALL MÅL - OVER/UNDER 3.5
-Over 3.5
-2.50
-Under 3.5
-1.50
-+102
-Tir. 25/11 21:00
-Borussia Dortmund
-Villarreal
-Internasjonal Klubb - UEFA Champions League
-TV2 Sport Premium 1
-TOTALT ANTALL MÅL - OVER/UNDER 1.5
-Over 1.5
-1.18
-Under 1.5
-4.50
-TOTALT ANTALL MÅL - OVER/UNDER 2.5
-Over 2.5
-1.60
-Under 2.5
-2.25
-TOTALT ANTALL MÅL - OVER/UNDER 3.5
-Over 3.5
-2.55
-Under 3.5
-1.48
-+142
-Tir. 25/11 21:00
-Slavia Praha
-Athletic Club Bilbao
-Internasjonal Klubb - UEFA Champions League
-TV2 Play
-TOTALT ANTALL MÅL - OVER/UNDER 1.5
-Over 1.5
-1.30
-Under 1.5
-3.30
-TOTALT ANTALL MÅL - OVER/UNDER 2.5
-Over 2.5
-1.92
-Under 2.5
-1.82
-TOTALT ANTALL MÅL - OVER/UNDER 3.5
-Over 3.5
-3.30
-Under 3.5
-1.30
-+141
-Tir. 25/11 21:00
-Chelsea
-Barcelona
-Internasjonal Klubb - UEFA Champions League
-TV2 Play
-TOTALT ANTALL MÅL - OVER/UNDER 1.5
-Over 1.5
-1.11
-Under 1.5
-5.80
-TOTALT ANTALL MÅL - OVER/UNDER 2.5
-Over 2.5
-1.40
-Under 2.5
-2.80
-TOTALT ANTALL MÅL - OVER/UNDER 3.5
-Over 3.5
-2.00
-Under 3.5
-1.75
-+143
-Ons. 26/11 18:45
-Pafos FC
-AS Monaco
-Internasjonal Klubb - UEFA Champions League
-TV2 Play
-TOTALT ANTALL MÅL - OVER/UNDER 1.5
-Over 1.5
-1.18
-Under 1.5
-4.50
-TOTALT ANTALL MÅL - OVER/UNDER 2.5
-Over 2.5
-1.62
-Under 2.5
-2.20
-TOTALT ANTALL MÅL - OVER/UNDER 3.5
-Over 3.5
-2.55
-Under 3.5
-1.48
-+142
-Ons. 26/11 18:45
-FC København
-Kairat Almaty
-Internasjonal Klubb - UEFA Champions League
-TV2 Sport Premium 1
-TOTALT ANTALL MÅL - OVER/UNDER 1.5
-Over 1.5
-1.15
-Under 1.5
-5.00
-TOTALT ANTALL MÅL - OVER/UNDER 2.5
-Over 2.5
-1.52
-Under 2.5
-2.45
-TOTALT ANTALL MÅL - OVER/UNDER 3.5
-Over 3.5
-2.30
-Under 3.5
-1.58
-+143
-Ons. 26/11 21:00
-Olympiakos
-Real Madrid
-Internasjonal Klubb - UEFA Champions League
-TV2 Sport 1
-TOTALT ANTALL MÅL - OVER/UNDER 1.5
-Over 1.5
-1.14
-Under 1.5
-5.10
-TOTALT ANTALL MÅL - OVER/UNDER 2.5
-Over 2.5
-1.50
-Under 2.5
-2.50
-TOTALT ANTALL MÅL - OVER/UNDER 3.5
-Over 3.5
-2.25
-Under 3.5
-1.60
-+143
-Ons. 26/11 21:00
-Arsenal
-Bayern München
-Internasjonal Klubb - UEFA Champions League
-TV2 Play
-TOTALT ANTALL MÅL - OVER/UNDER 1.5
-Over 1.5
-1.23
-Under 1.5
-3.90
-TOTALT ANTALL MÅL - OVER/UNDER 2.5
-Over 2.5
-1.72
-Under 2.5
-2.05
-TOTALT ANTALL MÅL - OVER/UNDER 3.5
-Over 3.5
-2.80
-Under 3.5
-1.40
-+142
-Ons. 26/11 21:00
-Eintracht Frankfurt
-Atalanta BC
-Internasjonal Klubb - UEFA Champions League
-TV2 Play
-TOTALT ANTALL MÅL - OVER/UNDER 1.5
-Over 1.5
-1.18
-Under 1.5
-4.50
-TOTALT ANTALL MÅL - OVER/UNDER 2.5
-Over 2.5
-1.60
-Under 2.5
-2.25
-TOTALT ANTALL MÅL - OVER/UNDER 3.5
-Over 3.5
-2.50
-Under 3.5
-1.50
-+142
-Ons. 26/11 21:00
-Atletico Madrid
-Inter
-Internasjonal Klubb - UEFA Champions League
-TV2 Play
-TOTALT ANTALL MÅL - OVER/UNDER 1.5
-Over 1.5
-1.25
-Under 1.5
-3.70
-TOTALT ANTALL MÅL - OVER/UNDER 2.5
-Over 2.5
-1.77
-Under 2.5
-1.97
-TOTALT ANTALL MÅL - OVER/UNDER 3.5
-Over 3.5
-2.95
-Under 3.5
-1.37
-+125
-Ons. 26/11 21:00
-Paris Saint Germain
-Tottenham Hotspur
-Internasjonal Klubb - UEFA Champions League
-TV2 Play
-TOTALT ANTALL MÅL - OVER/UNDER 1.5
-Over 1.5
-1.14
-Under 1.5
-5.20
-TOTALT ANTALL MÅL - OVER/UNDER 2.5
-Over 2.5
-1.48
-Under 2.5
-2.55
-TOTALT ANTALL MÅL - OVER/UNDER 3.5
-Over 3.5
-2.20
-Under 3.5
-1.62
-+143
-Ons. 26/11 21:00
-Liverpool
-PSV Eindhoven
-Internasjonal Klubb - UEFA Champions League
-TV2 Play
-TOTALT ANTALL MÅL - OVER/UNDER 1.5
-Over 1.5
-1.07
-Under 1.5
-7.35
-TOTALT ANTALL MÅL - OVER/UNDER 2.5
-Over 2.5
-1.28
-Under 2.5
-3.45
-TOTALT ANTALL MÅL - OVER/UNDER 3.5
-Over 3.5
-1.77
-Under 3.5
-1.97
-+143
-Ons. 26/11 21:00
-Sporting CP
-Club Brugge
-Internasjonal Klubb - UEFA Champions League
-TV2 Play
-TOTALT ANTALL MÅL - OVER/UNDER 1.5
-Over 1.5
-1.15
-Under 1.5
-5.00
-TOTALT ANTALL MÅL - OVER/UNDER 2.5
-Over 2.5
-1.52
-Under 2.5
-2.45
-TOTALT ANTALL MÅL - OVER/UNDER 3.5
-Over 3.5
-2.30
-Under 3.5
-1.58
-+143
 Spesialer
-(2)
+(1)
+Tor. 27/11 18:44
+Europa League-spesialer
+UEFA Europa League
+Vsport1
+Vis odds
 Europa Conference League
 (18)
 Uefa Europa League
@@ -463,25 +92,33 @@ Uefa Champions League Vinnerspill
 (1)
 Uefa Europa League Vinnerspill
 (1)
+Uefa Women'S Nations League
+(2)
 England
 Norge
 Spania
+Sør-Amerika
 Internasjonal
 Tyskland
 Italia
 Frankrike
-Asia
-Argentina
 Australia
 Belgia
 Brasil
 Danmark
-Egypt
-England Kvinner Og Lavere Divisjoner
+Japan
+Kroatia
+Mexico
 Nederland
+Paraguay
+Polen
 Portugal
 Skottland
+Slovenia
 Sverige
 Sveits
-Sør-Afrika
+Sør-Korea
+Tsjekkia
 Tyrkia
+Usa
+Østerrike

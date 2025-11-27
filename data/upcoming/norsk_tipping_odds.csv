@@ -1,180 +1,173 @@
 date,time,home_team,away_team,league,country,home_odds,draw_odds,away_odds,over_1_5,under_1_5,over_2_5,under_2_5,over_3_5,under_3_5
-2025-11-25,18:45,Ajax,Benfica,Internasjonal Klubb - UEFA Champions League,Europa,,,,1.2,4.2,1.65,2.15,2.65,1.45
-2025-11-25,18:45,Galatasaray,Union St Gilloise,Internasjonal Klubb - UEFA Champions League,Europa,,,,1.15,4.9,1.52,2.45,2.3,1.58
-2025-11-25,21:00,Manchester City,Bayer Leverkusen,Internasjonal Klubb - UEFA Champions League,Europa,,,,1.08,6.8,1.33,3.15,1.85,1.9
-2025-11-25,21:00,Napoli,FK Qarabag,Internasjonal Klubb - UEFA Champions League,Europa,,,,1.13,5.5,1.45,2.65,2.15,1.65
-2025-11-25,21:00,Marseille,Newcastle United,Internasjonal Klubb - UEFA Champions League,Europa,,,,1.23,3.9,1.72,2.05,2.8,1.4
-2025-11-25,21:00,Bodø/Glimt,Juventus,Internasjonal Klubb - UEFA Champions League,Europa,,,,1.18,4.5,1.6,2.25,2.5,1.5
-2025-11-25,21:00,Borussia Dortmund,Villarreal,Internasjonal Klubb - UEFA Champions League,Europa,,,,1.18,4.5,1.6,2.25,2.55,1.48
-2025-11-25,21:00,Slavia Praha,Athletic Club Bilbao,Internasjonal Klubb - UEFA Champions League,Europa,,,,1.3,3.3,1.92,1.82,3.3,1.3
-2025-11-25,21:00,Chelsea,Barcelona,Internasjonal Klubb - UEFA Champions League,Europa,,,,1.11,5.8,1.4,2.8,2.0,1.75
-2025-11-26,18:45,Pafos FC,AS Monaco,Internasjonal Klubb - UEFA Champions League,Europa,,,,1.18,4.5,1.62,2.2,2.55,1.48
-2025-11-26,18:45,FC København,Kairat Almaty,Internasjonal Klubb - UEFA Champions League,Europa,,,,1.15,5.0,1.52,2.45,2.3,1.58
-2025-11-26,21:00,Olympiakos,Real Madrid,Internasjonal Klubb - UEFA Champions League,Europa,,,,1.14,5.1,1.5,2.5,2.25,1.6
-2025-11-26,21:00,Arsenal,Bayern München,Internasjonal Klubb - UEFA Champions League,Europa,,,,1.23,3.9,1.72,2.05,2.8,1.4
-2025-11-26,21:00,Eintracht Frankfurt,Atalanta BC,Internasjonal Klubb - UEFA Champions League,Europa,,,,1.18,4.5,1.6,2.25,2.5,1.5
-2025-11-26,21:00,Atletico Madrid,Inter,Internasjonal Klubb - UEFA Champions League,Europa,,,,1.25,3.7,1.77,1.97,2.95,1.37
-2025-11-26,21:00,Paris Saint Germain,Tottenham Hotspur,Internasjonal Klubb - UEFA Champions League,Europa,,,,1.14,5.2,1.48,2.55,2.2,1.62
-2025-11-26,21:00,Liverpool,PSV Eindhoven,Internasjonal Klubb - UEFA Champions League,Europa,,,,1.07,7.35,1.28,3.45,1.77,1.97
-2025-11-26,21:00,Sporting CP,Club Brugge,Europa Conference League,Europa,,,,1.15,5.0,1.52,2.45,2.3,1.58
-2025-11-27,18:45,AZ Alkmaar,Shelbourne,UEFA Conference League - Europe,Europa,,,,,,,,,
-2025-11-27,18:45,SK Sigma Olomouc,NK Celje,UEFA Conference League - Europe,Europa,,,,,,,,,
-2025-11-27,18:45,Lech Poznan,Lausanne,UEFA Conference League - Europe,Europa,,,,,,,,,
-2025-11-27,18:45,Omonia Nicosia,Dinamo Kyiv,UEFA Conference League - Europe,Europa,,,,,,,,,
-2025-11-27,18:45,CS Universitatea Craiova,Mainz 05,UEFA Conference League - Europe,Europa,,,,,,,,,
-2025-11-27,18:45,Zrinjski Mostar,Häcken,UEFA Conference League - Europe,Europa,,,,,,,,,
-2025-11-27,18:45,Slovan Bratislava,Rayo Vallecano,UEFA Conference League - Europe,Europa,,,,,,,,,
-2025-11-27,18:45,Hamrun Spartans,Lincoln Red Imps FC,UEFA Conference League - Europe,Europa,,,,,,,,,
-2025-11-27,18:45,KS Rakow Czestochowa,Rapid Wien,UEFA Conference League - Europe,Europa,,,,,,,,,
-2025-11-27,21:00,Legia Warszawa,Sparta Praha,UEFA Conference League - Europe,Europa,,,,,,,,,
-2025-11-27,21:00,KF Drita,Shkendija,UEFA Conference League - Europe,Europa,,,,,,,,,
-2025-11-27,21:00,Fiorentina,AEK Athens,UEFA Conference League - Europe,Europa,,,,,,,,,
-2025-11-27,21:00,Strasbourg,Crystal Palace,UEFA Conference League - Europe,Europa,,,,,,,,,
-2025-11-27,21:00,Jagiellonia Bialystok,KuPS,UEFA Conference League - Europe,Europa,,,,,,,,,
-2025-11-27,21:00,Shamrock Rovers,Shakhtar Donetsk,UEFA Conference League - Europe,Europa,,,,,,,,,
-2025-11-27,21:00,Breidablik,Samsunspor,UEFA Conference League - Europe,Europa,,,,,,,,,
-2025-11-27,21:00,HNK Rijeka,AEK Larnaca,UEFA Conference League - Europe,Europa,,,,,,,,,
-2025-11-27,21:00,Aberdeen,FC Noah,Uefa Europa League,Europa,,,,,,,,,
+2025-11-27,18:44,Europa League-spesialer,UEFA Europa League,Europa Conference League,Europa,,,,,,,,,
+2025-11-27,18:45,AZ Alkmaar,Shelbourne,UEFA Conference League - Europe,Europa,,,,1.09,5.4,1.37,2.7,1.97,1.7
+2025-11-27,18:45,SK Sigma Olomouc,NK Celje,UEFA Conference League - Europe,Europa,,,,1.25,3.3,1.82,1.82,3.15,1.28
+2025-11-27,18:45,Lech Poznan,Lausanne,UEFA Conference League - Europe,Europa,,,,1.1,5.2,1.4,2.6,2.05,1.62
+2025-11-27,18:45,Omonia Nicosia,Dinamo Kyiv,UEFA Conference League - Europe,Europa,,,,1.25,3.35,1.8,1.85,3.0,1.3
+2025-11-27,18:45,CS Universitatea Craiova,Mainz 05,UEFA Conference League - Europe,Europa,,,,1.23,3.5,1.75,1.9,2.85,1.33
+2025-11-27,18:45,Zrinjski Mostar,Häcken,UEFA Conference League - Europe,Europa,,,,1.25,3.35,1.8,1.85,3.0,1.3
+2025-11-27,18:45,Slovan Bratislava,Rayo Vallecano,UEFA Conference League - Europe,Europa,,,,1.2,3.75,1.67,2.0,2.65,1.38
+2025-11-27,18:45,Hamrun Spartans,Lincoln Red Imps FC,UEFA Conference League - Europe,Europa,,,,1.23,3.5,1.72,1.92,2.85,1.33
+2025-11-27,18:45,KS Rakow Czestochowa,Rapid Wien,UEFA Conference League - Europe,Europa,,,,1.28,3.15,1.9,1.75,3.25,1.27
+2025-11-27,21:00,Legia Warszawa,Sparta Praha,UEFA Conference League - Europe,Europa,,,,1.25,3.3,1.82,1.82,3.1,1.28
+2025-11-27,21:00,KF Drita,Shkendija,UEFA Conference League - Europe,Europa,,,,1.42,2.55,2.25,1.52,4.2,1.16
+2025-11-27,21:00,Fiorentina,AEK Athens,UEFA Conference League - Europe,Europa,,,,1.27,3.25,1.85,1.8,3.1,1.28
+2025-11-27,21:00,Strasbourg,Crystal Palace,UEFA Conference League - Europe,Europa,,,,1.27,3.25,1.82,1.82,3.1,1.28
+2025-11-27,21:00,Jagiellonia Bialystok,KuPS,UEFA Conference League - Europe,Europa,,,,1.12,4.9,1.43,2.5,2.05,1.62
+2025-11-27,21:00,Shamrock Rovers,Shakhtar Donetsk,UEFA Conference League - Europe,Europa,,,,1.2,3.7,1.7,1.95,2.8,1.35
+2025-11-27,21:00,Breidablik,Samsunspor,UEFA Conference League - Europe,Europa,,,,1.17,4.1,1.58,2.15,2.45,1.45
+2025-11-27,21:00,HNK Rijeka,AEK Larnaca,UEFA Conference League - Europe,Europa,,,,1.32,2.95,1.97,1.7,3.5,1.23
+2025-11-27,21:00,Aberdeen,FC Noah Yerevan,Uefa Europa League,Europa,,,,1.25,3.35,1.8,1.85,3.0,1.3
 2025-11-27,18:45,Feyenoord,Celtic,Internasjonal Klubb - UEFA Europa League,Europa,,,,1.14,4.5,1.5,2.3,2.3,1.5
-2025-11-27,18:45,Viktoria Plzen,Freiburg,Internasjonal Klubb - UEFA Europa League,Europa,,,,1.3,3.0,1.92,1.72,3.35,1.25
-2025-11-27,18:45,PAOK,Brann,Internasjonal Klubb - UEFA Europa League,Europa,,,,1.14,4.1,1.52,2.15,2.3,1.45
-2025-11-27,18:45,Porto,Nice,Internasjonal Klubb - UEFA Europa League,Europa,,,,1.2,3.75,1.7,1.95,2.8,1.35
+2025-11-27,18:45,Viktoria Plzen,Freiburg,Internasjonal Klubb - UEFA Europa League,Europa,,,,1.28,3.15,1.9,1.75,3.3,1.25
+2025-11-27,18:45,PAOK,Brann,Internasjonal Klubb - UEFA Europa League,Europa,,,,1.18,4.5,1.6,2.25,2.5,1.5
+2025-11-27,18:45,Porto,Nice,Internasjonal Klubb - UEFA Europa League,Europa,,,,1.2,3.75,1.67,2.0,2.7,1.37
 2025-11-27,18:45,Ludogorets 1947,Celta Vigo,Internasjonal Klubb - UEFA Europa League,Europa,,,,1.28,3.15,1.87,1.77,3.2,1.27
-2025-11-27,18:45,Fenerbahce,Ferencvaros,Internasjonal Klubb - UEFA Europa League,Europa,,,,1.17,4.1,1.58,2.15,2.45,1.45
+2025-11-27,18:45,Fenerbahce Istanbul,Ferencvaros,Internasjonal Klubb - UEFA Europa League,Europa,,,,1.17,4.1,1.58,2.15,2.45,1.45
 2025-11-27,18:45,Lille,Dinamo Zagreb,Internasjonal Klubb - UEFA Europa League,Europa,,,,1.17,4.1,1.58,2.15,2.45,1.45
-2025-11-27,18:45,Roma,FC Midtjylland,Internasjonal Klubb - UEFA Europa League,Europa,,,,1.16,4.2,1.55,2.2,2.4,1.47
-2025-11-27,18:45,Aston Villa,Young Boys,Internasjonal Klubb - UEFA Europa League,Europa,,,,1.07,5.9,1.33,2.85,1.9,1.75
-2025-11-27,21:00,Panathinaikos,Sturm Graz,Internasjonal Klubb - UEFA Europa League,Europa,,,,1.25,3.4,1.77,1.87,2.9,1.32
+2025-11-27,18:45,Roma,FC Midtjylland,Internasjonal Klubb - UEFA Europa League,Europa,,,,1.17,4.1,1.58,2.15,2.45,1.45
+2025-11-27,18:45,Aston Villa,Young Boys,Internasjonal Klubb - UEFA Europa League,Europa,,,,1.08,5.8,1.33,2.85,1.9,1.75
+2025-11-27,21:00,Panathinaikos,Sturm Graz,Internasjonal Klubb - UEFA Europa League,Europa,,,,1.23,3.5,1.75,1.9,2.85,1.33
 2025-11-27,21:00,Real Betis,FC Utrecht,Internasjonal Klubb - UEFA Europa League,Europa,,,,1.18,4.0,1.6,2.1,2.55,1.42
-2025-11-27,21:00,Røde Stjerne,FCSB,Internasjonal Klubb - UEFA Europa League,Europa,,,,1.18,3.95,1.62,2.05,2.6,1.4
-2025-11-27,21:00,Maccabi Tel Aviv,Lyon,Internasjonal Klubb - UEFA Europa League,Europa,,,,1.23,3.5,1.72,1.92,2.9,1.32
-2025-11-27,21:00,Nottingham Forest,Malmö FF,Internasjonal Klubb - UEFA Europa League,Europa,,,,1.13,4.6,1.48,2.35,2.25,1.52
-2025-11-27,21:00,Go Ahead Eagles,Stuttgart,Internasjonal Klubb - UEFA Europa League,Europa,,,,1.14,4.5,1.5,2.3,2.25,1.52
-2025-11-27,21:00,Rangers,Braga,Internasjonal Klubb - UEFA Europa League,Europa,,,,1.27,3.2,1.87,1.77,3.15,1.28
+2025-11-27,21:00,Røde Stjerne,FCSB,Internasjonal Klubb - UEFA Europa League,Europa,,,,1.17,4.1,1.58,2.15,2.5,1.43
+2025-11-27,21:00,Maccabi Tel Aviv,Lyon,Internasjonal Klubb - UEFA Europa League,Europa,,,,1.23,3.45,1.77,1.87,2.95,1.32
+2025-11-27,21:00,Nottingham Forest,Malmö FF,Internasjonal Klubb - UEFA Europa League,Europa,,,,1.14,4.5,1.5,2.3,2.3,1.5
+2025-11-27,21:00,Go Ahead Eagles,Stuttgart,Internasjonal Klubb - UEFA Europa League,Europa,,,,1.11,5.0,1.43,2.5,2.1,1.6
+2025-11-27,21:00,Rangers,Braga,Internasjonal Klubb - UEFA Europa League,Europa,,,,1.25,3.3,1.82,1.82,3.1,1.28
 2025-11-27,21:00,Bologna,Red Bull Salzburg,Internasjonal Klubb - UEFA Europa League,Europa,,,,1.2,3.85,1.65,2.0,2.65,1.38
-2025-11-27,21:00,Genk,FC Basel,Uefa Europa League Vinnerspill,Europa,,,,1.16,4.2,1.55,2.2,2.35,1.48
-2025-11-29,16:00,Brentford,Burnley,England - Premier League,England,,,,1.25,3.7,1.8,1.95,3.05,1.35
-2025-11-29,16:00,Sunderland,Bournemouth,England - Premier League,England,,,,1.3,3.3,1.92,1.82,3.3,1.3
+2025-11-27,21:00,Genk,FC Basel,Uefa Europa League Vinnerspill,Europa,,,,1.16,4.2,1.55,2.2,2.4,1.47
+2025-11-29,16:00,Sunderland,Bournemouth,England - Premier League,England,,,,1.32,3.25,1.95,1.8,3.4,1.28
 2025-11-29,16:00,Manchester City,Leeds United,Vsport Premier League,England,,,,1.15,5.0,1.52,2.45,2.35,1.55
-2025-11-29,18:30,Everton,Newcastle United,Vsport Premier League,England,,,,1.33,3.15,2.0,1.75,3.45,1.28
+2025-11-29,16:00,Brentford,Burnley,England - Premier League,England,,,,1.23,3.8,1.77,1.97,3.0,1.35
+2025-11-29,18:30,Everton,Newcastle United,Vsport Premier League,England,,,,1.32,3.25,1.95,1.8,3.4,1.28
 2025-11-29,21:00,Tottenham Hotspur,Fulham,Vsport Premier League,England,,,,1.28,3.45,1.9,1.85,3.2,1.32
-2025-11-30,13:00,Crystal Palace,Manchester United,England - Premier League,England,,,,1.22,4.0,1.7,2.1,2.75,1.42
-2025-11-30,15:05,Aston Villa,Wolverhampton Wanderers,England - Premier League,England,,,,,,,,,
-2025-11-30,15:05,West Ham United,Liverpool,Vsport Premier League,England,,,,,,,,,
-2025-11-30,15:05,Nottingham Forest,Brighton and Hove Albion,England - Premier League,England,,,,,,,,,
-2025-11-30,17:30,Chelsea,Arsenal,Vsport Premier League,England,,,,,,,,,
-2025-12-02,20:30,Fulham,Manchester City,England - Premier League,England,,,,,,,,,
+2025-11-30,13:00,Crystal Palace,Manchester United,England - Premier League,England,,,,1.23,3.9,1.72,2.05,2.8,1.4
+2025-11-30,15:05,Nottingham Forest,Brighton and Hove Albion,England - Premier League,England,,,,1.28,3.45,1.87,1.87,3.2,1.32
+2025-11-30,15:05,Aston Villa,Wolverhampton Wanderers,England - Premier League,England,,,,1.25,3.7,1.8,1.95,3.05,1.35
+2025-11-30,15:05,West Ham United,Liverpool,Vsport Premier League,England,,,,1.15,5.0,1.52,2.45,2.3,1.58
+2025-11-30,17:30,Chelsea,Arsenal,Vsport Premier League,England,,,,1.3,3.3,1.92,1.82,3.3,1.3
 2025-12-02,20:30,Bournemouth,Everton,England - Premier League,England,,,,,,,,,
-2025-12-02,21:15,Newcastle United,Tottenham Hotspur,Championship,England,,,,,,,,,
-2025-11-25,20:45,Stoke City,Charlton Athletic,England - Championship,England,,,,1.32,3.25,1.97,1.77,3.45,1.28
-2025-11-25,20:45,Middlesbrough,Coventry,England - Championship,England,,,,1.28,3.45,1.87,1.87,3.2,1.32
-2025-11-25,20:45,Watford,Preston,England - Championship,England,,,,1.37,2.95,2.1,1.67,3.9,1.23
-2025-11-25,20:45,Hull City,Ipswich Town,England - Championship,England,,,,1.23,3.8,1.75,2.0,2.9,1.38
-2025-11-25,20:45,Norwich City,Oxford United,England - Championship,England,,,,1.27,3.6,1.82,1.92,3.1,1.33
-2025-11-25,20:45,Swansea City,Derby County,England - Championship,England,,,,1.45,2.6,2.4,1.52,4.5,1.18
-2025-11-25,21:00,Southampton,Leicester City,England - Championship,England,,,,1.25,3.7,1.77,1.97,3.0,1.35
-2025-11-26,20:45,Sheffield United,Portsmouth,England - Championship,England,,,,1.3,3.3,1.92,1.82,3.3,1.3
-2025-11-26,20:45,Wrexham,Bristol City,England - Championship,England,,,,1.33,3.15,2.0,1.75,3.55,1.27
-2025-11-26,20:45,Millwall,Sheffield Wednesday,England - Championship,England,,,,1.32,3.25,1.97,1.77,3.45,1.28
-2025-11-26,20:45,Blackburn Rovers,Queens Park Rangers,England - Championship,England,,,,1.33,3.15,2.0,1.75,3.55,1.27
-2025-11-26,21:00,West Bromwich,Birmingham City,England - Championship,England,,,,1.45,2.65,2.35,1.55,4.5,1.18
-2025-11-28,21:00,Oxford United,Ipswich Town,England - Championship,England,,,,1.28,3.5,1.87,1.87,3.15,1.33
-2025-11-29,13:30,Portsmouth,Bristol City,England - Championship,England,,,,1.33,3.15,2.0,1.75,3.55,1.27
-2025-11-29,13:30,Stoke City,Hull City,England - Championship,England,,,,1.23,3.8,1.75,2.0,2.9,1.38
-2025-11-29,13:30,Leicester City,Sheffield United,England - Championship,England,,,,1.33,3.15,2.0,1.75,3.55,1.27
-2025-11-29,16:00,Sheffield Wednesday,Preston,England - Championship,England,,,,1.33,3.15,2.0,1.75,3.55,1.27
+2025-12-02,20:30,Fulham,Manchester City,England - Premier League,England,,,,,,,,,
+2025-12-02,21:15,Newcastle United,Tottenham Hotspur,England - Premier League,England,,,,,,,,,
+2025-12-03,20:30,Arsenal,Brentford,England - Premier League,England,,,,,,,,,
+2025-12-03,20:30,Wolverhampton Wanderers,Nottingham Forest,England - Premier League,England,,,,,,,,,
+2025-12-03,20:30,Brighton and Hove Albion,Aston Villa,England - Premier League,England,,,,,,,,,
+2025-12-03,20:30,Burnley,Crystal Palace,England - Premier League,England,,,,,,,,,
+2025-12-03,21:15,Leeds United,Chelsea,England - Premier League,England,,,,,,,,,
+2025-12-03,21:15,Liverpool,Sunderland,England - Premier League,England,,,,,,,,,
+2025-12-04,21:00,Manchester United,West Ham United,Championship,England,,,,,,,,,
+2025-11-28,21:00,Oxford United,Ipswich Town,England - Championship,England,,,,1.28,3.5,1.87,1.87,3.2,1.32
+2025-11-29,13:30,Stoke City,Hull City,England - Championship,England,,,,1.23,3.8,1.77,1.97,2.9,1.38
+2025-11-29,13:30,Portsmouth,Bristol City,England - Championship,England,,,,1.3,3.3,1.95,1.8,3.45,1.28
+2025-11-29,13:30,Leicester City,Sheffield United,England - Championship,England,,,,1.3,3.3,1.92,1.82,3.3,1.3
+2025-11-29,16:00,West Bromwich,Swansea City,England - Championship,England,,,,1.35,3.05,2.1,1.7,3.75,1.25
+2025-11-29,16:00,Norwich City,Queens Park Rangers,England - Championship,England,,,,1.25,3.65,1.82,1.92,3.05,1.35
+2025-11-29,16:00,Wrexham,Blackburn Rovers,England - Championship,England,,,,1.33,3.1,2.05,1.72,3.65,1.25
+2025-11-29,16:00,Millwall,Southampton,England - Championship,England,,,,1.3,3.3,1.92,1.82,3.3,1.3
 2025-11-29,16:00,Coventry,Charlton Athletic,England - Championship,England,,,,1.22,4.1,1.67,2.1,2.75,1.42
-2025-11-29,16:00,Millwall,Southampton,England - Championship,England,,,,1.28,3.45,1.9,1.85,3.2,1.32
-2025-11-29,16:00,Norwich City,Queens Park Rangers,England - Championship,England,,,,1.25,3.7,1.77,1.97,2.95,1.37
-2025-11-29,16:00,Wrexham,Blackburn Rovers,England - Championship,England,,,,1.37,2.95,2.1,1.67,3.9,1.23
+2025-11-29,16:00,Sheffield Wednesday,Preston,England - Championship,England,,,,1.35,3.05,2.1,1.7,3.7,1.25
 2025-11-29,16:00,Middlesbrough,Derby County,England - Championship,England,,,,1.33,3.1,2.05,1.72,3.7,1.25
-2025-11-29,16:00,West Bromwich,Swansea City,England - Championship,England,,,,1.4,2.8,2.2,1.62,4.1,1.22
-2025-12-01,21:00,Birmingham City,Watford,League One,England,,,,,,,,,
-2025-11-25,20:45,Luton Town,Huddersfield Town,England - League One,England,,,,1.3,3.05,1.95,1.72,3.35,1.27
-2025-11-25,20:45,Peterborough United,Stevenage,England - League One,England,,,,1.35,2.85,2.1,1.62,3.65,1.22
-2025-11-29,13:30,Stockport County FC,Barnsley FC,England - League One,England,,,,,,,,,
-2025-11-29,13:30,Blackpool FC,Reading,England - League One,England,,,,,,,,,
-2025-11-29,16:00,Burton Albion,Leyton Orient,England - League One,England,,,,,,,,,
-2025-11-29,16:00,Doncaster Rovers,Peterborough United,England - League One,England,,,,,,,,,
-2025-11-29,16:00,Luton Town,Bolton Wanderers,England - League One,England,,,,,,,,,
-2025-11-29,16:00,Plymouth Argyle,Northampton Town,England - League One,England,,,,,,,,,
-2025-11-29,16:00,Wigan Athletic,Stevenage,England - League One,England,,,,,,,,,
-2025-11-29,16:00,Bradford City FC,Exeter City,England - League One,England,,,,,,,,,
-2025-11-29,16:00,Huddersfield Town,AFC Wimbledon,England - League One,England,,,,,,,,,
-2025-11-29,16:00,Cardiff City,Mansfield Town,England - League One,England,,,,,,,,,
-2025-11-29,16:00,Rotherham United,Wycombe Wanderers,England - League One,England,,,,,,,,,
-2025-11-29,16:00,Lincoln City,Port Vale,League Two,England,,,,,,,,,
-2025-11-27,21:00,Grimsby Town,Tranmere Rovers FC,England - League Two,England,,,,1.25,3.45,1.8,1.87,2.9,1.35
-2025-11-29,13:30,Accrington Stanley,Oldham Athletic,England - League Two,England,,,,,,,,,
-2025-11-29,13:30,Milton Keynes Dons,Fleetwood Town,England - League Two,England,,,,,,,,,
-2025-11-29,16:00,Colchester United,Cheltenham Town,England - League Two,England,,,,,,,,,
-2025-11-29,16:00,Shrewsbury Town,Gillingham,England - League Two,England,,,,,,,,,
-2025-11-29,16:00,Barnet FC,Harrogate Town,England - League Two,England,,,,,,,,,
-2025-11-29,16:00,Newport County,Barrow AFC,England - League Two,England,,,,,,,,,
-2025-11-29,16:00,Walsall FC,Bromley FC,England - League Two,England,,,,,,,,,
-2025-11-29,16:00,Chesterfield FC,Swindon Town,England - League Two,England,,,,,,,,,
-2025-11-29,16:00,Bristol Rovers,Notts County,England - League Two,England,,,,,,,,,
-2025-11-29,16:00,Cambridge United,Crewe Alexandra,England - League Two,England,,,,,,,,,
-2025-11-29,16:00,Salford City,Crawley Town,England Premier League Vinnerspill,England,,,,,,,,,
+2025-12-01,21:00,Birmingham City,Watford,League One,England,,,,1.33,3.15,2.0,1.75,3.55,1.27
+2025-11-29,13:30,Stockport County FC,Barnsley FC,England - League One,England,,,,1.2,3.95,1.65,2.1,2.55,1.45
+2025-11-29,13:30,Blackpool FC,Reading,England - League One,England,,,,1.27,3.3,1.85,1.82,3.05,1.32
+2025-11-29,16:00,Cardiff City,Mansfield Town,England - League One,England,,,,1.22,3.8,1.67,2.0,2.65,1.4
+2025-11-29,16:00,Huddersfield Town,AFC Wimbledon,England - League One,England,,,,1.3,3.2,1.9,1.77,3.2,1.3
+2025-11-29,16:00,Lincoln City,Port Vale,England - League One,England,,,,1.35,2.85,2.1,1.65,3.6,1.22
+2025-11-29,16:00,Bradford City FC,Exeter City,England - League One,England,,,,1.25,3.4,1.8,1.87,2.95,1.32
+2025-11-29,16:00,Rotherham United,Wycombe Wanderers,England - League One,England,,,,1.3,3.05,1.95,1.72,3.35,1.27
+2025-11-29,16:00,Doncaster Rovers,Peterborough United,England - League One,England,,,,1.25,3.5,1.77,1.9,2.85,1.35
+2025-11-29,16:00,Luton Town,Bolton Wanderers,England - League One,England,,,,1.27,3.3,1.85,1.82,3.1,1.3
+2025-11-29,16:00,Plymouth Argyle,Northampton Town,England - League One,England,,,,1.32,3.0,2.0,1.7,3.4,1.25
+2025-11-29,16:00,Wigan Athletic,Stevenage,England - League One,England,,,,1.47,2.4,2.45,1.47,,32.0
+2025-11-29,16:00,Burton Albion,Leyton Orient,League Two,England,,,,1.22,3.7,1.72,2.0,2.7,1.4
+2025-11-27,21:00,Grimsby Town,Tranmere Rovers FC,England - League Two,England,,,,1.25,3.55,1.77,1.92,2.85,1.35
+2025-11-29,13:30,Accrington Stanley,Oldham Athletic,England - League Two,England,,,,1.35,2.9,2.05,1.67,3.55,1.25
+2025-11-29,13:30,Milton Keynes Dons,Fleetwood Town,England - League Two,England,,,,1.25,3.45,1.8,1.87,2.9,1.35
+2025-11-29,16:00,Colchester United,Cheltenham Town,England - League Two,England,,,,1.25,3.45,1.8,1.87,2.95,1.35
+2025-11-29,16:00,Shrewsbury Town,Gillingham,England - League Two,England,,,,1.37,2.8,2.1,1.62,3.7,1.22
+2025-11-29,16:00,Barnet FC,Harrogate Town,England - League Two,England,,,,1.18,4.1,1.6,2.15,2.45,1.47
+2025-11-29,16:00,Newport County,Barrow AFC,England - League Two,England,,,,1.32,3.0,2.0,1.7,3.4,1.25
+2025-11-29,16:00,Walsall FC,Bromley FC,England - League Two,England,,,,1.35,2.9,2.05,1.65,3.55,1.25
+2025-11-29,16:00,Chesterfield FC,Swindon Town,England - League Two,England,,,,1.22,3.6,1.72,1.95,2.8,1.37
+2025-11-29,16:00,Bristol Rovers,Notts County,England - League Two,England,,,,1.27,3.25,1.87,1.8,3.1,1.3
+2025-11-29,16:00,Cambridge United,Crewe Alexandra,England - League Two,England,,,,1.37,2.8,2.15,1.6,3.75,1.22
+2025-11-29,16:00,Salford City,Crawley Town,England Premier League Vinnerspill,England,,,,1.17,4.3,1.55,2.25,2.35,1.52
 2026-05-24,02:00,England Premier League 25/26,England - Premier League,,England,,,,,,,,,
-2025-11-28,21:00,Getafe,Elche,,Spania,,,,1.58,2.3,2.75,1.42,5.4,1.13
+2025-11-28,21:00,Getafe,Elche,,Spania,,,,1.55,2.35,2.7,1.43,5.4,1.13
 2025-11-29,14:00,Mallorca,Osasuna,,Spania,,,,1.45,2.65,2.35,1.55,4.5,1.18
-2025-11-29,16:15,Barcelona,Alaves,,Spania,,,,1.1,6.3,1.37,2.95,1.95,1.8
-2025-11-29,18:30,Levante,Athletic Club Bilbao,,Spania,,,,1.33,3.1,2.05,1.72,3.65,1.25
-2025-11-29,21:00,Atletico Madrid,Real Oviedo,,Spania,,,,1.2,4.2,1.65,2.15,2.6,1.45
-2025-11-30,14:00,Real Sociedad,Villarreal,,Spania,,,,,,,,,
-2025-11-30,16:15,Sevilla,Real Betis,,Spania,,,,,,,,,
-2025-11-30,18:30,Celta Vigo,Espanyol,,Spania,,,,,,,,,
-2025-11-30,21:00,Girona,Real Madrid,,Spania,,,,,,,,,
-2025-12-01,21:00,Rayo Vallecano,Valencia,La Liga 2,Spania,,,,,,,,,
-2025-11-28,20:30,Gijon,FC Andorra,La Liga Vinnerspill,Spania,,,,1.32,2.95,2.0,1.67,3.45,1.23
+2025-11-29,16:15,Barcelona,Alaves,,Spania,,,,1.09,6.6,1.35,3.05,1.92,1.82
+2025-11-29,18:30,Levante,Athletic Club Bilbao,,Spania,,,,1.33,3.15,2.0,1.75,3.65,1.25
+2025-11-29,21:00,Atletico Madrid,Real Oviedo,,Spania,,,,1.2,4.3,1.62,2.2,2.55,1.47
+2025-11-30,14:00,Real Sociedad,Villarreal,,Spania,,,,1.25,3.65,1.82,1.92,3.05,1.35
+2025-11-30,16:15,Sevilla,Real Betis,,Spania,,,,1.3,3.3,1.95,1.8,3.45,1.28
+2025-11-30,18:30,Celta Vigo,Espanyol,,Spania,,,,1.28,3.45,1.9,1.85,3.2,1.32
+2025-11-30,21:00,Girona,Real Madrid,,Spania,,,,1.1,6.2,1.38,2.9,1.97,1.77
+2025-12-01,21:00,Rayo Vallecano,Valencia,,Spania,,,,1.33,3.15,2.05,1.72,3.6,1.27
+2025-12-02,21:00,Barcelona,Atletico Madrid,,Spania,,,,,,,,,
+2025-12-03,19:00,Athletic Club Bilbao,Real Madrid,La Liga 2,Spania,,,,,,,,,
+2025-11-28,20:30,Gijon,FC Andorra,,Spania,,,,1.32,2.95,2.0,1.67,3.4,1.25
+2025-11-29,14:00,Ceuta,Burgos,,Spania,,,,1.48,2.35,2.5,1.43,4.7,1.13
+2025-11-29,16:15,CD Leonesa,Granada,,Spania,,,,1.37,2.7,2.15,1.58,3.75,1.2
+2025-11-29,18:30,Albacete,Deportivo La Coruna,,Spania,,,,1.25,3.35,1.8,1.85,2.95,1.32
+2025-11-29,18:30,Almeria,Huesca,,Spania,,,,1.33,2.85,2.0,1.65,3.65,1.22
+2025-11-29,21:00,Real Valladolid,Malaga,,Spania,,,,1.32,2.95,2.0,1.67,3.5,1.23
+2025-11-30,14:00,Real Zaragoza,Leganes,,Spania,,,,1.47,2.4,2.45,1.45,4.6,1.13
+2025-11-30,16:15,Racing Santander,Eibar,,Spania,,,,1.23,3.45,1.77,1.87,2.9,1.32
+2025-11-30,18:30,Mirandes,Real Sociedad B,,Spania,,,,1.35,2.75,2.1,1.6,3.75,1.2
+2025-11-30,18:30,Cordoba,Cadiz,,Spania,,,,1.28,3.15,1.87,1.77,3.2,1.27
+2025-11-30,21:00,Castellon,Las Palmas,La Liga Vinnerspill,Spania,,,,1.27,3.25,1.82,1.82,3.05,1.3
 2026-05-24,02:00,Spania LaLiga 25/26,Spania - LaLiga,,Spania,,,,,,,,,
 2025-11-28,20:30,Borussia Mönchengladbach,RB Leipzig,Tyskland - Bundesliga,Tyskland,,,,1.12,5.3,1.42,2.65,2.05,1.7
 2025-11-29,15:30,Werder Bremen,FC Köln,Tyskland - Bundesliga,Tyskland,,,,1.15,4.7,1.52,2.4,2.25,1.57
-2025-11-29,15:30,Bayern München,FC St. Pauli,Tyskland - Bundesliga,Tyskland,,,,1.07,7.0,1.25,3.5,1.67,2.1
+2025-11-29,15:30,Bayern München,FC St. Pauli,Tyskland - Bundesliga,Tyskland,,,,1.07,7.0,1.25,3.55,1.65,2.1
 2025-11-29,15:30,TSG Hoffenheim,Augsburg,Tyskland - Bundesliga,Tyskland,,,,1.17,4.6,1.52,2.35,2.3,1.55
-2025-11-29,15:30,Union Berlin,1. FC Heidenheim,Tyskland - Bundesliga,Tyskland,,,,1.27,3.4,1.85,1.85,3.05,1.32
+2025-11-29,15:30,Union Berlin,1. FC Heidenheim,Tyskland - Bundesliga,Tyskland,,,,1.27,3.45,1.85,1.87,3.05,1.32
 2025-11-29,18:30,Bayer Leverkusen,Borussia Dortmund,Tyskland - Bundesliga,Tyskland,,,,1.17,4.6,1.55,2.3,2.3,1.55
-2025-11-30,15:30,Hamburger SV,VfB Stuttgart,Tyskland - Bundesliga,Tyskland,,,,,,,,,2.0
-2025-11-30,17:30,Eintracht Frankfurt,VfL Wolfsburg,Tyskland - Bundesliga,Tyskland,,,,,,,,,2.0
-2025-11-30,19:30,Freiburg,FSV Mainz,2. Bundesliga,Tyskland,,,,,,,,,2.0
-2025-11-28,18:30,Hannover 96,Karlsruher SC,2. Bundesliga - Germany,Tyskland,,,,,,,,,
-2025-11-28,18:30,Schalke 04,SC Paderborn,2. Bundesliga - Germany,Tyskland,,,,,,,,,
-2025-11-29,13:00,Eintracht Braunschweig,1 FC Kaiserslautern,2. Bundesliga - Germany,Tyskland,,,,,,,,,
-2025-11-29,13:00,Holstein Kiel,Hertha Berlin,2. Bundesliga - Germany,Tyskland,,,,,,,,,
-2025-11-29,13:00,Greuther Fürth,VfL Bochum,2. Bundesliga - Germany,Tyskland,,,,,,,,,
-2025-11-29,20:30,1. FC Magdeburg,1. FC Nürnberg,2. Bundesliga - Germany,Tyskland,,,,,,,,,
-2025-11-28,20:45,Como 1907,Sassuolo Calcio,Serie A - Italy,Italia,,,,1.3,3.3,1.9,1.8,3.2,1.3
+2025-11-30,15:30,Hamburger SV,VfB Stuttgart,Tyskland - Bundesliga,Tyskland,,,,1.15,4.7,1.52,2.4,2.25,1.57
+2025-11-30,17:30,Eintracht Frankfurt,VfL Wolfsburg,Tyskland - Bundesliga,Tyskland,,,,1.13,5.1,1.45,2.55,2.1,1.65
+2025-11-30,19:30,Freiburg,FSV Mainz,2. Bundesliga,Tyskland,,,,1.3,3.25,1.92,1.77,3.25,1.3
+2025-11-28,18:30,Hannover 96,Karlsruher SC,2. Bundesliga - Germany,Tyskland,,,,,,1.52,2.35,2.25,1.55
+2025-11-28,18:30,Schalke 04,SC Paderborn,2. Bundesliga - Germany,Tyskland,,,,1.27,3.25,1.9,1.77,3.15,1.3
+2025-11-29,13:00,Eintracht Braunschweig,1 FC Kaiserslautern,2. Bundesliga - Germany,Tyskland,,,,1.18,4.1,1.6,2.15,2.45,1.47
+2025-11-29,13:00,Holstein Kiel,Hertha Berlin,2. Bundesliga - Germany,Tyskland,,,,1.22,3.7,1.7,2.0,2.7,1.4
+2025-11-29,13:00,Greuther Fürth,VfL Bochum,2. Bundesliga - Germany,Tyskland,,,,,,1.52,2.3,2.25,1.55
+2025-11-29,20:30,1. FC Magdeburg,1. FC Nürnberg,2. Bundesliga - Germany,Tyskland,,,,1.17,4.2,1.57,2.2,2.4,1.5
+2025-11-30,13:30,Arminia Bielefeld,SC Preussen 06 Munster,2. Bundesliga - Germany,Tyskland,,,,,,,,,
+2025-11-30,13:30,Dynamo Dresden,Fortuna Düsseldorf,2. Bundesliga - Germany,Tyskland,,,,,,,,,
+2025-11-30,13:30,SV 07 Elversberg,SV Darmstadt 98,3. Liga,Tyskland,,,,,,,,,
+2025-11-28,19:00,SV Wehen Wiesbaden,Erzgebirge Aue,3. Liga - Germany,Tyskland,,,,1.18,3.6,1.62,1.95,2.5,1.4
+2025-11-28,20:45,Como 1907,Sassuolo Calcio,Serie A - Italy,Italia,,,,1.3,3.3,1.9,1.82,3.15,1.3
 2025-11-29,15:00,Genoa,Hellas Verona,Serie A - Italy,Italia,,,,1.52,2.35,2.65,1.42,5.0,1.14
-2025-11-29,15:00,Parma Calcio,Udinese,Serie A - Italy,Italia,,,,1.37,2.8,2.2,1.6,3.85,1.22
-2025-11-29,18:00,Juventus,Cagliari,Serie A - Italy,Italia,,,,1.3,3.3,1.9,1.82,3.2,1.3
-2025-11-29,20:45,Milan,Lazio,Serie A - Italy,Italia,,,,1.3,3.3,1.9,1.82,3.2,1.3
+2025-11-29,15:00,Parma Calcio,Udinese,Serie A - Italy,Italia,,,,1.4,2.8,2.2,1.6,3.9,1.22
+2025-11-29,18:00,Juventus,Cagliari,Serie A - Italy,Italia,,,,1.27,3.35,1.85,1.85,3.1,1.32
+2025-11-29,20:45,Milan,Lazio,Serie A - Italy,Italia,,,,1.3,3.25,1.92,1.8,3.25,1.3
 2025-11-30,12:30,Lecce,Torino FC,Serie A - Italy,Italia,,,,1.5,2.4,2.55,1.45,4.8,1.15
-2025-11-30,15:00,Pisa SC,Inter Milan,Serie A - Italy,Italia,,,,,,,,,2.0
-2025-11-30,18:00,Atalanta BC,Fiorentina,Serie A - Italy,Italia,,,,,,,,,2.0
-2025-11-30,20:45,Roma,Napoli,Serie A - Italy,Italia,,,,,,,,,2.0
-2025-12-01,20:45,Bologna,US Cremonese,Serie B,Italia,,,,,,,,,2.0
-2025-11-28,20:30,Cesena FC,Modena FC,Serie B - Italy,Italia,,,,,,,,,
-2025-11-29,15:00,Empoli FC,SSC Bari,Serie B - Italy,Italia,,,,,,,,,
-2025-11-29,15:00,FC Sudtirol Bolzano,US Avellino,Serie B - Italy,Italia,,,,,,,,,
-2025-11-29,15:00,Reggiana 1919,Frosinone Calcio,Serie B - Italy,Italia,,,,,,,,,
-2025-11-29,15:00,Delfino Pescara,Calcio Padova,Serie B - Italy,Italia,,,,,,,,,
-2025-11-29,15:00,Venezia FC,Mantova 1911,Serie B - Italy,Italia,,,,,,,,,
-2025-11-29,17:15,US Catanzaro,Virtus Entella,Serie B - Italy,Italia,,,,,,,,,
-2025-11-29,19:30,Palermo FC,Carrarese Calcio,Serie B - Italy,Italia,,,,,,,,,
+2025-11-30,15:00,Pisa SC,Inter Milan,Serie A - Italy,Italia,,,,1.22,3.7,1.72,2.0,2.8,1.37
+2025-11-30,18:00,Atalanta BC,Fiorentina,Serie A - Italy,Italia,,,,1.27,3.5,1.82,1.87,3.0,1.35
+2025-11-30,20:45,Roma,Napoli,Serie A - Italy,Italia,,,,1.45,2.6,2.4,1.52,4.3,1.18
+2025-12-01,20:45,Bologna,US Cremonese,Serie B,Italia,,,,1.32,3.05,2.0,1.72,3.5,1.27
+2025-11-28,20:30,Cesena FC,Modena FC,Serie B - Italy,Italia,,,,1.42,2.6,2.3,1.52,4.1,1.18
+2025-11-29,15:00,FC Sudtirol Bolzano,US Avellino,Serie B - Italy,Italia,,,,1.37,2.8,2.15,1.6,3.75,1.22
+2025-11-29,15:00,Delfino Pescara,Calcio Padova,Serie B - Italy,Italia,,,,1.37,2.8,2.15,1.6,3.75,1.22
+2025-11-29,15:00,Reggiana 1919,Frosinone Calcio,Serie B - Italy,Italia,,,,1.27,3.3,1.87,1.8,3.1,1.3
+2025-11-29,15:00,Empoli FC,SSC Bari,Serie B - Italy,Italia,,,,1.37,2.75,2.2,1.57,3.85,1.2
+2025-11-29,15:00,Venezia FC,Mantova 1911,Serie B - Italy,Italia,,,,1.2,3.8,1.67,2.05,2.65,1.4
+2025-11-29,17:15,US Catanzaro,Virtus Entella,Serie B - Italy,Italia,,,,1.42,2.6,2.3,1.52,4.1,1.18
+2025-11-29,19:30,Palermo FC,Carrarese Calcio,Serie B - Italy,Italia,,,,1.27,3.25,1.87,1.8,3.1,1.3
+2025-11-30,15:00,Juve Stabia,AC Monza,Serie B - Italy,Italia,,,,,,,,,
+2025-11-30,17:15,Spezia Calcio,Sampdoria Genoa,Serie B - Italy,Italia,,,,,,,,,
 2025-11-28,20:45,FC Metz,Rennes,Frankrike - Ligue 1,Frankrike,,,,1.22,3.95,1.67,2.05,2.65,1.42
 2025-11-29,17:00,AS Monaco,Paris Saint-Germain,Frankrike - Ligue 1,Frankrike,,,,1.12,5.3,1.42,2.65,2.05,1.7
-2025-11-29,19:00,Paris FC,Auxerre,Frankrike - Ligue 1,Frankrike,,,,1.27,3.5,1.82,1.87,3.0,1.35
-2025-11-29,21:05,Olympique Marseille,Toulouse,Frankrike - Ligue 1,Frankrike,,,,1.25,3.6,1.77,1.92,2.9,1.37
-2025-11-30,15:00,Strasbourg Alsace,Stade Brest 29,Frankrike - Ligue 1,Frankrike,,,,,,,,,2.0
-2025-11-30,17:15,Le Havre,Lille OSC,Frankrike - Ligue 1,Frankrike,,,,,,,,,2.0
-2025-11-30,17:15,FC Lorient,OGC Nice,Frankrike - Ligue 1,Frankrike,,,,,,,,,2.0
-2025-11-30,17:15,Angers SCO,Lens,Frankrike - Ligue 1,Frankrike,,,,,,,,,2.0
-2025-11-30,20:45,Olympique Lyon,FC Nantes,Ligue 2,Frankrike,,,,,,,,,2.0
-2025-11-25,20:00,SC Bastia,Stade Lavallois MFC,Frankrike - Ligue 2,Frankrike,,,,1.47,2.35,2.4,1.42,,46.0
-2025-11-25,20:45,Motherwell FC,Hibernian FC,Championship,Skottland,,,,1.22,3.5,1.7,1.9,2.7,1.35
-2025-11-25,20:45,Partick Thistle FC,Dunfermline Athletic FC,League 1,Skottland,,,,1.32,2.7,2.05,1.6,3.45,1.2
-2025-11-25,20:45,Alloa Athletic FC,Inverness Caledonian Thistle FC,League 1 - Scotland,Skottland,,,,1.2,3.45,1.67,1.92,2.65,1.35
+2025-11-29,19:00,Paris FC,Auxerre,Frankrike - Ligue 1,Frankrike,,,,1.25,3.5,1.8,1.9,2.95,1.35
+2025-11-29,21:05,Olympique Marseille,Toulouse,Frankrike - Ligue 1,Frankrike,,,,1.25,3.65,1.77,1.95,2.85,1.37
+2025-11-30,15:00,Strasbourg Alsace,Stade Brest 29,Frankrike - Ligue 1,Frankrike,,,,1.22,3.85,1.7,2.05,2.7,1.42
+2025-11-30,17:15,Le Havre,Lille OSC,Frankrike - Ligue 1,Frankrike,,,,1.27,3.35,1.87,1.85,3.1,1.32
+2025-11-30,17:15,FC Lorient,OGC Nice,Frankrike - Ligue 1,Frankrike,,,,1.25,3.55,1.82,1.9,2.95,1.35
+2025-11-30,17:15,Angers SCO,Lens,Frankrike - Ligue 1,Frankrike,,,,1.25,3.55,1.8,1.9,2.95,1.35
+2025-11-30,20:45,Olympique Lyon,FC Nantes,Frankrike - Ligue 1,Frankrike,,,,1.22,3.9,1.67,2.05,2.65,1.42
+2025-11-29,16:00,Dundee FC,St Mirren FC,Premiership - Scotland,Skottland,,,,1.3,3.0,1.92,1.7,3.15,1.27
+2025-11-29,16:00,Motherwell FC,Heart of Midlothian FC,Premiership - Scotland,Skottland,,,,1.22,3.5,1.7,1.9,2.7,1.35
+2025-11-29,18:45,Kilmarnock FC,Dundee United,Premiership - Scotland,Skottland,,,,1.25,3.2,1.82,1.77,2.95,1.3
 2025-11-30,17:00,Viking,Vålerenga,,Norge,,,,,,,,,
 2025-11-30,17:00,Sandefjord,KFUM,,Norge,,,,,,,,,
 2025-11-30,17:00,Bodø/Glimt,Fredrikstad,,Norge,,,,,,,,,
@@ -183,51 +176,48 @@ date,time,home_team,away_team,league,country,home_odds,draw_odds,away_odds,over_
 2025-11-30,17:00,Sarpsborg 08,Molde,,Norge,,,,,,,,,
 2025-11-30,17:00,Haugesund,Bryne,,Norge,,,,,,,,,
 2025-11-30,17:00,Kristiansund,Tromsø,,Norge,,,,,,,,,
-2025-11-30,17:00,Eliteserien,Norge - Eliteserien,,Norge,,,,,,,,,
-2025-11-26,18:00,Aalesund,Egersund,Kval Til Obos-Ligaen,Norge,,,,1.16,4.2,1.55,2.2,2.4,1.47
+2025-12-06,16:00,Lillestrøm,Sarpsborg 08,,Norge,,,,,,,,,2.0
+2025-11-30,17:00,Eliteserien,Norge - Eliteserien,Kval Til Obos-Ligaen,Norge,,,,,,,,,
 2025-11-29,14:00,Brattvåg,Moss,"Postnord-Ligaen, Avdeling 2",Norge,,,,,,,,,
-2025-11-25,20:45,Merthyr Town,Leamington FC,England Amatør - National League North,England Lower,,,,1.15,4.0,1.52,2.15,2.25,1.47
-2025-11-25,20:45,AFC Telford United,Oxford City,England Amatør - National League North,England Lower,,,,1.18,3.7,1.6,2.0,2.45,1.4
-2025-11-25,20:45,Southport FC,Radcliffe FC,England Amatør - National League North,England Lower,,,,1.18,3.6,1.62,2.0,2.5,1.4
-2025-11-25,20:45,Chorley FC,Spennymoor Town FC,England Amatør - National League North,England Lower,,,,1.22,3.25,1.75,1.82,2.8,1.32
-2025-11-25,20:45,Peterborough Sports,Bedford Town Football Club,England Amatør - National League North,England Lower,,,,1.22,3.35,1.72,1.87,2.7,1.35
-2025-11-25,20:45,King's Lynn Town,Buxton FC,England Amatør - National League North,England Lower,,,,1.22,3.25,1.77,1.8,2.8,1.32
-2025-11-25,20:45,Darlington FC,Curzon Ashton FC,England Amatør - National League North,England Lower,,,,,,1.47,2.3,2.1,1.55
-2025-11-25,20:45,AFC Fylde,Macclesfield FC,England Amatør - National League North,England Lower,,,,1.14,4.1,1.5,2.2,2.25,1.5
-2025-11-25,20:45,Scarborough Athletic,Alfreton Town FC,England Amatør - National League North,England Lower,,,,1.22,3.25,1.75,1.82,2.75,1.32
-2025-11-25,20:45,Chester FC,Hereford FC,England Amatør - National League North,England Lower,,,,1.17,3.75,1.57,2.05,2.4,1.42
-2025-11-25,20:45,Worksop Town,South Shields,England Amatør - National League North,England Lower,,,,,,1.5,2.25,2.2,1.5
-2025-11-25,20:45,Marine FC,Kidderminster Harriers FC,National League South,England Lower,,,,1.32,2.75,2.0,1.6,3.4,1.22
-2025-11-25,20:45,Torquay United,Worthing FC,England Amatør - National League South,England Lower,,,,1.15,4.0,1.52,2.15,2.25,1.5
-2025-11-25,20:45,Weston-super-Mare,Bath City FC,England Amatør - National League South,England Lower,,,,1.35,2.65,2.1,1.55,3.6,1.18
-2025-11-25,20:45,Slough Town,AFC Totton,England Amatør - National League South,England Lower,,,,1.17,3.85,1.57,2.1,2.35,1.45
-2025-11-25,20:45,Hemel Hempstead Town,Chelmsford City,England Amatør - National League South,England Lower,,,,1.27,3.05,1.85,1.72,3.0,1.27
-2025-11-25,20:45,Dagenham and Redbridge FC,Chesham United,England Amatør - National League South,England Lower,,,,1.27,3.05,1.85,1.72,3.0,1.27
-2025-11-25,20:45,Chippenham Town FC,Farnborough FC,England Amatør - National League South,England Lower,,,,1.18,3.65,1.62,2.0,2.45,1.4
-2025-11-25,20:45,Hampton & Richmond Borough,Tonbridge Angels,England Amatør - National League South,England Lower,,,,1.25,3.1,1.82,1.75,2.9,1.3
-2025-11-25,20:45,Enfield Town,Maidstone United FC,England Amatør - National League South,England Lower,,,,1.22,3.3,1.72,1.85,2.75,1.32
-2025-11-25,20:45,Ebbsfleet United FC,Horsham FC,England Amatør - National League South,England Lower,,,,1.27,3.0,1.87,1.7,3.05,1.27
-2025-11-25,20:45,Salisbury FC,Maidenhead United FC,England Amatør - National League South,England Lower,,,,1.25,3.2,1.77,1.8,2.85,1.3
-2025-11-28,20:00,PEC Zwolle,SC Heerenveen,,Nederland,,,,,,,,,
-2025-11-29,16:30,Excelsior Rotterdam,NAC Breda,,Nederland,,,,,,,,,
-2025-11-29,18:45,Fortuna Sittard,Heracles Almelo,,Nederland,,,,,,,,,
-2025-11-29,21:00,NEC Nijmegen,Sparta Rotterdam,,Nederland,,,,,,,,,
+2025-11-28,20:00,PEC Zwolle,SC Heerenveen,,Nederland,,,,1.17,4.4,1.55,2.25,2.3,1.52
+2025-11-29,16:30,Excelsior Rotterdam,NAC Breda,,Nederland,,,,1.2,3.9,1.67,2.05,2.6,1.42
+2025-11-29,18:45,Fortuna Sittard,Heracles Almelo,,Nederland,,,,1.2,3.9,1.65,2.05,2.55,1.42
+2025-11-29,21:00,NEC Nijmegen,Sparta Rotterdam,,Nederland,,,,,,1.45,2.5,2.1,1.62
 2025-11-30,12:15,PSV Eindhoven,FC Volendam,,Nederland,,,,,,,,,
-2025-11-25,20:00,Roda JC Kerkrade,FC Dordrecht,,Nederland,,,,1.15,3.95,1.52,2.15,2.3,1.47
-2025-11-25,20:00,Vitesse Arnhem,Jong PSV,,Nederland,,,,,,1.32,2.8,1.8,1.77
-2025-11-25,20:00,ADO Den Haag,De Graafschap,,Nederland,,,,,,1.27,3.05,1.67,1.92
-2025-11-25,20:00,RKC Waalwijk,MVV Maastricht,,Nederland,,,,,,1.3,2.9,1.75,1.82
-2025-11-28,21:15,Vitoria SC Guimaraes,AVS Futebol SAD,Liga Portugal - Portugal,Portugal,,,,,,,,,
-2025-11-29,16:30,Casa Pia Lisbon,FC Alverca SAD,Liga Portugal - Portugal,Portugal,,,,,,,,,
-2025-11-29,16:30,Moreirense,Famalicao,Liga Portugal - Portugal,Portugal,,,,,,,,,
-2025-11-29,19:00,Nacional da Madeira,Benfica,Liga Portugal - Portugal,Portugal,,,,,,,,,
-2025-11-29,21:30,Gil Vicente Barcelos,CD Tondela,Liga Portugal - Portugal,Portugal,,,,,,,,,
-2025-11-28,18:00,Kocaelispor,Genclerbirligi,,Tyrkia,,,,,,,,,
-2025-11-29,12:30,Caykur Rizespor,Kayserispor,,Tyrkia,,,,,,,,,
-2025-11-29,15:00,Gaziantep,Eyupspor,,Tyrkia,,,,,,,,,
-2025-11-29,18:00,Trabzonspor,Konyaspor,,Tyrkia,,,,,,,,,
-2025-11-29,18:00,Kasimpasa Istanbul,Istanbul Basaksehir,,Tyrkia,,,,,,,,,
-2025-11-28,20:45,Yellow-Red KV Mechelen,Standard Liege,,Belgia,,,,,,,,,
-2025-11-29,16:00,FCV Dender EH,KVC Westerlo,,Belgia,,,,,,,,,
-2025-11-29,18:15,SV Zulte Waregem,Cercle Brugge,,Belgia,,,,,,,,,
-2025-11-29,20:45,Royal Charleroi SC,RAAL La Louviere,,Belgia,,,,,,,,,
+2025-11-30,14:30,Go Ahead Eagles,FC Utrecht,,Nederland,,,,,,,,,
+2025-11-30,14:30,SC Telstar,Feyenoord Rotterdam,,Nederland,,,,,,,,,
+2025-11-30,16:45,FC Twente Enschede,AZ Alkmaar,,Nederland,,,,,,,,,
+2025-11-30,20:00,Ajax Amsterdam,FC Groningen,,Nederland,,,,,,,,,
+2025-11-28,20:00,SC Cambuur,Helmond Sport,,Nederland,,,,,,1.47,2.3,2.15,1.52
+2025-11-28,20:00,FC Dordrecht,Jong Utrecht,,Nederland,,,,,,1.47,2.3,2.15,1.52
+2025-11-28,20:00,FC Emmen,Jong AZ,,Nederland,,,,,,1.42,2.4,2.05,1.6
+2025-11-28,20:00,VVV Venlo,ADO Den Haag,,Nederland,,,,,,1.4,2.45,2.0,1.6
+2025-11-28,20:00,FC Den Bosch,Willem II Tilburg,,Nederland,,,,,,1.45,2.3,2.1,1.55
+2025-11-28,21:15,Vitoria SC Guimaraes,AVS Futebol SAD,Liga Portugal - Portugal,Portugal,,,,1.32,3.0,2.0,1.7,3.45,1.25
+2025-11-29,16:30,Moreirense,Famalicao,Liga Portugal - Portugal,Portugal,,,,1.35,2.9,2.05,1.65,3.55,1.25
+2025-11-29,16:30,Casa Pia Lisbon,FC Alverca SAD,Liga Portugal - Portugal,Portugal,,,,1.4,2.7,2.2,1.57,3.9,1.2
+2025-11-29,19:00,CD Nacional Madeira,Benfica,Liga Portugal - Portugal,Portugal,,,,1.2,3.8,1.65,2.05,2.65,1.42
+2025-11-29,21:30,Gil Vicente Barcelos,CD Tondela,Liga Portugal - Portugal,Portugal,,,,1.35,2.85,2.1,1.65,3.6,1.22
+2025-11-30,16:30,Rio Ave,Santa Clara Azores,Liga Portugal - Portugal,Portugal,,,,,,,,,
+2025-11-30,19:00,Sporting CP,Estrela Amadora,Liga Portugal - Portugal,Portugal,,,,,,,,,
+2025-11-30,21:30,Porto,Estoril Praia,Liga Portugal - Portugal,Portugal,,,,,,,,,
+2025-12-01,21:15,FC Arouca,SC Braga,Liga Portugal - Portugal,Portugal,,,,,,,,,
+2025-11-28,18:00,Kocaelispor,Genclerbirligi,,Tyrkia,,,,1.37,2.8,2.1,1.62,3.7,1.22
+2025-11-29,12:30,Caykur Rizespor,Kayserispor,,Tyrkia,,,,1.2,3.9,1.65,2.05,2.6,1.42
+2025-11-29,15:00,Gaziantep,Eyupspor,,Tyrkia,,,,1.25,3.55,1.77,1.9,2.85,1.35
+2025-11-29,18:00,Trabzonspor,Konyaspor,,Tyrkia,,,,1.2,3.85,1.67,2.05,2.6,1.42
+2025-11-29,18:00,Kasimpasa Istanbul,Istanbul Basaksehir,,Tyrkia,,,,1.27,3.3,1.85,1.82,3.05,1.3
+2025-11-30,15:00,Antalyaspor,Goztepe Izmir,,Tyrkia,,,,,,,,,
+2025-11-30,18:00,Fatih Karagumruk Istanbul,Besiktas Istanbul,,Tyrkia,,,,,,,,,
+2025-12-01,18:00,Fenerbahce Istanbul,Galatasaray Istanbul,,Tyrkia,,,,,,,,,
+2025-12-01,18:00,Samsunspor,Alanyaspor,,Tyrkia,,,,,,,,,
+2025-11-28,20:45,Yellow-Red KV Mechelen,Standard Liege,,Belgia,,,,1.25,3.45,1.82,1.85,2.95,1.35
+2025-11-29,16:00,FCV Dender EH,KVC Westerlo,,Belgia,,,,1.18,4.1,1.6,2.15,2.45,1.47
+2025-11-29,18:15,SV Zulte Waregem,Cercle Brugge,,Belgia,,,,1.18,4.2,1.6,2.15,2.4,1.47
+2025-11-29,20:45,Royal Charleroi SC,RAAL La Louviere,,Belgia,,,,1.37,2.8,2.15,1.6,3.75,1.22
+2025-11-30,13:30,Club Brugge,Royal Antwerp FC,,Belgia,,,,,,,,,
+2025-11-30,16:00,KRC Genk,Oud-Heverlee Leuven,,Belgia,,,,,,,,,
+2025-11-30,18:30,RSC Anderlecht,Union Saint-Gilloise,,Belgia,,,,,,,,,
+2025-11-30,19:15,KAA Gent,St. Truidense VV,Challenger Pro League,Belgia,,,,,,,,,
+2025-11-28,20:00,KAS Eupen,Lommel SK,Challenger Pro League - Belgium,Belgia,,,,1.2,3.45,1.67,1.92,2.6,1.35
+2025-11-28,20:00,K Beerschot VA,RFC Liege,Challenger Pro League - Belgium,Belgia,,,,1.18,3.6,1.62,1.95,2.5,1.37
