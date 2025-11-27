@@ -419,6 +419,20 @@ def step_euro_4_generate_predictions():
     euro_main()
 
 
+def step_euro_5_generate_html_report():
+    """Generate HTML report for European bets."""
+    import subprocess
+    import sys
+    result = subprocess.run(
+        [sys.executable, "generate_report.py", "--european"],
+        capture_output=True,
+        text=True
+    )
+    print(result.stdout)
+    if result.stderr:
+        print(result.stderr)
+
+
 def run_european_pipeline(args):
     """Run the European competition pipeline."""
     start_time = time.time()
@@ -452,6 +466,9 @@ def run_european_pipeline(args):
         
         # Step 5: Generate European predictions
         run_step("Generate European Value Bets", step_euro_4_generate_predictions)
+        
+        # Step 6: Generate HTML report
+        run_step("Generate HTML Report", step_euro_5_generate_html_report)
         
         total_time = time.time() - start_time
         print(f"\n{'#'*60}")
