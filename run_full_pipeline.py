@@ -2,13 +2,25 @@
 """
 Full betting pipeline - runs everything from data fetch to report generation.
 
-Steps:
+DOMESTIC LEAGUES PIPELINE (default):
 1. Download latest results from football-data.co.uk
 2. Prepare the dataset with rolling averages
 3. Train the Poisson regression models
 4. Scrape Norsk Tipping odds (via Selenium)
 5. Calculate value bets using the trained model
 6. Generate the HTML report
+
+EUROPEAN COMPETITIONS PIPELINE (--european flag):
+1. Fetch UCL/UEL/UECL data from openfootball GitHub
+2. Prepare European dataset with cross-competition features
+3. Train European Poisson model
+4. Scrape Norsk Tipping odds (shared step)
+5. Generate European value bets
+
+Usage:
+    python run_full_pipeline.py              # Run domestic leagues pipeline
+    python run_full_pipeline.py --european   # Run European competitions pipeline
+    python run_full_pipeline.py -e           # Short flag for European
 """
 
 import subprocess
@@ -361,11 +373,107 @@ def step5_generate_report():
     generate_report_main()
 
 
+# ============================================================
+# EUROPEAN PIPELINE FUNCTIONS
+# ============================================================
+
+def step_euro_1_fetch_data():
+    """Fetch European competition data from openfootball."""
+    from fetch_european_openfootball import fetch_all_european_data
+    from pathlib import Path
+    import pandas as pd
+    
+    print("Fetching European data from openfootball GitHub...")
+    df = fetch_all_european_data()
+    
+    if df.empty:
+        print("No data fetched!")
+        return
+    
+    # Save to both locations
+    output_dir = Path("data/raw/european")
+    output_dir.mkdir(parents=True, exist_ok=True)
+    
+    df.to_csv(output_dir / "openfootball_european.csv", index=False)
+    df.to_csv(output_dir / "european_matches.csv", index=False)
+    
+    print(f"Saved {len(df)} European matches")
+
+
+def step_euro_2_prepare_dataset():
+    """Prepare European dataset with features."""
+    from src.european_prepare import main as prepare_main
+    prepare_main()
+
+
+def step_euro_3_train_model():
+    """Train European Poisson model."""
+    from src.european_models import main as train_main
+    train_main()
+
+
+def step_euro_4_generate_predictions():
+    """Generate European value bets using Norsk Tipping odds."""
+    # Run the european today script
+    from run_european_today import main as euro_main
+    euro_main()
+
+
+def run_european_pipeline(args):
+    """Run the European competition pipeline."""
+    start_time = time.time()
+    
+    try:
+        # Step 1: Fetch European data
+        if not args.no_download:
+            run_step("Fetch European Data (openfootball)", step_euro_1_fetch_data)
+        else:
+            print("\n[Skipping European data fetch]")
+        
+        # Step 2: Prepare dataset
+        if not args.no_train:
+            run_step("Prepare European Dataset", step_euro_2_prepare_dataset)
+        else:
+            print("\n[Skipping European dataset preparation]")
+        
+        # Step 3: Train model
+        if not args.no_train:
+            run_step("Train European Model", step_euro_3_train_model)
+        else:
+            print("\n[Skipping European model training]")
+        
+        # Step 4: Scrape Norsk Tipping odds (same as regular pipeline)
+        if not args.no_scrape:
+            headless = not args.visible
+            skip_recent = not args.force_scrape
+            run_step("Scrape Norsk Tipping Odds", step4_scrape_odds, headless, skip_recent)
+        else:
+            print("\n[Skipping odds scraping]")
+        
+        # Step 5: Generate European predictions
+        run_step("Generate European Value Bets", step_euro_4_generate_predictions)
+        
+        total_time = time.time() - start_time
+        print(f"\n{'#'*60}")
+        print(f"# EUROPEAN PIPELINE COMPLETE - Total time: {total_time:.1f}s")
+        print(f"{'#'*60}")
+        
+    except Exception as e:
+        print(f"\n{'!'*60}")
+        print(f"! EUROPEAN PIPELINE FAILED: {e}")
+        print(f"{'!'*60}")
+        import traceback
+        traceback.print_exc()
+        sys.exit(1)
+
+
 def main():
     """Run the full betting pipeline."""
     import argparse
     
     parser = argparse.ArgumentParser(description="Run full betting pipeline")
+    parser.add_argument("--european", "-e", action="store_true", 
+                        help="Run European competitions pipeline (UCL/UEL/UECL)")
     parser.add_argument("--no-download", action="store_true", help="Skip downloading latest results")
     parser.add_argument("--no-train", action="store_true", help="Skip model training")
     parser.add_argument("--no-scrape", action="store_true", help="Skip odds scraping")
@@ -374,6 +482,15 @@ def main():
     parser.add_argument("--visible", action="store_true", help="Show browser window while scraping")
     parser.add_argument("--open-report", action="store_true", help="Open report in browser when done")
     args = parser.parse_args()
+    
+    # Determine which pipeline to run
+    if args.european:
+        print(f"\n{'#'*60}")
+        print(f"# EUROPEAN PIPELINE - {datetime.now().strftime('%Y-%m-%d %H:%M')}")
+        print(f"# (UCL / UEL / Conference League)")
+        print(f"{'#'*60}")
+        run_european_pipeline(args)
+        return
     
     print(f"\n{'#'*60}")
     print(f"# BETTING PIPELINE - {datetime.now().strftime('%Y-%m-%d %H:%M')}")

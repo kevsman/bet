@@ -436,8 +436,60 @@ def main():
     output_dir = Path("data/raw/european")
     output_dir.mkdir(parents=True, exist_ok=True)
     
-    # Fetch data
+    # Fetch openfootball data (primarily UCL)
     df = fetch_all_european_data()
+    
+    # Also fetch Wikipedia data for UEL/UECL 2025-26
+    try:
+        from fetch_european_wikipedia import load_wikipedia_data
+        wiki_df = load_wikipedia_data()
+        
+        if not wiki_df.empty:
+            print(f"\n📥 Adding {len(wiki_df)} UEL/UECL matches from Wikipedia")
+            
+            # Convert Wikipedia format to match openfootball format
+            wiki_converted = wiki_df.rename(columns={
+                "home_team": "HomeTeam",
+                "away_team": "AwayTeam",
+                "home_goals": "FTHG",
+                "away_goals": "FTAG",
+                "date": "Date"
+            })
+            
+            # Add missing columns
+            wiki_converted["competition_code"] = wiki_converted["competition"].apply(
+                lambda x: "EL" if x == "EL" else "UECL"
+            )
+            
+            # Set FTR (Full Time Result)
+            def get_ftr(row):
+                if row["FTHG"] > row["FTAG"]:
+                    return "H"
+                elif row["FTHG"] < row["FTAG"]:
+                    return "A"
+                else:
+                    return "D"
+            
+            wiki_converted["FTR"] = wiki_converted.apply(get_ftr, axis=1)
+            wiki_converted["round"] = "League Phase"
+            
+            # Keep only columns that exist in openfootball data
+            cols_to_keep = ["Date", "HomeTeam", "AwayTeam", "FTHG", "FTAG", "FTR", 
+                          "competition_code", "season", "round"]
+            wiki_converted = wiki_converted[cols_to_keep]
+            
+            # Combine with openfootball data
+            if df.empty:
+                df = wiki_converted
+            else:
+                # Remove any UEL/UECL 2025-26 from openfootball (likely empty anyway)
+                df_filtered = df[~((df["season"] == "2025-26") & 
+                                   (df["competition_code"].isin(["EL", "UECL"])))]
+                df = pd.concat([df_filtered, wiki_converted], ignore_index=True)
+            
+            print(f"✅ Combined dataset now has {len(df)} matches")
+    except Exception as e:
+        print(f"⚠️ Could not load Wikipedia data: {e}")
     
     if df.empty:
         print("\nNo data fetched!")
@@ -464,20 +516,16 @@ def main():
     
     # Also update the European model dataset
     processed_dir = Path("data/processed/european")
-    if processed_dir.exists():
-        # Merge with existing data or replace
-        existing_path = processed_dir / "european_dataset.csv"
-        if existing_path.exists():
-            existing_df = pd.read_csv(existing_path)
-            print(f"\nExisting dataset has {len(existing_df)} matches")
-            
-            # Use new data (it's more complete)
-            new_df = df.copy()
-            new_df.to_csv(existing_path, index=False)
-            print(f"Updated dataset with {len(new_df)} matches")
-        else:
-            df.to_csv(existing_path, index=False)
-            print(f"\nCreated new dataset with {len(df)} matches")
+    processed_dir.mkdir(parents=True, exist_ok=True)
+    
+    existing_path = processed_dir / "european_dataset.csv"
+    if existing_path.exists():
+        existing_df = pd.read_csv(existing_path)
+        print(f"\nExisting dataset has {len(existing_df)} matches")
+    
+    # Use new data (it's more complete)
+    df.to_csv(existing_path, index=False)
+    print(f"Updated dataset with {len(df)} matches")
 
 
 if __name__ == "__main__":

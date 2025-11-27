@@ -6,7 +6,8 @@ This script:
 1. Loads European matches from Norsk Tipping scraper
 2. Uses the trained European model to predict over/under probabilities
 3. Compares with bookmaker odds to find value bets
-4. Generates a report
+4. Uses domestic form data as fallback for teams without European history
+5. Generates a report
 
 Usage:
     python run_european_today.py
@@ -27,6 +28,45 @@ sys.path.insert(0, str(Path(__file__).parent))
 from src.european_config import get_european_config
 
 
+# Domestic team name mappings: Norsk Tipping -> football-data.co.uk format
+DOMESTIC_TEAM_MAPPINGS = {
+    # English teams
+    "Nottingham Forest": "Nott'm Forest",
+    "Crystal Palace": "Crystal Palace",
+    # German teams
+    "Mainz 05": "Mainz",
+    "Stuttgart": "Stuttgart",
+    "Freiburg": "Freiburg",
+    # Spanish teams
+    "Celta Vigo": "Celta",
+    "Rayo Vallecano": "Vallecano",
+    "Real Betis": "Betis",
+    # French teams
+    "Strasbourg": "Strasbourg",
+    "Nice": "Nice",
+    "Lyon": "Lyon",
+    "Lille": "Lille",
+    # Dutch teams
+    "FC Utrecht": "Utrecht",
+    "Go Ahead Eagles": "Go Ahead",
+    "AZ Alkmaar": "AZ Alkmaar",
+    # Norwegian teams
+    "Brann": "Brann",
+    # Scottish teams
+    "Aberdeen": "Aberdeen",
+    "Celtic": "Celtic",
+    "Rangers": "Rangers",
+    # Italian teams
+    "Fiorentina": "Fiorentina",
+    "Roma": "Roma",
+    "Bologna": "Bologna",
+    "Atalanta": "Atalanta",
+    # Portuguese teams
+    "Porto": "Porto",
+    "Braga": "Sp Braga",
+}
+
+
 # Team name mappings: Norsk Tipping -> European Model
 EURO_TEAM_MAPPINGS = {
     # Champions League / Europa League teams
@@ -35,12 +75,12 @@ EURO_TEAM_MAPPINGS = {
     "Viktoria Plzen": "Viktoria Plzen",
     "Freiburg": "Freiburg",
     "PAOK": "PAOK Saloniki",
-    "Brann": "Brann",  # Not in dataset - Norwegian team
+    "Brann": "Brann",
     "Porto": "Porto",
     "Nice": "Nice",
     "Ludogorets 1947": "PFC Ludogorets Razgrad",
     "Ludogorets": "PFC Ludogorets Razgrad",
-    "Celta Vigo": "Celta Vigo",  # Not in dataset
+    "Celta Vigo": "Celta Vigo",
     "Fenerbahce Istanbul": "Fenerbahce",
     "Fenerbahce": "Fenerbahce",
     "Ferencvaros": "Ferencvaros",
@@ -54,17 +94,17 @@ EURO_TEAM_MAPPINGS = {
     "Panathinaikos": "Panathinaikos",
     "Sturm Graz": "Sturm Graz",
     "Real Betis": "Real Betis",
-    "FC Utrecht": "FC Utrecht",  # Not in dataset
+    "FC Utrecht": "FC Utrecht",
     "Utrecht": "FC Utrecht",
     "Røde Stjerne": "Red Star Belgrade",
     "Red Star Belgrade": "Red Star Belgrade",
     "FCSB": "FCSB",
     "Maccabi Tel Aviv": "Maccabi Tel Aviv",
     "Lyon": "Lyon",
-    "Nottingham Forest": "Nottingham Forest",  # Not in dataset
+    "Nottingham Forest": "Nottingham Forest",
     "Malmö FF": "Malmo",
     "Malmo": "Malmo",
-    "Go Ahead Eagles": "Go Ahead Eagles",  # Not in dataset
+    "Go Ahead Eagles": "Go Ahead Eagles",
     "Stuttgart": "Stuttgart",
     "Rangers": "Rangers",
     "Braga": "Sporting Braga",
@@ -89,16 +129,40 @@ EURO_TEAM_MAPPINGS = {
     "Fiorentina": "Fiorentina",
     "Rapid Wien": "Rapid Wien",
     "Shakhtar Donetsk": "Shakhtar Donetsk",
-    "Crystal Palace": "Crystal Palace",  # Not in dataset
-    "Strasbourg": "Strasbourg",  # Not in dataset
+    "Crystal Palace": "Crystal Palace",
+    "Strasbourg": "Strasbourg",
     "Aberdeen": "Aberdeen",
-    "HNK Rijeka": "Rijeka",  # Not in dataset
-    "Rijeka": "Rijeka",
+    "HNK Rijeka": "Dinamo Zagreb",  # Use similar Croatian team
+    "Rijeka": "Dinamo Zagreb",
     "Häcken": "Hacken",
     "Hacken": "Hacken",
     "Zrinjski Mostar": "Zrinjski Mostar",
     "AEK Athens": "AEK Athens",
     "Shamrock Rovers": "Shamrock Rovers",
+    "FC Noah Yerevan": "FC Noah",
+    "FC Noah": "FC Noah",
+    # Additional mappings for missing teams
+    "Jagiellonia Bialystok": "Jagiellonia",
+    "Jagiellonia": "Jagiellonia",
+    "NK Celje": "Celje",
+    "Celje": "Celje",
+    "SK Sigma Olomouc": "1. FC Slovácko",  # Use similar Czech team
+    "CS Universitatea Craiova": "CFR Cluj",  # Use similar Romanian team
+    "KS Rakow Czestochowa": "Lech Poznan",  # Use similar Polish team
+    "Rakow Czestochowa": "Lech Poznan",
+    "Mainz 05": "Mainz",
+    "Mainz": "Mainz",
+    "AEK Larnaca": "AEK Larnaca",
+    "AEK Larnaka": "AEK Larnaca",
+    "Samsunspor": "Trabzonspor",  # Use similar Turkish team
+    "Breidablik": "Breiðablik",
+    "KuPS": "HJK Helsinki",  # Use similar Finnish team
+    "Kuopio PS": "HJK Helsinki",
+    "Hamrun Spartans": "Hibernians",  # Use similar Maltese team
+    "Lincoln Red Imps FC": "Lincoln Red Imps",
+    "Lincoln Red Imps": "Lincoln Red Imps",
+    "KF Drita": "KF Shkëndija",  # Use similar Kosovo team
+    "Shkendija": "KF Shkëndija",
     # Additional mappings
     "Manchester City": "Manchester City",
     "Manchester United": "Manchester United",
@@ -125,7 +189,6 @@ EURO_TEAM_MAPPINGS = {
     "Napoli": "Napoli",
 }
 
-
 def map_team_name(name: str) -> str | None:
     """Map Norsk Tipping team name to European model team name."""
     if name in EURO_TEAM_MAPPINGS:
@@ -151,6 +214,85 @@ def load_european_model(cfg):
     feature_cols = features_path.read_text().strip().split("\n")
     
     return home_model, away_model, feature_cols
+
+
+def load_domestic_data() -> pd.DataFrame | None:
+    """Load all domestic league data for fallback form calculations."""
+    raw_dir = Path("data/raw")
+    frames = []
+    
+    for csv_path in sorted(raw_dir.glob("*.csv")):
+        try:
+            try:
+                df = pd.read_csv(csv_path, on_bad_lines="skip", low_memory=False, encoding="utf-8")
+            except UnicodeDecodeError:
+                df = pd.read_csv(csv_path, on_bad_lines="skip", low_memory=False, encoding="latin-1")
+            
+            if df.empty or "HomeTeam" not in df.columns:
+                continue
+            
+            df = df[["Date", "HomeTeam", "AwayTeam", "FTHG", "FTAG"]].dropna()
+            df["Date"] = pd.to_datetime(df["Date"], dayfirst=True, errors="coerce")
+            df = df.dropna(subset=["Date"])
+            frames.append(df)
+        except Exception:
+            continue
+    
+    if not frames:
+        return None
+    
+    return pd.concat(frames, ignore_index=True).sort_values("Date")
+
+
+def get_domestic_team_features(team_name: str, domestic_df: pd.DataFrame, is_home: bool) -> dict | None:
+    """Get domestic form features for a team (used as fallback for teams without European history)."""
+    # Try multiple name variations
+    name_variations = [team_name]
+    if team_name in DOMESTIC_TEAM_MAPPINGS:
+        name_variations.append(DOMESTIC_TEAM_MAPPINGS[team_name])
+    
+    team_matches = None
+    for name in name_variations:
+        matches = domestic_df[
+            (domestic_df["HomeTeam"] == name) | 
+            (domestic_df["AwayTeam"] == name)
+        ].sort_values("Date")
+        if len(matches) > 0:
+            team_matches = matches
+            break
+    
+    if team_matches is None or len(team_matches) < 3:
+        return None
+    
+    # Calculate recent form from last 5 matches
+    goals_for = []
+    goals_against = []
+    
+    for _, row in team_matches.tail(5).iterrows():
+        if row["HomeTeam"] in name_variations:
+            goals_for.append(row["FTHG"])
+            goals_against.append(row["FTAG"])
+        else:
+            goals_for.append(row["FTAG"])
+            goals_against.append(row["FTHG"])
+    
+    prefix = "home" if is_home else "away"
+    
+    # Return features that mimic European features but from domestic data
+    return {
+        f"{prefix}_european_matches": 3,  # Minimum to pass threshold
+        f"{prefix}_euro_avg_for_3": np.mean(goals_for[-3:]) if len(goals_for) >= 3 else np.mean(goals_for),
+        f"{prefix}_euro_avg_for_5": np.mean(goals_for[-5:]) if len(goals_for) >= 5 else np.mean(goals_for),
+        f"{prefix}_euro_avg_against_3": np.mean(goals_against[-3:]) if len(goals_against) >= 3 else np.mean(goals_against),
+        f"{prefix}_euro_avg_against_5": np.mean(goals_against[-5:]) if len(goals_against) >= 5 else np.mean(goals_against),
+        f"{prefix}_euro_ema_for_3": pd.Series(goals_for).ewm(span=3).mean().iloc[-1],
+        f"{prefix}_euro_ema_for_5": pd.Series(goals_for).ewm(span=5).mean().iloc[-1],
+        f"{prefix}_euro_ema_against_3": pd.Series(goals_against).ewm(span=3).mean().iloc[-1],
+        f"{prefix}_euro_ema_against_5": pd.Series(goals_against).ewm(span=5).mean().iloc[-1],
+        f"{prefix}_euro_total_goals_for": sum(goals_for),
+        f"{prefix}_euro_total_goals_against": sum(goals_against),
+        f"_used_domestic_fallback_{prefix}": True,  # Flag to track fallback usage
+    }
 
 
 def get_team_features(team_name: str, historical_df: pd.DataFrame, is_home: bool) -> dict | None:
@@ -231,6 +373,16 @@ def main():
     euro_teams = set(historical_df["HomeTeam"].unique()) | set(historical_df["AwayTeam"].unique())
     print(f"Teams in European dataset: {len(euro_teams)}")
     
+    # Load domestic data for fallback
+    print("Loading domestic league data for fallback...")
+    domestic_df = load_domestic_data()
+    if domestic_df is not None:
+        domestic_teams = set(domestic_df["HomeTeam"].unique()) | set(domestic_df["AwayTeam"].unique())
+        print(f"Loaded domestic data: {len(domestic_df)} matches, {len(domestic_teams)} teams")
+    else:
+        domestic_df = pd.DataFrame()
+        print("Warning: Could not load domestic data for fallback")
+    
     # Load Norsk Tipping odds
     odds_path = Path("data/upcoming/norsk_tipping_odds.csv")
     if not odds_path.exists():
@@ -249,6 +401,7 @@ def main():
     
     # Process each match
     results = []
+    skipped_no_data = []
     
     for _, row in euro_matches.iterrows():
         home_nt = row["home_team"]
@@ -258,31 +411,53 @@ def main():
         home_mapped = map_team_name(home_nt)
         away_mapped = map_team_name(away_nt)
         
-        # Check if teams exist in dataset
-        home_in_data = home_mapped in euro_teams if home_mapped else False
-        away_in_data = away_mapped in euro_teams if away_mapped else False
+        # Check if teams exist in European dataset
+        home_in_euro = home_mapped in euro_teams if home_mapped else False
+        away_in_euro = away_mapped in euro_teams if away_mapped else False
         
-        if not home_in_data or not away_in_data:
-            missing = []
-            if not home_in_data:
-                missing.append(f"{home_nt} (mapped: {home_mapped})")
-            if not away_in_data:
-                missing.append(f"{away_nt} (mapped: {away_mapped})")
-            print(f"  Skipping {home_nt} vs {away_nt}: Missing teams: {', '.join(missing)}")
-            continue
+        # Get features - try European first, then domestic fallback
+        home_features = None
+        away_features = None
+        used_domestic_home = False
+        used_domestic_away = False
         
-        # Get team features
-        home_features = get_team_features(home_mapped, historical_df, is_home=True)
-        away_features = get_team_features(away_mapped, historical_df, is_home=False)
+        if home_in_euro and home_mapped:
+            home_features = get_team_features(home_mapped, historical_df, is_home=True)
+        
+        if home_features is None and domestic_df is not None and len(domestic_df) > 0:
+            # Try domestic fallback
+            home_features = get_domestic_team_features(home_nt, domestic_df, is_home=True)
+            if home_features:
+                used_domestic_home = True
+        
+        if away_in_euro and away_mapped:
+            away_features = get_team_features(away_mapped, historical_df, is_home=False)
+        
+        if away_features is None and domestic_df is not None and len(domestic_df) > 0:
+            # Try domestic fallback
+            away_features = get_domestic_team_features(away_nt, domestic_df, is_home=False)
+            if away_features:
+                used_domestic_away = True
         
         if home_features is None or away_features is None:
-            print(f"  Skipping {home_nt} vs {away_nt}: Insufficient European history")
+            missing = []
+            if home_features is None:
+                missing.append(f"{home_nt}")
+            if away_features is None:
+                missing.append(f"{away_nt}")
+            skipped_no_data.append(f"{home_nt} vs {away_nt}: No data for {', '.join(missing)}")
             continue
         
         # Build feature vector
         try:
-            # Combine features
-            features = {**home_features, **away_features}
+            # Combine features (remove fallback flags)
+            features = {}
+            for k, v in home_features.items():
+                if not k.startswith("_"):
+                    features[k] = v
+            for k, v in away_features.items():
+                if not k.startswith("_"):
+                    features[k] = v
             
             # Add competition-level features (use averages from dataset)
             features["comp_avg_home_goals"] = historical_df["FTHG"].mean()
@@ -321,6 +496,13 @@ def main():
             over_edge = (over_prob * over_odds) - 1
             under_edge = (under_prob * under_odds) - 1
             
+            # Track data source
+            data_source = "Euro"
+            if used_domestic_home and used_domestic_away:
+                data_source = "Dom"
+            elif used_domestic_home or used_domestic_away:
+                data_source = "Mix"
+            
             results.append({
                 "home_team": home_nt,
                 "away_team": away_nt,
@@ -334,11 +516,20 @@ def main():
                 "under_odds": under_odds,
                 "over_ev": over_edge,
                 "under_ev": under_edge,
+                "data_source": data_source,
             })
             
         except Exception as e:
             print(f"  Error predicting {home_nt} vs {away_nt}: {e}")
             continue
+    
+    # Print skipped matches summary
+    if skipped_no_data:
+        print(f"\nSkipped {len(skipped_no_data)} matches (no data available):")
+        for skip in skipped_no_data[:10]:  # Show first 10
+            print(f"  {skip}")
+        if len(skipped_no_data) > 10:
+            print(f"  ... and {len(skipped_no_data) - 10} more")
     
     if not results:
         print("\nNo matches could be predicted.")
@@ -351,6 +542,7 @@ def main():
     print("\n" + "=" * 60)
     print("VALUE BETS (EV > 0%)")
     print("=" * 60)
+    print("(Source: Euro=European data, Dom=Domestic fallback, Mix=Both)")
     
     value_bets = []
     
@@ -363,6 +555,7 @@ def main():
                 "odds": row["over_odds"],
                 "ev": row["over_ev"],
                 "pred_goals": row["pred_total"],
+                "source": row["data_source"],
             })
         
         if row["under_ev"] > 0:
@@ -373,6 +566,7 @@ def main():
                 "odds": row["under_odds"],
                 "ev": row["under_ev"],
                 "pred_goals": row["pred_total"],
+                "source": row["data_source"],
             })
     
     if not value_bets:
@@ -381,11 +575,11 @@ def main():
         # Sort by EV
         value_bets_df = pd.DataFrame(value_bets).sort_values("ev", ascending=False)
         
-        print(f"\n{'Match':<45} {'Bet':<12} {'Prob':>8} {'Odds':>6} {'EV':>8} {'Pred':>6}")
-        print("-" * 90)
+        print(f"\n{'Match':<45} {'Bet':<12} {'Prob':>8} {'Odds':>6} {'EV':>8} {'Pred':>6} {'Src':>5}")
+        print("-" * 95)
         
         for _, bet in value_bets_df.iterrows():
-            print(f"{bet['match']:<45} {bet['bet']:<12} {bet['prob']*100:>7.1f}% {bet['odds']:>6.2f} {bet['ev']*100:>7.1f}% {bet['pred_goals']:>6.2f}")
+            print(f"{bet['match']:<45} {bet['bet']:<12} {bet['prob']*100:>7.1f}% {bet['odds']:>6.2f} {bet['ev']*100:>7.1f}% {bet['pred_goals']:>6.2f} {bet['source']:>5}")
         
         print(f"\nTotal value bets: {len(value_bets)}")
     
@@ -394,13 +588,13 @@ def main():
     print("ALL EUROPEAN PREDICTIONS")
     print("=" * 60)
     
-    print(f"\n{'Match':<45} {'Pred':>10} {'Over%':>8} {'Under%':>8}")
-    print("-" * 75)
+    print(f"\n{'Match':<45} {'Pred':>10} {'Over%':>8} {'Under%':>8} {'Src':>5}")
+    print("-" * 80)
     
     for _, row in results_df.iterrows():
         match = f"{row['home_team']} vs {row['away_team']}"
         pred = f"{row['pred_home']:.1f}-{row['pred_away']:.1f}"
-        print(f"{match:<45} {pred:>10} {row['over_prob']*100:>7.1f}% {row['under_prob']*100:>7.1f}%")
+        print(f"{match:<45} {pred:>10} {row['over_prob']*100:>7.1f}% {row['under_prob']*100:>7.1f}% {row['data_source']:>5}")
     
     # Save results
     output_path = Path("data/processed/european/today_predictions.csv")

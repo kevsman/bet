@@ -14,13 +14,40 @@ from .european_config import EuropeanConfig, get_european_config
 
 
 def load_european_data(cfg: EuropeanConfig) -> pd.DataFrame:
-    """Load European match data."""
+    """Load European match data.
+    
+    Prefers openfootball data (combined with Wikipedia UEL/UECL) if available,
+    falls back to FBref scraped data.
+    """
+    # Prefer openfootball data (includes Wikipedia UEL/UECL)
+    openfootball_path = cfg.raw_dir / "openfootball_european.csv"
+    if openfootball_path.exists():
+        print(f"Loading openfootball data from {openfootball_path}")
+        df = pd.read_csv(openfootball_path, low_memory=False)
+        df["Date"] = pd.to_datetime(df["Date"], errors="coerce")
+        df = df.dropna(subset=["Date"])
+        
+        # Standardize column names if needed
+        if "competition_code" in df.columns and "competition" not in df.columns:
+            df["competition"] = df["competition_code"]
+        
+        # Ensure required columns exist
+        required_cols = ["Date", "HomeTeam", "AwayTeam", "FTHG", "FTAG"]
+        if not all(c in df.columns for c in required_cols):
+            print(f"  Missing columns in openfootball data, falling back to FBref")
+        else:
+            df = df.sort_values("Date").reset_index(drop=True)
+            print(f"  Loaded {len(df)} matches from openfootball + Wikipedia")
+            return df
+    
+    # Fallback to FBref scraped data
     data_path = cfg.raw_dir / "european_matches.csv"
     if not data_path.exists():
         raise FileNotFoundError(
             f"European data not found at {data_path}. Run european_fetch first."
         )
     
+    print(f"Loading FBref data from {data_path}")
     df = pd.read_csv(data_path, parse_dates=["Date"])
     df = df.sort_values("Date").reset_index(drop=True)
     return df
