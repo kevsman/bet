@@ -10,35 +10,37 @@ Resultatservice
 Statistikksenter
 Alle Sporter
 Fotball
-296
+388
 Ishockey
-15
+46
 Håndball
-16
+31
 Golf
 1
 Alpint
 1
 Langrenn
-3
+4
 Skiskyting
-4
-Formel 1
-5
-Amerikansk fotball
-84
-Basketball
-2
-Snooker
 8
-Curling
-10
-Counter-Strike
+Formel 1
 4
+Amerikansk fotball
+71
+Bandy
+3
+Basketball
+9
+Snooker
+4
+Curling
+2
+Counter-Strike
+9
 Dota 2
-14
+12
 Underholdning
-1
+2
 Avansert filter
 Avansert filter
 Trykk Enter eller Pil ned for å velge. Trykk Escape for å tilbakestille.
@@ -76,49 +78,221 @@ Totalt antall mål - over/under 3.5
 Begge lag scorer
 Uavgjort tilbakebetales
 1. omgang - HUB
-Europa
-Spesialer
-(1)
-Tor. 27/11 18:44
-Europa League-spesialer
-UEFA Europa League
-Vsport1
-Vis odds
-Europa Conference League
-(18)
-Uefa Europa League
-(18)
-Uefa Champions League Vinnerspill
-(1)
-Uefa Europa League Vinnerspill
-(1)
-Uefa Women'S Nations League
-(2)
-England
 Norge
+Eliteserien
+(8)
+Søn. 30/11 17:00
+Viking
+Vålerenga
+Norge - Eliteserien
+TV2 Direkte
+TOTALT ANTALL MÅL - OVER/UNDER 1.5
+Over 1.5
+1.06
+Under 1.5
+7.80
+TOTALT ANTALL MÅL - OVER/UNDER 2.5
+Over 2.5
+1.27
+Under 2.5
+3.60
+TOTALT ANTALL MÅL - OVER/UNDER 3.5
+Over 3.5
+1.70
+Under 3.5
+2.10
++49
+Søn. 30/11 17:00
+Sandefjord
+KFUM
+Norge - Eliteserien
+TV2 Play
+TOTALT ANTALL MÅL - OVER/UNDER 1.5
+Over 1.5
+1.20
+Under 1.5
+4.20
+TOTALT ANTALL MÅL - OVER/UNDER 2.5
+Over 2.5
+1.65
+Under 2.5
+2.15
+TOTALT ANTALL MÅL - OVER/UNDER 3.5
+Over 3.5
+2.65
+Under 3.5
+1.45
++50
+Søn. 30/11 17:00
+Bodø/Glimt
+Fredrikstad
+Norge - Eliteserien
+TV2 Sport 1
+TOTALT ANTALL MÅL - OVER/UNDER 1.5
+Over 1.5
+1.07
+Under 1.5
+7.35
+TOTALT ANTALL MÅL - OVER/UNDER 2.5
+Over 2.5
+1.27
+Under 2.5
+3.55
+TOTALT ANTALL MÅL - OVER/UNDER 3.5
+Over 3.5
+1.70
+Under 3.5
+2.10
++49
+Søn. 30/11 17:00
+Brann
+HamKam
+Norge - Eliteserien
+TV2 Play
+TOTALT ANTALL MÅL - OVER/UNDER 1.5
+Over 1.5
+1.13
+Under 1.5
+5.40
+TOTALT ANTALL MÅL - OVER/UNDER 2.5
+Over 2.5
+1.45
+Under 2.5
+2.65
+TOTALT ANTALL MÅL - OVER/UNDER 3.5
+Over 3.5
+2.15
+Under 3.5
+1.65
++49
+Søn. 30/11 17:00
+Rosenborg
+Strømsgodset
+Norge - Eliteserien
+TV2 Play
+TOTALT ANTALL MÅL - OVER/UNDER 1.5
+Over 1.5
+1.10
+Under 1.5
+6.10
+TOTALT ANTALL MÅL - OVER/UNDER 2.5
+Over 2.5
+1.38
+Under 2.5
+2.90
+TOTALT ANTALL MÅL - OVER/UNDER 3.5
+Over 3.5
+1.95
+Under 3.5
+1.80
++50
+Søn. 30/11 17:00
+Sarpsborg 08
+Molde
+Norge - Eliteserien
+TV2 Play
+TOTALT ANTALL MÅL - OVER/UNDER 1.5
+Over 1.5
+1.11
+Under 1.5
+6.00
+TOTALT ANTALL MÅL - OVER/UNDER 2.5
+Over 2.5
+1.38
+Under 2.5
+2.90
+TOTALT ANTALL MÅL - OVER/UNDER 3.5
+Over 3.5
+1.97
+Under 3.5
+1.77
++50
+Søn. 30/11 17:00
+Haugesund
+Bryne
+Norge - Eliteserien
+TV2 Play
+TOTALT ANTALL MÅL - OVER/UNDER 1.5
+Over 1.5
+1.20
+Under 1.5
+4.30
+TOTALT ANTALL MÅL - OVER/UNDER 2.5
+Over 2.5
+1.62
+Under 2.5
+2.20
+TOTALT ANTALL MÅL - OVER/UNDER 3.5
+Over 3.5
+2.55
+Under 3.5
+1.48
++50
+Søn. 30/11 17:00
+Kristiansund
+Tromsø
+Norge - Eliteserien
+TV2 Play
+TOTALT ANTALL MÅL - OVER/UNDER 1.5
+Over 1.5
+1.20
+Under 1.5
+4.30
+TOTALT ANTALL MÅL - OVER/UNDER 2.5
+Over 2.5
+1.62
+Under 2.5
+2.20
+TOTALT ANTALL MÅL - OVER/UNDER 3.5
+Over 3.5
+2.55
+Under 3.5
+1.47
++49
+Nm Menn
+(1)
+Eliteserien Vinnerspill
+(1)
+Kvalik Til Eliteserien
+(1)
+Kval Til Obos-Ligaen
+(1)
+Postnord-Ligaen, Avdeling 2
+(1)
+England
+Europa
 Spania
 Sør-Amerika
 Internasjonal
 Tyskland
 Italia
 Frankrike
+Argentina
 Australia
 Belgia
 Brasil
+Chile
 Danmark
+England Kvinner Og Lavere Divisjoner
+Hellas
+Israel
 Japan
 Kroatia
+Kypros
 Mexico
 Nederland
-Paraguay
 Polen
 Portugal
+Romania
 Skottland
+Slovakia
 Slovenia
 Sverige
 Sveits
+Sør-Afrika
 Sør-Korea
 Tsjekkia
 Tyrkia
+Ungarn
 Usa
 Østerrike

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>European Competition Betting Recommendations</title>
+    <title>Value Bets - Domestic Leagues</title>
     <style>
         * {
             margin: 0;
@@ -16,15 +16,17 @@
             background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
             min-height: 100vh;
             padding: 20px;
+            color: #e0e0e0;
         }
         
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            background: white;
+            background: #0f0f23;
             border-radius: 15px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
             overflow: hidden;
+            border: 1px solid #2d2d44;
         }
         
         .header {
@@ -32,588 +34,1497 @@
             color: white;
             padding: 40px;
             text-align: center;
+            border-bottom: 2px solid #e94560;
         }
         
         .header h1 {
-            font-size: 2.5em;
+            font-size: 2.2em;
             margin-bottom: 10px;
+            color: #e94560;
         }
         
         .header .subtitle {
             font-size: 1.1em;
-            opacity: 0.9;
+            color: #4ecca3;
+            margin-bottom: 5px;
+        }
+        
+        .header .model-info {
+            font-size: 0.95em;
+            color: #a0a0b0;
         }
         
         .header .timestamp {
             margin-top: 15px;
-            font-size: 0.9em;
-            opacity: 0.8;
+            font-size: 0.85em;
+            color: #666;
         }
         
         .summary {
-            background: #f8f9fa;
-            padding: 30px;
+            background: #1a1a2e;
+            padding: 25px 30px;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            border-bottom: 3px solid #e9ecef;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            border-bottom: 1px solid #2d2d44;
         }
         
         .summary-card {
-            background: white;
-            padding: 20px;
+            background: linear-gradient(135deg, #16213e 0%, #1a1a2e 100%);
+            padding: 18px 15px;
             border-radius: 10px;
             text-align: center;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-        
-        .summary-card .value {
-            font-size: 2em;
-            font-weight: bold;
-            color: #0f3460;
+            border: 1px solid #2d2d44;
         }
         
         .summary-card .label {
-            color: #6c757d;
-            margin-top: 5px;
+            color: #888;
+            font-size: 0.8em;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+        }
+        
+        .summary-card .value {
+            font-size: 1.8em;
+            font-weight: bold;
+        }
+        
+        .summary-card .value.green { color: #4ecca3; }
+        .summary-card .value.red { color: #e94560; }
+        .summary-card .value.yellow { color: #fbbf24; }
+        .summary-card .value.purple { color: #a855f7; }
+        .summary-card .value.blue { color: #60a5fa; }
+        
+        .bet-list {
+            padding: 25px;
         }
         
         .section-title {
-            padding: 30px;
-            padding-bottom: 0;
-            font-size: 1.5em;
-            color: #333;
+            color: #e94560;
+            font-size: 1.2em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #2d2d44;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
         
-        .top-picks {
-            padding: 30px;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 20px;
-        }
-        
-        .pick-card {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        .section-title .count {
+            background: #2d2d44;
+            padding: 5px 12px;
             border-radius: 15px;
-            padding: 25px;
-            color: white;
-            position: relative;
+            font-size: 0.8em;
+            color: #a0a0b0;
+        }
+        
+        /* Compact Bet Table */
+        .bet-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            background: #16213e;
+            border-radius: 12px;
             overflow: hidden;
         }
         
-        .pick-card.rank-1 {
-            background: linear-gradient(135deg, #f5af19 0%, #f12711 100%);
+        .bet-table th {
+            background: #0f0f23;
+            padding: 12px 10px;
+            text-align: left;
+            font-size: 0.75em;
+            text-transform: uppercase;
+            color: #666;
+            font-weight: 600;
+            border-bottom: 2px solid #2d2d44;
+            position: sticky;
+            top: 0;
+            z-index: 10;
         }
         
-        .pick-card.rank-2 {
-            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
-        }
-        
-        .pick-card.rank-3 {
-            background: linear-gradient(135deg, #4776E6 0%, #8E54E9 100%);
-        }
-        
-        .pick-card .rank {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: rgba(255,255,255,0.2);
-            border-radius: 50%;
+        .bet-table th:first-child {
+            padding-left: 15px;
             width: 40px;
-            height: 40px;
+        }
+        
+        .bet-table td {
+            padding: 12px 10px;
+            border-bottom: 1px solid #2d2d44;
+            vertical-align: middle;
+        }
+        
+        .bet-table tr {
+            transition: background 0.2s;
+        }
+        
+        .bet-table tbody tr:hover {
+            background: #1e2a47;
+        }
+        
+        .bet-table tbody tr.selected {
+            background: rgba(78, 204, 163, 0.1);
+        }
+        
+        .bet-table tbody tr.top-pick {
+            border-left: 3px solid #4ecca3;
+        }
+        
+        .bet-table tbody tr.strong {
+            border-left: 3px solid #fbbf24;
+        }
+        
+        .bet-row-checkbox input {
+            display: none;
+        }
+        
+        .bet-row-checkbox label {
+            width: 22px;
+            height: 22px;
+            background: #2d2d44;
+            border: 2px solid #3d3d54;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: transparent;
+            font-size: 0.85em;
+        }
+        
+        .bet-row-checkbox input:checked + label {
+            background: #4ecca3;
+            border-color: #4ecca3;
+            color: #0f0f23;
+        }
+        
+        .match-cell {
+            min-width: 180px;
+        }
+        
+        .match-cell .teams {
+            font-weight: 600;
+            color: #fff;
+            font-size: 0.95em;
+            margin-bottom: 2px;
+        }
+        
+        .match-cell .meta {
+            font-size: 0.75em;
+            color: #666;
+        }
+        
+        .match-cell .league {
+            color: #a0a0b0;
+            background: #2d2d44;
+            padding: 2px 6px;
+            border-radius: 4px;
+            margin-right: 8px;
+        }
+        
+        .match-cell .date {
+            color: #4ecca3;
+        }
+        
+        .bet-type-cell {
+            font-weight: 600;
+            padding: 5px 10px;
+            border-radius: 6px;
+            font-size: 0.85em;
+            display: inline-block;
+            white-space: nowrap;
+        }
+        
+        .bet-type-cell.over {
+            background: linear-gradient(135deg, #e94560 0%, #ff6b6b 100%);
+            color: white;
+        }
+        
+        .bet-type-cell.under {
+            background: linear-gradient(135deg, #4ecca3 0%, #45b7a0 100%);
+            color: white;
+        }
+        
+        .odds-cell {
+            font-weight: bold;
+            color: #fbbf24;
+            font-size: 1em;
+        }
+        
+        .ev-cell {
+            font-weight: bold;
+            color: #4ecca3;
+            font-size: 1em;
+        }
+        
+        .edge-cell {
+            color: #60a5fa;
+            font-size: 0.95em;
+        }
+        
+        .prob-cell {
+            color: #a855f7;
+            font-size: 0.95em;
+        }
+        
+        .stake-cell {
+            color: #e94560;
+            font-size: 0.95em;
+        }
+        
+        .goals-cell {
+            color: #fbbf24;
+            font-weight: bold;
+            font-size: 0.95em;
+        }
+        
+        .models-cell {
+            font-size: 0.8em;
+            min-width: 140px;
+        }
+        
+        .model-mini {
+            display: flex;
+            gap: 3px;
+            align-items: center;
+            margin-bottom: 2px;
+        }
+        
+        .model-mini:last-child {
+            margin-bottom: 0;
+        }
+        
+        .model-label {
+            width: 14px;
+            height: 14px;
+            border-radius: 3px;
+            font-size: 0.65em;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .model-label.poisson {
+            background: #60a5fa;
+            color: #0f0f23;
+        }
+        
+        .model-label.dc {
+            background: #a855f7;
+            color: #0f0f23;
+        }
+        
+        .model-mini .model-prob {
+            color: #a0a0b0;
+        }
+        
+        .model-mini .model-score {
+            color: #666;
+            font-size: 0.9em;
+        }
+        
+        .badge-mini {
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.65em;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        
+        .badge-mini.top { background: #4ecca3; color: #0f0f23; }
+        .badge-mini.strong { background: #fbbf24; color: #0f0f23; }
+        
+        /* Legacy styles for Top 5 cards (keeping card format there) */
+        .bet-card {
+            background: linear-gradient(135deg, #16213e 0%, #1a1a2e 100%);
+            border: 1px solid #2d2d44;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+        }
+        
+        .bet-card:hover {
+            border-color: #e94560;
+            box-shadow: 0 5px 20px rgba(233, 69, 96, 0.15);
+            transform: translateY(-2px);
+        }
+        
+        .bet-card.top-pick {
+            border-left: 4px solid #4ecca3;
+        }
+        
+        .bet-card.strong {
+            border-left: 4px solid #fbbf24;
+        }
+        
+        .badge {
+            padding: 5px 12px;
+            border-radius: 12px;
+            font-size: 0.75em;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        
+        .badge.top { background: #4ecca3; color: #0f0f23; }
+        .badge.strong { background: #fbbf24; color: #0f0f23; }
+        
+        .bet-type {
+            font-size: 1.1em;
+            font-weight: bold;
+            padding: 10px 18px;
+            border-radius: 8px;
+            color: white;
+        }
+        
+        .bet-type.over {
+            background: linear-gradient(135deg, #e94560 0%, #ff6b6b 100%);
+        }
+        
+        .bet-type.under {
+            background: linear-gradient(135deg, #4ecca3 0%, #45b7a0 100%);
+        }
+        
+        .bet-odds {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #fff;
+        }
+        
+        .bet-odds span {
+            color: #888;
+            font-size: 0.7em;
+            font-weight: normal;
+        }
+        
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 12px;
+        }
+        
+        .metric {
+            background: #0f0f23;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #2d2d44;
+        }
+        
+        .metric .label {
+            color: #666;
+            font-size: 0.7em;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+        
+        .metric .value {
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+        
+        .metric .value.green { color: #4ecca3; }
+        .metric .value.red { color: #e94560; }
+        .metric .value.yellow { color: #fbbf24; }
+        .metric .value.purple { color: #a855f7; }
+        .metric .value.blue { color: #60a5fa; }
+        
+        .metric .sub {
+            color: #555;
+            font-size: 0.7em;
+            margin-top: 2px;
+        }
+        
+        .model-comparison {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #2d2d44;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        
+        .model-box {
+            background: #0f0f23;
+            border: 1px solid #2d2d44;
+            border-radius: 8px;
+            padding: 12px 15px;
+            min-width: 160px;
+        }
+        
+        .model-box.poisson {
+            border-left: 3px solid #60a5fa;
+        }
+        
+        .model-box.dixon-coles {
+            border-left: 3px solid #a855f7;
+        }
+        
+        .model-title {
+            font-size: 0.75em;
+            text-transform: uppercase;
+            color: #888;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        
+        .model-box.poisson .model-title { color: #60a5fa; }
+        .model-box.dixon-coles .model-title { color: #a855f7; }
+        
+        .model-stats {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .model-stat {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+        
+        .stat-label {
+            font-size: 0.65em;
+            color: #555;
+            text-transform: uppercase;
+        }
+        
+        .stat-value {
+            font-size: 1em;
+            font-weight: bold;
+            color: #e0e0e0;
+        }
+        
+        .model-source {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.8em;
+        }
+        
+        .source-label {
+            color: #555;
+        }
+        
+        .source-value {
+            color: #4ecca3;
+            font-weight: 500;
+        }
+        
+        .footer {
+            background: #0f0f23;
+            padding: 20px;
+            text-align: center;
+            color: #555;
+            font-size: 0.85em;
+            border-top: 1px solid #2d2d44;
+        }
+        
+        .footer a {
+            color: #4ecca3;
+            text-decoration: none;
+        }
+        
+        /* Top 5 Section */
+        .top-bets {
+            background: linear-gradient(135deg, #16213e 0%, #1a1a2e 100%);
+            padding: 25px;
+            border-bottom: 1px solid #2d2d44;
+        }
+        
+        .top-bets-title {
+            color: #e94560;
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .top-bets-title .icon {
+            font-size: 1.3em;
+        }
+        
+        .top-bets-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+        }
+        
+        .top-bet-card {
+            background: #0f0f23;
+            border: 1px solid #2d2d44;
+            border-radius: 10px;
+            padding: 15px;
+            position: relative;
+        }
+        
+        .top-bet-card .rank {
+            position: absolute;
+            top: -8px;
+            left: -8px;
+            background: #e94560;
+            color: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: bold;
+            font-size: 0.85em;
+        }
+        
+        .top-bet-card .teams {
+            font-weight: bold;
+            color: #fff;
+            margin-bottom: 8px;
+            font-size: 0.95em;
+        }
+        
+        .top-bet-card .bet-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        
+        .top-bet-card .bet-label {
+            font-size: 0.85em;
+            padding: 4px 10px;
+            border-radius: 5px;
+            color: white;
+        }
+        
+        .top-bet-card .bet-label.over { background: #e94560; }
+        .top-bet-card .bet-label.under { background: #4ecca3; }
+        
+        .top-bet-card .odds-display {
+            color: #fbbf24;
+            font-weight: bold;
+        }
+        
+        .top-bet-card .ev-display {
+            color: #4ecca3;
+            font-size: 1.1em;
+            font-weight: bold;
+        }
+        
+        /* Calculator Section */
+        .calculator {
+            background: #1a1a2e;
+            padding: 25px;
+            border-bottom: 1px solid #2d2d44;
+        }
+        
+        .calculator-title {
+            color: #4ecca3;
             font-size: 1.2em;
-        }
-        
-        .pick-card .match {
-            font-size: 1.3em;
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-        
-        .pick-card .league {
-            opacity: 0.8;
-            font-size: 0.9em;
-            margin-bottom: 15px;
-        }
-        
-        .pick-card .bet-type {
-            background: rgba(255,255,255,0.2);
-            display: inline-block;
-            padding: 8px 15px;
-            border-radius: 20px;
-            font-weight: bold;
-            margin-bottom: 15px;
-        }
-        
-        .pick-card .stats {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
             gap: 10px;
-            margin-top: 15px;
         }
         
-        .pick-card .stat {
+        .calculator-controls {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+        
+        .bankroll-input {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .bankroll-input label {
+            color: #a0a0b0;
+            font-size: 0.9em;
+        }
+        
+        .bankroll-input input {
+            background: #0f0f23;
+            border: 1px solid #2d2d44;
+            border-radius: 8px;
+            padding: 10px 15px;
+            color: #fff;
+            font-size: 1.1em;
+            width: 150px;
+            text-align: right;
+        }
+        
+        .bankroll-input input:focus {
+            outline: none;
+            border-color: #4ecca3;
+        }
+        
+        .calc-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .calc-btn {
+            background: #2d2d44;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 20px;
+            color: #a0a0b0;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: all 0.2s;
+        }
+        
+        .calc-btn:hover {
+            background: #3d3d54;
+            color: #fff;
+        }
+        
+        .calc-btn.primary {
+            background: #4ecca3;
+            color: #0f0f23;
+        }
+        
+        .calc-btn.primary:hover {
+            background: #5fd9b0;
+        }
+        
+        .calc-results {
+            background: #0f0f23;
+            border-radius: 10px;
+            padding: 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+        }
+        
+        .calc-result {
             text-align: center;
         }
         
-        .pick-card .stat .value {
+        .calc-result .label {
+            color: #666;
+            font-size: 0.8em;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+        
+        .calc-result .value {
             font-size: 1.5em;
             font-weight: bold;
         }
         
-        .pick-card .stat .label {
-            font-size: 0.8em;
-            opacity: 0.8;
+        .calc-result .value.green { color: #4ecca3; }
+        .calc-result .value.red { color: #e94560; }
+        .calc-result .value.yellow { color: #fbbf24; }
+        
+        /* Bet Selection */
+        .bet-card {
+            position: relative;
         }
         
-        .all-bets {
-            padding: 30px;
+        .bet-checkbox {
+            position: absolute;
+            top: 15px;
+            right: 15px;
         }
         
-        .bet-table {
-            width: 100%;
-            border-collapse: collapse;
+        .bet-checkbox input {
+            display: none;
         }
         
-        .bet-table th {
-            background: #0f3460;
-            color: white;
-            padding: 15px;
-            text-align: left;
+        .bet-checkbox label {
+            width: 28px;
+            height: 28px;
+            background: #2d2d44;
+            border: 2px solid #3d3d54;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: transparent;
+            font-size: 1em;
         }
         
-        .bet-table td {
-            padding: 15px;
-            border-bottom: 1px solid #e9ecef;
+        .bet-checkbox input:checked + label {
+            background: #4ecca3;
+            border-color: #4ecca3;
+            color: #0f0f23;
         }
         
-        .bet-table tr:hover {
-            background: #f8f9fa;
+        .bet-checkbox label:hover {
+            border-color: #4ecca3;
         }
         
-        .bet-table .ev-positive {
-            color: #28a745;
-            font-weight: bold;
+        .bet-card.selected {
+            border-color: #4ecca3;
+            box-shadow: 0 0 15px rgba(78, 204, 163, 0.2);
         }
         
-        .bet-table .bet-type {
-            background: #e3f2fd;
-            padding: 5px 10px;
-            border-radius: 15px;
-            font-size: 0.9em;
-        }
-        
-        .calculator {
-            background: #f8f9fa;
-            padding: 30px;
-            margin: 30px;
-            border-radius: 15px;
-        }
-        
-        .calculator h3 {
-            margin-bottom: 20px;
-            color: #333;
-        }
-        
-        .calculator-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-        }
-        
-        .calculator input {
-            width: 100%;
-            padding: 15px;
-            border: 2px solid #ddd;
-            border-radius: 10px;
-            font-size: 1.1em;
-        }
-        
-        .calculator input:focus {
-            border-color: #0f3460;
-            outline: none;
-        }
-        
-        .calculator .result {
-            background: #0f3460;
-            color: white;
-            padding: 20px;
-            border-radius: 10px;
-            text-align: center;
-            margin-top: 20px;
-        }
-        
-        .calculator .result .amount {
-            font-size: 2em;
-            font-weight: bold;
-        }
-        
-        .footer {
-            background: #1a1a2e;
-            color: white;
-            padding: 30px;
-            text-align: center;
-        }
-        
-        .footer p {
-            margin: 5px 0;
-            opacity: 0.8;
+        @media (max-width: 768px) {
+            .header h1 { font-size: 1.6em; }
+            .match-teams { font-size: 1.1em; }
+            .summary { grid-template-columns: repeat(2, 1fr); }
+            .metrics-grid { grid-template-columns: repeat(2, 1fr); }
+            .top-bets-grid { grid-template-columns: 1fr; }
+            .calculator-controls { flex-direction: column; align-items: stretch; }
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>⚽ European Competition Bets</h1>
-            <div class="subtitle">UCL • Europa League • Conference League</div>
-            <div class="timestamp">Generated: 2025-11-27 16:22</div>
+            <h1>Value Bets Report</h1>
+            <div class="subtitle">Domestic Leagues</div>
+            <div class="model-info">Dixon-Coles + Poisson Ensemble Model</div>
+            <div class="timestamp">Generated: November 29, 2025 at 12:14</div>
         </div>
         
         <div class="summary">
             <div class="summary-card">
-                <div class="value">16</div>
-                <div class="label">Value Bets Found</div>
+                <div class="label">Value Bets</div>
+                <div class="value green">17</div>
             </div>
             <div class="summary-card">
-                <div class="value">32</div>
-                <div class="label">Matches Analyzed</div>
-            </div>
-            <div class="summary-card">
-                <div class="value">47.6%</div>
                 <div class="label">Total Stake</div>
+                <div class="value red">30.1%</div>
             </div>
             <div class="summary-card">
-                <div class="value">14.4%</div>
-                <div class="label">Avg Expected Value</div>
+                <div class="label">Avg EV</div>
+                <div class="value green">+6.4%</div>
+            </div>
+            <div class="summary-card">
+                <div class="label">Best EV</div>
+                <div class="value green">+8.5%</div>
+            </div>
+            <div class="summary-card">
+                <div class="label">Avg Odds</div>
+                <div class="value yellow">2.27</div>
+            </div>
+            <div class="summary-card">
+                <div class="label">Over / Under</div>
+                <div class="value blue">3 / 14</div>
             </div>
         </div>
-        
-        <h2 class="section-title">🏆 Top 5 Picks</h2>
-        <div class="top-picks">
 
-            <div class="pick-card rank-1">
-                <div class="rank">#1</div>
-                <div class="match">Nottingham Forest vs Malmö FF</div>
-                <div class="league">Internasjonal Klubb - UEFA Europa League</div>
-                <div class="bet-type">Under 2.5 @ 2.30</div>
-                <div class="stats">
-                    <div class="stat">
-                        <div class="value">+33.3%</div>
-                        <div class="label">EV</div>
-                    </div>
-                    <div class="stat">
-                        <div class="value">2.30</div>
-                        <div class="label">Odds</div>
-                    </div>
-                    <div class="stat">
-                        <div class="value">58%</div>
-                        <div class="label">Probability</div>
-                    </div>
-                    <div class="stat">
-                        <div class="value">2.4</div>
-                        <div class="label">Pred Goals</div>
-                    </div>
-                </div>
+        <div class="top-bets">
+            <div class="top-bets-title">
+                <span class="icon">&#9733;</span>
+                <span>Top 5 Value Bets</span>
             </div>
+            <div class="top-bets-grid">
 
-            <div class="pick-card rank-2">
-                <div class="rank">#2</div>
-                <div class="match">Lech Poznan vs Lausanne</div>
-                <div class="league">UEFA Conference League - Europe</div>
-                <div class="bet-type">Under 2.5 @ 2.60</div>
-                <div class="stats">
-                    <div class="stat">
-                        <div class="value">+29.7%</div>
-                        <div class="label">EV</div>
+                <div class="top-bet-card">
+                    <div class="rank">1</div>
+                    <div class="teams">Brentford vs Burnley</div>
+                    <div class="bet-info">
+                        <span class="bet-label under">Under 2.5</span>
+                        <span class="odds-display">@ 2.00</span>
                     </div>
-                    <div class="stat">
-                        <div class="value">2.60</div>
-                        <div class="label">Odds</div>
-                    </div>
-                    <div class="stat">
-                        <div class="value">50%</div>
-                        <div class="label">Probability</div>
-                    </div>
-                    <div class="stat">
-                        <div class="value">2.7</div>
-                        <div class="label">Pred Goals</div>
-                    </div>
+                    <div class="ev-display">+16.9% EV</div>
                 </div>
-            </div>
 
-            <div class="pick-card rank-3">
-                <div class="rank">#3</div>
-                <div class="match">Fiorentina vs AEK Athens</div>
-                <div class="league">UEFA Conference League - Europe</div>
-                <div class="bet-type">Over 2.5 @ 1.85</div>
-                <div class="stats">
-                    <div class="stat">
-                        <div class="value">+27.5%</div>
-                        <div class="label">EV</div>
+                <div class="top-bet-card">
+                    <div class="rank">2</div>
+                    <div class="teams">Angers SCO vs Lens</div>
+                    <div class="bet-info">
+                        <span class="bet-label under">Under 2.5</span>
+                        <span class="odds-display">@ 1.92</span>
                     </div>
-                    <div class="stat">
-                        <div class="value">1.85</div>
-                        <div class="label">Odds</div>
-                    </div>
-                    <div class="stat">
-                        <div class="value">69%</div>
-                        <div class="label">Probability</div>
-                    </div>
-                    <div class="stat">
-                        <div class="value">3.6</div>
-                        <div class="label">Pred Goals</div>
-                    </div>
+                    <div class="ev-display">+15.4% EV</div>
                 </div>
-            </div>
 
-            <div class="pick-card ">
-                <div class="rank">#4</div>
-                <div class="match">Breidablik vs Samsunspor</div>
-                <div class="league">UEFA Conference League - Europe</div>
-                <div class="bet-type">Under 2.5 @ 2.15</div>
-                <div class="stats">
-                    <div class="stat">
-                        <div class="value">+20.7%</div>
-                        <div class="label">EV</div>
+                <div class="top-bet-card">
+                    <div class="rank">3</div>
+                    <div class="teams">Liverpool vs Sunderland</div>
+                    <div class="bet-info">
+                        <span class="bet-label under">Under 2.5</span>
+                        <span class="odds-display">@ 2.45</span>
                     </div>
-                    <div class="stat">
-                        <div class="value">2.15</div>
-                        <div class="label">Odds</div>
-                    </div>
-                    <div class="stat">
-                        <div class="value">56%</div>
-                        <div class="label">Probability</div>
-                    </div>
-                    <div class="stat">
-                        <div class="value">2.4</div>
-                        <div class="label">Pred Goals</div>
-                    </div>
+                    <div class="ev-display">+17.4% EV</div>
                 </div>
-            </div>
 
-            <div class="pick-card ">
-                <div class="rank">#5</div>
-                <div class="match">Genk vs FC Basel</div>
-                <div class="league">Uefa Europa League Vinnerspill</div>
-                <div class="bet-type">Under 2.5 @ 2.20</div>
-                <div class="stats">
-                    <div class="stat">
-                        <div class="value">+19.3%</div>
-                        <div class="label">EV</div>
+                <div class="top-bet-card">
+                    <div class="rank">4</div>
+                    <div class="teams">Leicester City vs Sheffield United</div>
+                    <div class="bet-info">
+                        <span class="bet-label under">Under 2.5</span>
+                        <span class="odds-display">@ 1.82</span>
                     </div>
-                    <div class="stat">
-                        <div class="value">2.20</div>
-                        <div class="label">Odds</div>
-                    </div>
-                    <div class="stat">
-                        <div class="value">54%</div>
-                        <div class="label">Probability</div>
-                    </div>
-                    <div class="stat">
-                        <div class="value">2.5</div>
-                        <div class="label">Pred Goals</div>
-                    </div>
+                    <div class="ev-display">+12.7% EV</div>
                 </div>
-            </div>
 
+                <div class="top-bet-card">
+                    <div class="rank">5</div>
+                    <div class="teams">Girona vs Real Madrid</div>
+                    <div class="bet-info">
+                        <span class="bet-label under">Under 3.5</span>
+                        <span class="odds-display">@ 1.77</span>
+                    </div>
+                    <div class="ev-display">+11.9% EV</div>
+                </div>
+
+            </div>
         </div>
-        
+
         <div class="calculator">
-            <h3>💰 Bet Calculator</h3>
-            <div class="calculator-grid">
-                <div>
-                    <label>Your Bankroll (kr)</label>
-                    <input type="number" id="bankroll" value="1000" onchange="calculateStakes()">
+            <div class="calculator-title">
+                <span>&#128176;</span>
+                <span>Bet Calculator</span>
+            </div>
+            <div class="calculator-controls">
+                <div class="bankroll-input">
+                    <label for="bankroll">Bankroll (kr):</label>
+                    <input type="number" id="bankroll" value="500" min="0" step="100">
                 </div>
-                <div>
-                    <label>Kelly Fraction</label>
-                    <input type="number" id="kellyFraction" value="0.25" step="0.05" onchange="calculateStakes()">
+                <div class="calc-buttons">
+                    <button class="calc-btn" onclick="selectAll()">Select All</button>
+                    <button class="calc-btn" onclick="selectNone()">Clear All</button>
+                    <button class="calc-btn" onclick="selectTop5()">Top 5 Only</button>
+                    <button class="calc-btn primary" onclick="calculateBets()">Calculate</button>
                 </div>
             </div>
-            <div class="result">
-                <div>Recommended Total Stake</div>
-                <div class="amount" id="totalStake">-</div>
+            <div class="calc-results">
+                <div class="calc-result">
+                    <div class="label">Selected Bets</div>
+                    <div class="value green" id="selected-count">0</div>
+                </div>
+                <div class="calc-result">
+                    <div class="label">Total to Stake</div>
+                    <div class="value red" id="total-stake">0 kr</div>
+                </div>
+                <div class="calc-result">
+                    <div class="label">Expected Return</div>
+                    <div class="value yellow" id="expected-return">0 kr</div>
+                </div>
+                <div class="calc-result">
+                    <div class="label">Expected Profit</div>
+                    <div class="value green" id="expected-profit">0 kr</div>
+                </div>
             </div>
         </div>
         
-        <h2 class="section-title">📊 All Value Bets</h2>
-        <div class="all-bets">
+        <div class="bet-list">
+            <div class="section-title">
+                <span>All Value Bets</span>
+                <span class="count">17 bets found</span>
+            </div>
+            
             <table class="bet-table">
                 <thead>
                     <tr>
+                        <th></th>
                         <th>Match</th>
-                        <th>Competition</th>
                         <th>Bet</th>
                         <th>Odds</th>
-                        <th>Prob</th>
                         <th>EV</th>
+                        <th>Edge</th>
+                        <th>Prob</th>
                         <th>Goals</th>
+                        <th>Stake</th>
+                        <th>Models (P / DC)</th>
                     </tr>
                 </thead>
                 <tbody>
 
-                    <tr>
-                        <td><strong>Nottingham Forest</strong> vs Malmö FF</td>
-                        <td>Internasjonal Klubb - UEFA Europa League</td>
-                        <td><span class="bet-type">Under 2.5</span></td>
-                        <td>2.30</td>
-                        <td>58%</td>
-                        <td class="ev-positive">+33.3%</td>
-                        <td>2.36</td>
+                    <tr class="top-pick" data-bet-id="0" data-odds="2.0" data-stake="0.0211414837776658" data-ev="0.0845659351106633" data-prob="0.5845659351106633">
+                        <td>
+                            <div class="bet-row-checkbox">
+                                <input type="checkbox" id="bet-0" checked onchange="updateCalculator()">
+                                <label for="bet-0">&#10003;</label>
+                            </div>
+                        </td>
+                        <td class="match-cell">
+                            <div class="teams">Brentford vs Burnley</div>
+                            <div class="meta">
+                                <span class="league">Unknown</span>
+                                <span class="date">2025-11-29 16:00</span>
+                            </div>
+                        </td>
+                        <td><span class="bet-type-cell under">Under 2.5</span></td>
+                        <td class="odds-cell">2.00</td>
+                        <td class="ev-cell">+16.9% <span class="badge-mini top">Top</span></td>
+                        <td class="edge-cell">+8.5%</td>
+                        <td class="prob-cell">58.5%</td>
+                        <td class="goals-cell">2.30</td>
+                        <td class="stake-cell">2.1%</td>
+                        <td class="models-cell">
+                            <div class="model-mini">
+                                <span class="model-label poisson">P</span>
+                                <span class="model-prob">59%</span>
+                                <span class="model-score">(1.2-1.1)</span>
+                            </div>
+                            <div class="model-mini">
+                                <span class="model-label dc">D</span>
+                                <span class="model-prob">57%</span>
+                                <span class="model-score">(1.5-0.9)</span>
+                            </div>
+                        </td>
                     </tr>
 
-                    <tr>
-                        <td><strong>Lech Poznan</strong> vs Lausanne</td>
-                        <td>UEFA Conference League</td>
-                        <td><span class="bet-type">Under 2.5</span></td>
-                        <td>2.60</td>
-                        <td>50%</td>
-                        <td class="ev-positive">+29.7%</td>
-                        <td>2.68</td>
+                    <tr class="top-pick" data-bet-id="1" data-odds="1.92" data-stake="0.0217642661229071" data-ev="0.0800924993322981" data-prob="0.6009258326656315">
+                        <td>
+                            <div class="bet-row-checkbox">
+                                <input type="checkbox" id="bet-1" checked onchange="updateCalculator()">
+                                <label for="bet-1">&#10003;</label>
+                            </div>
+                        </td>
+                        <td class="match-cell">
+                            <div class="teams">Angers SCO vs Lens</div>
+                            <div class="meta">
+                                <span class="league">Unknown</span>
+                                <span class="date">2025-11-30 17:15</span>
+                            </div>
+                        </td>
+                        <td><span class="bet-type-cell under">Under 2.5</span></td>
+                        <td class="odds-cell">1.92</td>
+                        <td class="ev-cell">+15.4% <span class="badge-mini top">Top</span></td>
+                        <td class="edge-cell">+8.0%</td>
+                        <td class="prob-cell">60.1%</td>
+                        <td class="goals-cell">2.65</td>
+                        <td class="stake-cell">2.2%</td>
+                        <td class="models-cell">
+                            <div class="model-mini">
+                                <span class="model-label poisson">P</span>
+                                <span class="model-prob">51%</span>
+                                <span class="model-score">(1.2-1.4)</span>
+                            </div>
+                            <div class="model-mini">
+                                <span class="model-label dc">D</span>
+                                <span class="model-prob">74%</span>
+                                <span class="model-score">(0.6-1.1)</span>
+                            </div>
+                        </td>
                     </tr>
 
-                    <tr>
-                        <td><strong>Fiorentina</strong> vs AEK Athens</td>
-                        <td>UEFA Conference League</td>
-                        <td><span class="bet-type">Over 2.5</span></td>
-                        <td>1.85</td>
-                        <td>69%</td>
-                        <td class="ev-positive">+27.5%</td>
-                        <td>3.56</td>
+                    <tr class="top-pick" data-bet-id="2" data-odds="2.45" data-stake="0.0122401995982261" data-ev="0.0709931576697119" data-prob="0.4791564229758343">
+                        <td>
+                            <div class="bet-row-checkbox">
+                                <input type="checkbox" id="bet-2" checked onchange="updateCalculator()">
+                                <label for="bet-2">&#10003;</label>
+                            </div>
+                        </td>
+                        <td class="match-cell">
+                            <div class="teams">Liverpool vs Sunderland</div>
+                            <div class="meta">
+                                <span class="league">Unknown</span>
+                                <span class="date">2025-12-03 21:15</span>
+                            </div>
+                        </td>
+                        <td><span class="bet-type-cell under">Under 2.5</span></td>
+                        <td class="odds-cell">2.45</td>
+                        <td class="ev-cell">+17.4% <span class="badge-mini top">Top</span></td>
+                        <td class="edge-cell">+7.1%</td>
+                        <td class="prob-cell">47.9%</td>
+                        <td class="goals-cell">2.76</td>
+                        <td class="stake-cell">1.2%</td>
+                        <td class="models-cell">
+                            <div class="model-mini">
+                                <span class="model-label poisson">P</span>
+                                <span class="model-prob">48%</span>
+                                <span class="model-score">(1.7-1.0)</span>
+                            </div>
+                            <div class="model-mini">
+                                <span class="model-label dc">D</span>
+                                <span class="model-prob">48%</span>
+                                <span class="model-score">(2.2-0.6)</span>
+                            </div>
+                        </td>
                     </tr>
 
-                    <tr>
-                        <td><strong>Breidablik</strong> vs Samsunspor</td>
-                        <td>UEFA Conference League</td>
-                        <td><span class="bet-type">Under 2.5</span></td>
-                        <td>2.15</td>
-                        <td>56%</td>
-                        <td class="ev-positive">+20.7%</td>
-                        <td>2.43</td>
+                    <tr class="strong" data-bet-id="3" data-odds="1.82" data-stake="0.0213330196767882" data-ev="0.0699723045398654" data-prob="0.6194228539904149">
+                        <td>
+                            <div class="bet-row-checkbox">
+                                <input type="checkbox" id="bet-3" checked onchange="updateCalculator()">
+                                <label for="bet-3">&#10003;</label>
+                            </div>
+                        </td>
+                        <td class="match-cell">
+                            <div class="teams">Leicester City vs Sheffield United</div>
+                            <div class="meta">
+                                <span class="league">Unknown</span>
+                                <span class="date">2025-11-29 13:30</span>
+                            </div>
+                        </td>
+                        <td><span class="bet-type-cell under">Under 2.5</span></td>
+                        <td class="odds-cell">1.82</td>
+                        <td class="ev-cell">+12.7% <span class="badge-mini strong">Strong</span></td>
+                        <td class="edge-cell">+7.0%</td>
+                        <td class="prob-cell">61.9%</td>
+                        <td class="goals-cell">2.19</td>
+                        <td class="stake-cell">2.1%</td>
+                        <td class="models-cell">
+                            <div class="model-mini">
+                                <span class="model-label poisson">P</span>
+                                <span class="model-prob">62%</span>
+                                <span class="model-score">(1.2-1.0)</span>
+                            </div>
+                            <div class="model-mini">
+                                <span class="model-label dc">D</span>
+                                <span class="model-prob">61%</span>
+                                <span class="model-score">(1.3-0.9)</span>
+                            </div>
+                        </td>
                     </tr>
 
-                    <tr>
-                        <td><strong>Genk</strong> vs FC Basel</td>
-                        <td>Uefa Europa League Vinnerspill</td>
-                        <td><span class="bet-type">Under 2.5</span></td>
-                        <td>2.20</td>
-                        <td>54%</td>
-                        <td class="ev-positive">+19.3%</td>
-                        <td>2.51</td>
+                    <tr class="strong" data-bet-id="4" data-odds="1.77" data-stake="0.0217692335393829" data-ev="0.0670492393012995" data-prob="0.632020990713729">
+                        <td>
+                            <div class="bet-row-checkbox">
+                                <input type="checkbox" id="bet-4" checked onchange="updateCalculator()">
+                                <label for="bet-4">&#10003;</label>
+                            </div>
+                        </td>
+                        <td class="match-cell">
+                            <div class="teams">Girona vs Real Madrid</div>
+                            <div class="meta">
+                                <span class="league">Unknown</span>
+                                <span class="date">2025-11-30 21:00</span>
+                            </div>
+                        </td>
+                        <td><span class="bet-type-cell under">Under 3.5</span></td>
+                        <td class="odds-cell">1.77</td>
+                        <td class="ev-cell">+11.9% <span class="badge-mini strong">Strong</span></td>
+                        <td class="edge-cell">+6.7%</td>
+                        <td class="prob-cell">63.2%</td>
+                        <td class="goals-cell">3.16</td>
+                        <td class="stake-cell">2.2%</td>
+                        <td class="models-cell">
+                            <div class="model-mini">
+                                <span class="model-label poisson">P</span>
+                                <span class="model-prob">61%</span>
+                                <span class="model-score">(1.3-1.9)</span>
+                            </div>
+                            <div class="model-mini">
+                                <span class="model-label dc">D</span>
+                                <span class="model-prob">66%</span>
+                                <span class="model-score">(1.0-2.0)</span>
+                            </div>
+                        </td>
                     </tr>
 
-                    <tr>
-                        <td><strong>Rangers</strong> vs Braga</td>
-                        <td>Internasjonal Klubb - UEFA Europa League</td>
-                        <td><span class="bet-type">Over 2.5</span></td>
-                        <td>1.82</td>
-                        <td>65%</td>
-                        <td class="ev-positive">+18.3%</td>
-                        <td>3.35</td>
+                    <tr class="top-pick" data-bet-id="5" data-odds="3.6" data-stake="0.0063309042457802" data-ev="0.0658414041561149" data-prob="0.3436191819338927">
+                        <td>
+                            <div class="bet-row-checkbox">
+                                <input type="checkbox" id="bet-5" checked onchange="updateCalculator()">
+                                <label for="bet-5">&#10003;</label>
+                            </div>
+                        </td>
+                        <td class="match-cell">
+                            <div class="teams">Angers SCO vs Lens</div>
+                            <div class="meta">
+                                <span class="league">Unknown</span>
+                                <span class="date">2025-11-30 17:15</span>
+                            </div>
+                        </td>
+                        <td><span class="bet-type-cell under">Under 1.5</span></td>
+                        <td class="odds-cell">3.60</td>
+                        <td class="ev-cell">+23.7% <span class="badge-mini top">Top</span></td>
+                        <td class="edge-cell">+6.6%</td>
+                        <td class="prob-cell">34.4%</td>
+                        <td class="goals-cell">2.65</td>
+                        <td class="stake-cell">0.6%</td>
+                        <td class="models-cell">
+                            <div class="model-mini">
+                                <span class="model-label poisson">P</span>
+                                <span class="model-prob">26%</span>
+                                <span class="model-score">(1.2-1.4)</span>
+                            </div>
+                            <div class="model-mini">
+                                <span class="model-label dc">D</span>
+                                <span class="model-prob">47%</span>
+                                <span class="model-score">(0.6-1.1)</span>
+                            </div>
+                        </td>
                     </tr>
 
-                    <tr>
-                        <td><strong>Shamrock Rovers</strong> vs Shakhtar Donetsk</td>
-                        <td>UEFA Conference League</td>
-                        <td><span class="bet-type">Under 2.5</span></td>
-                        <td>1.95</td>
-                        <td>59%</td>
-                        <td class="ev-positive">+15.8%</td>
-                        <td>2.31</td>
+                    <tr class="strong" data-bet-id="6" data-odds="1.38" data-stake="0.0432453055736921" data-ev="0.0657328644720121" data-prob="0.7903705456314325">
+                        <td>
+                            <div class="bet-row-checkbox">
+                                <input type="checkbox" id="bet-6" checked onchange="updateCalculator()">
+                                <label for="bet-6">&#10003;</label>
+                            </div>
+                        </td>
+                        <td class="match-cell">
+                            <div class="teams">Brentford vs Burnley</div>
+                            <div class="meta">
+                                <span class="league">Unknown</span>
+                                <span class="date">2025-11-29 16:00</span>
+                            </div>
+                        </td>
+                        <td><span class="bet-type-cell under">Under 3.5</span></td>
+                        <td class="odds-cell">1.38</td>
+                        <td class="ev-cell">+9.1% <span class="badge-mini strong">Strong</span></td>
+                        <td class="edge-cell">+6.6%</td>
+                        <td class="prob-cell">79.0%</td>
+                        <td class="goals-cell">2.30</td>
+                        <td class="stake-cell">4.3%</td>
+                        <td class="models-cell">
+                            <div class="model-mini">
+                                <span class="model-label poisson">P</span>
+                                <span class="model-prob">80%</span>
+                                <span class="model-score">(1.2-1.1)</span>
+                            </div>
+                            <div class="model-mini">
+                                <span class="model-label dc">D</span>
+                                <span class="model-prob">78%</span>
+                                <span class="model-score">(1.5-0.9)</span>
+                            </div>
+                        </td>
                     </tr>
 
-                    <tr>
-                        <td><strong>Aston Villa</strong> vs Young Boys</td>
-                        <td>Internasjonal Klubb - UEFA Europa League</td>
-                        <td><span class="bet-type">Under 2.5</span></td>
-                        <td>2.85</td>
-                        <td>40%</td>
-                        <td class="ev-positive">+15.2%</td>
-                        <td>3.09</td>
+                    <tr class="top-pick" data-bet-id="7" data-odds="2.9" data-stake="0.0083870939893744" data-ev="0.0637419143192456" data-prob="0.4085695005261422">
+                        <td>
+                            <div class="bet-row-checkbox">
+                                <input type="checkbox" id="bet-7" checked onchange="updateCalculator()">
+                                <label for="bet-7">&#10003;</label>
+                            </div>
+                        </td>
+                        <td class="match-cell">
+                            <div class="teams">Girona vs Real Madrid</div>
+                            <div class="meta">
+                                <span class="league">Unknown</span>
+                                <span class="date">2025-11-30 21:00</span>
+                            </div>
+                        </td>
+                        <td><span class="bet-type-cell under">Under 2.5</span></td>
+                        <td class="odds-cell">2.90</td>
+                        <td class="ev-cell">+18.5% <span class="badge-mini top">Top</span></td>
+                        <td class="edge-cell">+6.4%</td>
+                        <td class="prob-cell">40.9%</td>
+                        <td class="goals-cell">3.16</td>
+                        <td class="stake-cell">0.8%</td>
+                        <td class="models-cell">
+                            <div class="model-mini">
+                                <span class="model-label poisson">P</span>
+                                <span class="model-prob">39%</span>
+                                <span class="model-score">(1.3-1.9)</span>
+                            </div>
+                            <div class="model-mini">
+                                <span class="model-label dc">D</span>
+                                <span class="model-prob">44%</span>
+                                <span class="model-score">(1.0-2.0)</span>
+                            </div>
+                        </td>
                     </tr>
 
-                    <tr>
-                        <td><strong>Go Ahead Eagles</strong> vs Stuttgart</td>
-                        <td>Internasjonal Klubb - UEFA Europa League</td>
-                        <td><span class="bet-type">Under 2.5</span></td>
-                        <td>2.50</td>
-                        <td>46%</td>
-                        <td class="ev-positive">+14.8%</td>
-                        <td>2.84</td>
+                    <tr class="strong" data-bet-id="8" data-odds="2.1" data-stake="0.0144436226629109" data-ev="0.0635519397168082" data-prob="0.5397424159072844">
+                        <td>
+                            <div class="bet-row-checkbox">
+                                <input type="checkbox" id="bet-8" checked onchange="updateCalculator()">
+                                <label for="bet-8">&#10003;</label>
+                            </div>
+                        </td>
+                        <td class="match-cell">
+                            <div class="teams">Juventus vs Cagliari</div>
+                            <div class="meta">
+                                <span class="league">Unknown</span>
+                                <span class="date">2025-11-29 18:00</span>
+                            </div>
+                        </td>
+                        <td><span class="bet-type-cell under">Under 2.5</span></td>
+                        <td class="odds-cell">2.10</td>
+                        <td class="ev-cell">+13.3% <span class="badge-mini strong">Strong</span></td>
+                        <td class="edge-cell">+6.4%</td>
+                        <td class="prob-cell">54.0%</td>
+                        <td class="goals-cell">2.69</td>
+                        <td class="stake-cell">1.4%</td>
+                        <td class="models-cell">
+                            <div class="model-mini">
+                                <span class="model-label poisson">P</span>
+                                <span class="model-prob">49%</span>
+                                <span class="model-score">(1.7-1.0)</span>
+                            </div>
+                            <div class="model-mini">
+                                <span class="model-label dc">D</span>
+                                <span class="model-prob">61%</span>
+                                <span class="model-score">(1.6-0.6)</span>
+                            </div>
+                        </td>
                     </tr>
 
-                    <tr>
-                        <td><strong>HNK Rijeka</strong> vs AEK Larnaca</td>
-                        <td>UEFA Conference League</td>
-                        <td><span class="bet-type">Over 2.5</span></td>
-                        <td>1.97</td>
-                        <td>56%</td>
-                        <td class="ev-positive">+10.7%</td>
-                        <td>2.93</td>
+                    <tr class="top-pick" data-bet-id="9" data-odds="3.9" data-stake="0.005422077139586" data-ev="0.0628960948191986" data-prob="0.319306351229455">
+                        <td>
+                            <div class="bet-row-checkbox">
+                                <input type="checkbox" id="bet-9" checked onchange="updateCalculator()">
+                                <label for="bet-9">&#10003;</label>
+                            </div>
+                        </td>
+                        <td class="match-cell">
+                            <div class="teams">Brentford vs Burnley</div>
+                            <div class="meta">
+                                <span class="league">Unknown</span>
+                                <span class="date">2025-11-29 16:00</span>
+                            </div>
+                        </td>
+                        <td><span class="bet-type-cell under">Under 1.5</span></td>
+                        <td class="odds-cell">3.90</td>
+                        <td class="ev-cell">+24.5% <span class="badge-mini top">Top</span></td>
+                        <td class="edge-cell">+6.3%</td>
+                        <td class="prob-cell">31.9%</td>
+                        <td class="goals-cell">2.30</td>
+                        <td class="stake-cell">0.5%</td>
+                        <td class="models-cell">
+                            <div class="model-mini">
+                                <span class="model-label poisson">P</span>
+                                <span class="model-prob">33%</span>
+                                <span class="model-score">(1.2-1.1)</span>
+                            </div>
+                            <div class="model-mini">
+                                <span class="model-label dc">D</span>
+                                <span class="model-prob">30%</span>
+                                <span class="model-score">(1.5-0.9)</span>
+                            </div>
+                        </td>
                     </tr>
 
-                    <tr>
-                        <td><strong>Roma</strong> vs FC Midtjylland</td>
-                        <td>Internasjonal Klubb - UEFA Europa League</td>
-                        <td><span class="bet-type">Over 2.5</span></td>
-                        <td>1.58</td>
-                        <td>68%</td>
-                        <td class="ev-positive">+7.0%</td>
-                        <td>3.49</td>
+                    <tr class="strong" data-bet-id="10" data-odds="1.8" data-stake="0.0196376382434015" data-ev="0.062840442378885" data-prob="0.6183959979344407">
+                        <td>
+                            <div class="bet-row-checkbox">
+                                <input type="checkbox" id="bet-10" checked onchange="updateCalculator()">
+                                <label for="bet-10">&#10003;</label>
+                            </div>
+                        </td>
+                        <td class="match-cell">
+                            <div class="teams">Burnley vs Crystal Palace</div>
+                            <div class="meta">
+                                <span class="league">Unknown</span>
+                                <span class="date">2025-12-03 20:30</span>
+                            </div>
+                        </td>
+                        <td><span class="bet-type-cell under">Under 2.5</span></td>
+                        <td class="odds-cell">1.80</td>
+                        <td class="ev-cell">+11.3% <span class="badge-mini strong">Strong</span></td>
+                        <td class="edge-cell">+6.3%</td>
+                        <td class="prob-cell">61.8%</td>
+                        <td class="goals-cell">2.37</td>
+                        <td class="stake-cell">2.0%</td>
+                        <td class="models-cell">
+                            <div class="model-mini">
+                                <span class="model-label poisson">P</span>
+                                <span class="model-prob">58%</span>
+                                <span class="model-score">(1.1-1.2)</span>
+                            </div>
+                            <div class="model-mini">
+                                <span class="model-label dc">D</span>
+                                <span class="model-prob">68%</span>
+                                <span class="model-score">(0.9-1.1)</span>
+                            </div>
+                        </td>
                     </tr>
 
-                    <tr>
-                        <td><strong>Ludogorets 1947</strong> vs Celta Vigo</td>
-                        <td>Internasjonal Klubb - UEFA Europa League</td>
-                        <td><span class="bet-type">Over 2.5</span></td>
-                        <td>1.87</td>
-                        <td>56%</td>
-                        <td class="ev-positive">+5.1%</td>
-                        <td>2.94</td>
+                    <tr class="strong" data-bet-id="11" data-odds="2.1" data-stake="0.013685356817952" data-ev="0.060215569998989" data-prob="0.5364060461894652">
+                        <td>
+                            <div class="bet-row-checkbox">
+                                <input type="checkbox" id="bet-11" checked onchange="updateCalculator()">
+                                <label for="bet-11">&#10003;</label>
+                            </div>
+                        </td>
+                        <td class="match-cell">
+                            <div class="teams">Olympique Lyon vs FC Nantes</div>
+                            <div class="meta">
+                                <span class="league">Unknown</span>
+                                <span class="date">2025-11-30 20:45</span>
+                            </div>
+                        </td>
+                        <td><span class="bet-type-cell under">Under 2.5</span></td>
+                        <td class="odds-cell">2.10</td>
+                        <td class="ev-cell">+12.6% <span class="badge-mini strong">Strong</span></td>
+                        <td class="edge-cell">+6.0%</td>
+                        <td class="prob-cell">53.6%</td>
+                        <td class="goals-cell">2.58</td>
+                        <td class="stake-cell">1.4%</td>
+                        <td class="models-cell">
+                            <div class="model-mini">
+                                <span class="model-label poisson">P</span>
+                                <span class="model-prob">52%</span>
+                                <span class="model-score">(1.6-1.0)</span>
+                            </div>
+                            <div class="model-mini">
+                                <span class="model-label dc">D</span>
+                                <span class="model-prob">55%</span>
+                                <span class="model-score">(1.7-0.7)</span>
+                            </div>
+                        </td>
                     </tr>
 
-                    <tr>
-                        <td><strong>Panathinaikos</strong> vs Sturm Graz</td>
-                        <td>Internasjonal Klubb - UEFA Europa League</td>
-                        <td><span class="bet-type">Under 2.5</span></td>
-                        <td>1.90</td>
-                        <td>55%</td>
-                        <td class="ev-positive">+4.4%</td>
-                        <td>2.48</td>
+                    <tr class="strong" data-bet-id="12" data-odds="2.45" data-stake="0.0096799591433731" data-ev="0.056143763031564" data-prob="0.4643070283376864">
+                        <td>
+                            <div class="bet-row-checkbox">
+                                <input type="checkbox" id="bet-12" checked onchange="updateCalculator()">
+                                <label for="bet-12">&#10003;</label>
+                            </div>
+                        </td>
+                        <td class="match-cell">
+                            <div class="teams">Roma vs Napoli</div>
+                            <div class="meta">
+                                <span class="league">Unknown</span>
+                                <span class="date">2025-11-30 20:45</span>
+                            </div>
+                        </td>
+                        <td><span class="bet-type-cell over">Over 2.5</span></td>
+                        <td class="odds-cell">2.45</td>
+                        <td class="ev-cell">+13.8% <span class="badge-mini strong">Strong</span></td>
+                        <td class="edge-cell">+5.6%</td>
+                        <td class="prob-cell">46.4%</td>
+                        <td class="goals-cell">3.07</td>
+                        <td class="stake-cell">1.0%</td>
+                        <td class="models-cell">
+                            <div class="model-mini">
+                                <span class="model-label poisson">P</span>
+                                <span class="model-prob">59%</span>
+                                <span class="model-score">(1.7-1.4)</span>
+                            </div>
+                            <div class="model-mini">
+                                <span class="model-label dc">D</span>
+                                <span class="model-prob">27%</span>
+                                <span class="model-score">(1.0-0.8)</span>
+                            </div>
+                        </td>
                     </tr>
 
-                    <tr>
-                        <td><strong>Røde Stjerne</strong> vs FCSB</td>
-                        <td>Internasjonal Klubb - UEFA Europa League</td>
-                        <td><span class="bet-type">Under 2.5</span></td>
-                        <td>2.15</td>
-                        <td>48%</td>
-                        <td class="ev-positive">+4.0%</td>
-                        <td>2.74</td>
+                    <tr class="strong" data-bet-id="13" data-odds="1.55" data-stake="0.0253486983662177" data-ev="0.0557671364056789" data-prob="0.7009284267282596">
+                        <td>
+                            <div class="bet-row-checkbox">
+                                <input type="checkbox" id="bet-13" checked onchange="updateCalculator()">
+                                <label for="bet-13">&#10003;</label>
+                            </div>
+                        </td>
+                        <td class="match-cell">
+                            <div class="teams">Liverpool vs Sunderland</div>
+                            <div class="meta">
+                                <span class="league">Unknown</span>
+                                <span class="date">2025-12-03 21:15</span>
+                            </div>
+                        </td>
+                        <td><span class="bet-type-cell under">Under 3.5</span></td>
+                        <td class="odds-cell">1.55</td>
+                        <td class="ev-cell">+8.6% <span class="badge-mini strong">Strong</span></td>
+                        <td class="edge-cell">+5.6%</td>
+                        <td class="prob-cell">70.1%</td>
+                        <td class="goals-cell">2.76</td>
+                        <td class="stake-cell">2.5%</td>
+                        <td class="models-cell">
+                            <div class="model-mini">
+                                <span class="model-label poisson">P</span>
+                                <span class="model-prob">70%</span>
+                                <span class="model-score">(1.7-1.0)</span>
+                            </div>
+                            <div class="model-mini">
+                                <span class="model-label dc">D</span>
+                                <span class="model-prob">70%</span>
+                                <span class="model-score">(2.2-0.6)</span>
+                            </div>
+                        </td>
                     </tr>
 
-                    <tr>
-                        <td><strong>Viktoria Plzen</strong> vs Freiburg</td>
-                        <td>Internasjonal Klubb - UEFA Europa League</td>
-                        <td><span class="bet-type">Over 2.5</span></td>
-                        <td>1.90</td>
-                        <td>55%</td>
-                        <td class="ev-positive">+3.9%</td>
-                        <td>2.87</td>
+                    <tr class="" data-bet-id="14" data-odds="1.35" data-stake="0.0385867271415244" data-ev="0.0540214179981342" data-prob="0.7947621587388749">
+                        <td>
+                            <div class="bet-row-checkbox">
+                                <input type="checkbox" id="bet-14" checked onchange="updateCalculator()">
+                                <label for="bet-14">&#10003;</label>
+                            </div>
+                        </td>
+                        <td class="match-cell">
+                            <div class="teams">Angers SCO vs Lens</div>
+                            <div class="meta">
+                                <span class="league">Unknown</span>
+                                <span class="date">2025-11-30 17:15</span>
+                            </div>
+                        </td>
+                        <td><span class="bet-type-cell under">Under 3.5</span></td>
+                        <td class="odds-cell">1.35</td>
+                        <td class="ev-cell">+7.3% </td>
+                        <td class="edge-cell">+5.4%</td>
+                        <td class="prob-cell">79.5%</td>
+                        <td class="goals-cell">2.65</td>
+                        <td class="stake-cell">3.9%</td>
+                        <td class="models-cell">
+                            <div class="model-mini">
+                                <span class="model-label poisson">P</span>
+                                <span class="model-prob">73%</span>
+                                <span class="model-score">(1.2-1.4)</span>
+                            </div>
+                            <div class="model-mini">
+                                <span class="model-label dc">D</span>
+                                <span class="model-prob">90%</span>
+                                <span class="model-score">(0.6-1.1)</span>
+                            </div>
+                        </td>
                     </tr>
 
-                    <tr>
-                        <td><strong>Zrinjski Mostar</strong> vs Häcken</td>
-                        <td>UEFA Conference League</td>
-                        <td><span class="bet-type">Under 2.5</span></td>
-                        <td>1.85</td>
-                        <td>55%</td>
-                        <td class="ev-positive">+1.1%</td>
-                        <td>2.49</td>
+                    <tr class="strong" data-bet-id="15" data-odds="2.0" data-stake="0.0127835741889611" data-ev="0.0511342967558445" data-prob="0.5511342967558446">
+                        <td>
+                            <div class="bet-row-checkbox">
+                                <input type="checkbox" id="bet-15" checked onchange="updateCalculator()">
+                                <label for="bet-15">&#10003;</label>
+                            </div>
+                        </td>
+                        <td class="match-cell">
+                            <div class="teams">Chelsea vs Arsenal</div>
+                            <div class="meta">
+                                <span class="league">Unknown</span>
+                                <span class="date">2025-11-30 17:30</span>
+                            </div>
+                        </td>
+                        <td><span class="bet-type-cell over">Over 2.5</span></td>
+                        <td class="odds-cell">2.00</td>
+                        <td class="ev-cell">+10.2% <span class="badge-mini strong">Strong</span></td>
+                        <td class="edge-cell">+5.1%</td>
+                        <td class="prob-cell">55.1%</td>
+                        <td class="goals-cell">3.41</td>
+                        <td class="stake-cell">1.3%</td>
+                        <td class="models-cell">
+                            <div class="model-mini">
+                                <span class="model-label poisson">P</span>
+                                <span class="model-prob">66%</span>
+                                <span class="model-score">(1.8-1.6)</span>
+                            </div>
+                            <div class="model-mini">
+                                <span class="model-label dc">D</span>
+                                <span class="model-prob">39%</span>
+                                <span class="model-score">(0.9-1.3)</span>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr class="top-pick" data-bet-id="16" data-odds="3.45" data-stake="0.00516648005408" data-ev="0.050631504529984" data-prob="0.3404865769937522">
+                        <td>
+                            <div class="bet-row-checkbox">
+                                <input type="checkbox" id="bet-16" checked onchange="updateCalculator()">
+                                <label for="bet-16">&#10003;</label>
+                            </div>
+                        </td>
+                        <td class="match-cell">
+                            <div class="teams">Chelsea vs Arsenal</div>
+                            <div class="meta">
+                                <span class="league">Unknown</span>
+                                <span class="date">2025-11-30 17:30</span>
+                            </div>
+                        </td>
+                        <td><span class="bet-type-cell over">Over 3.5</span></td>
+                        <td class="odds-cell">3.45</td>
+                        <td class="ev-cell">+17.5% <span class="badge-mini top">Top</span></td>
+                        <td class="edge-cell">+5.1%</td>
+                        <td class="prob-cell">34.0%</td>
+                        <td class="goals-cell">3.41</td>
+                        <td class="stake-cell">0.5%</td>
+                        <td class="models-cell">
+                            <div class="model-mini">
+                                <span class="model-label poisson">P</span>
+                                <span class="model-prob">44%</span>
+                                <span class="model-score">(1.8-1.6)</span>
+                            </div>
+                            <div class="model-mini">
+                                <span class="model-label dc">D</span>
+                                <span class="model-prob">19%</span>
+                                <span class="model-score">(0.9-1.3)</span>
+                            </div>
+                        </td>
                     </tr>
 
                 </tbody>
@@ -621,20 +1532,102 @@
         </div>
         
         <div class="footer">
-            <p>⚠️ Bet responsibly. These are model predictions and do not guarantee profits.</p>
-            <p>Model uses European history + domestic form data • Data from openfootball + Wikipedia</p>
+            <p>Model: Dixon-Coles + Poisson Ensemble | Kelly Criterion (25% fractional, max 5%)</p>
+            <p style="margin-top: 8px;">Bet responsibly. Past performance does not guarantee future results.</p>
         </div>
     </div>
     
     <script>
-        function calculateStakes() {
+        // Initialize calculator on page load
+        document.addEventListener('DOMContentLoaded', function() {{
+            updateCalculator();
+        }});
+        
+        function updateCalculator() {{
             const bankroll = parseFloat(document.getElementById('bankroll').value) || 0;
-            const kellyFraction = parseFloat(document.getElementById('kellyFraction').value) || 0.25;
-            const totalStakePct = 47.5921;
-            const adjustedStake = bankroll * (totalStakePct / 100) * (kellyFraction / 0.25);
-            document.getElementById('totalStake').textContent = adjustedStake.toFixed(0) + ' kr';
-        }
-        calculateStakes();
+            const betRows = document.querySelectorAll('.bet-table tbody tr');
+            
+            let selectedCount = 0;
+            let totalStakePercent = 0;
+            let expectedReturn = 0;
+            
+            betRows.forEach(row => {{
+                const checkbox = row.querySelector('input[type="checkbox"]');
+                const odds = parseFloat(row.dataset.odds);
+                const stake = parseFloat(row.dataset.stake);
+                const prob = parseFloat(row.dataset.prob);
+                
+                if (checkbox && checkbox.checked) {{
+                    selectedCount++;
+                    totalStakePercent += stake;
+                    // Expected return = stake * odds * probability
+                    const stakeAmount = bankroll * stake;
+                    expectedReturn += stakeAmount * odds * prob;
+                    row.classList.add('selected');
+                }} else {{
+                    row.classList.remove('selected');
+                }}
+            }});
+            
+            const totalStakeAmount = bankroll * totalStakePercent;
+            const expectedProfit = expectedReturn - totalStakeAmount;
+            
+            document.getElementById('selected-count').textContent = selectedCount;
+            document.getElementById('total-stake').textContent = totalStakeAmount.toFixed(0) + ' kr';
+            document.getElementById('expected-return').textContent = expectedReturn.toFixed(0) + ' kr';
+            document.getElementById('expected-profit').textContent = (expectedProfit >= 0 ? '+' : '') + expectedProfit.toFixed(0) + ' kr';
+            
+            // Update color based on profit
+            const profitEl = document.getElementById('expected-profit');
+            if (expectedProfit >= 0) {{
+                profitEl.className = 'value green';
+            }} else {{
+                profitEl.className = 'value red';
+            }}
+        }}
+        
+        function selectAll() {{
+            document.querySelectorAll('.bet-table tbody input[type="checkbox"]').forEach(cb => cb.checked = true);
+            updateCalculator();
+        }}
+        
+        function selectNone() {{
+            document.querySelectorAll('.bet-table tbody input[type="checkbox"]').forEach(cb => cb.checked = false);
+            updateCalculator();
+        }}
+        
+        function selectTop5() {{
+            const checkboxes = document.querySelectorAll('.bet-table tbody input[type="checkbox"]');
+            checkboxes.forEach((cb, index) => {{
+                cb.checked = index < 5;
+            }});
+            updateCalculator();
+        }}
+        
+        function calculateBets() {{
+            updateCalculator();
+            
+            // Show individual bet amounts
+            const bankroll = parseFloat(document.getElementById('bankroll').value) || 0;
+            let message = 'Bet Amounts:\n\n';
+            
+            document.querySelectorAll('.bet-table tbody tr').forEach((row, index) => {{
+                const checkbox = row.querySelector('input[type="checkbox"]');
+                if (checkbox && checkbox.checked) {{
+                    const teams = row.querySelector('.teams').textContent;
+                    const bet = row.querySelector('.bet-type-cell').textContent;
+                    const odds = parseFloat(row.dataset.odds);
+                    const stake = parseFloat(row.dataset.stake);
+                    const amount = (bankroll * stake).toFixed(0);
+                    message += `${{teams}}\n${{bet}} @ ${{odds.toFixed(2)}} → ${{amount}} kr\n\n`;
+                }}
+            }});
+            
+            alert(message);
+        }}
+        
+        // Update when bankroll changes
+        document.getElementById('bankroll').addEventListener('input', updateCalculator);
     </script>
 </body>
 </html>
