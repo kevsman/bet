@@ -662,6 +662,58 @@
             border-color: #4ecca3;
         }
         
+        .staking-method {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .staking-method label {
+            color: #a0a0b0;
+            font-size: 0.9em;
+        }
+        
+        .staking-method select {
+            background: #0f0f23;
+            border: 1px solid #2d2d44;
+            border-radius: 8px;
+            padding: 10px 15px;
+            color: #fff;
+            font-size: 0.95em;
+            cursor: pointer;
+        }
+        
+        .staking-method select:focus {
+            outline: none;
+            border-color: #4ecca3;
+        }
+        
+        .prob-filter {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .prob-filter label {
+            color: #a0a0b0;
+            font-size: 0.9em;
+        }
+        
+        .prob-filter select {
+            background: #0f0f23;
+            border: 1px solid #2d2d44;
+            border-radius: 8px;
+            padding: 10px 15px;
+            color: #fff;
+            font-size: 0.95em;
+            cursor: pointer;
+        }
+        
+        .prob-filter select:focus {
+            outline: none;
+            border-color: #4ecca3;
+        }
+        
         .calc-buttons {
             display: flex;
             gap: 10px;
@@ -720,6 +772,58 @@
         .calc-result .value.green { color: #4ecca3; }
         .calc-result .value.red { color: #e94560; }
         .calc-result .value.yellow { color: #fbbf24; }
+        
+        /* Bet Breakdown */
+        .bet-breakdown {
+            margin-top: 20px;
+            background: #0f0f23;
+            border-radius: 10px;
+            padding: 15px;
+            display: none;
+        }
+        
+        .bet-breakdown.visible {
+            display: block;
+        }
+        
+        .bet-breakdown-title {
+            color: #a0a0b0;
+            font-size: 0.85em;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #2d2d44;
+        }
+        
+        .bet-breakdown-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .bet-breakdown-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: #16213e;
+            border-radius: 6px;
+            font-size: 0.9em;
+        }
+        
+        .bet-breakdown-item .bet-info {
+            color: #a0a0b0;
+        }
+        
+        .bet-breakdown-item .bet-match {
+            color: #fff;
+            font-weight: 500;
+        }
+        
+        .bet-breakdown-item .bet-amount {
+            color: #4ecca3;
+            font-weight: bold;
+        }
         
         /* Bet Selection */
         .bet-card {
@@ -782,7 +886,7 @@
             <h1>Value Bets Report</h1>
             <div class="subtitle">Domestic Leagues</div>
             <div class="model-info">Dixon-Coles + Poisson Ensemble Model</div>
-            <div class="timestamp">Generated: November 29, 2025 at 12:14</div>
+            <div class="timestamp">Generated: November 29, 2025 at 12:27</div>
         </div>
         
         <div class="summary">
@@ -882,11 +986,27 @@
                     <label for="bankroll">Bankroll (kr):</label>
                     <input type="number" id="bankroll" value="500" min="0" step="100">
                 </div>
+                <div class="staking-method">
+                    <label for="staking">Staking:</label>
+                    <select id="staking" onchange="updateCalculator()">
+                        <option value="kelly">Kelly (proportional to edge)</option>
+                        <option value="fixed">Fixed (equal stakes)</option>
+                        <option value="ev-weighted">EV Weighted</option>
+                    </select>
+                </div>
+                <div class="prob-filter">
+                    <label for="minProb">Min Prob:</label>
+                    <select id="minProb" onchange="applyProbFilter()">
+                        <option value="0">All bets</option>
+                        <option value="40">≥40% (moderate)</option>
+                        <option value="50" selected>≥50% (confident)</option>
+                        <option value="60">≥60% (high confidence)</option>
+                    </select>
+                </div>
                 <div class="calc-buttons">
                     <button class="calc-btn" onclick="selectAll()">Select All</button>
                     <button class="calc-btn" onclick="selectNone()">Clear All</button>
                     <button class="calc-btn" onclick="selectTop5()">Top 5 Only</button>
-                    <button class="calc-btn primary" onclick="calculateBets()">Calculate</button>
                 </div>
             </div>
             <div class="calc-results">
@@ -907,6 +1027,7 @@
                     <div class="value green" id="expected-profit">0 kr</div>
                 </div>
             </div>
+            <div id="bet-breakdown" class="bet-breakdown"></div>
         </div>
         
         <div class="bet-list">
@@ -1539,92 +1660,124 @@
     
     <script>
         // Initialize calculator on page load
-        document.addEventListener('DOMContentLoaded', function() {{
-            updateCalculator();
-        }});
+        document.addEventListener('DOMContentLoaded', function() {
+            applyProbFilter();
+        });
         
-        function updateCalculator() {{
-            const bankroll = parseFloat(document.getElementById('bankroll').value) || 0;
+        function applyProbFilter() {
+            const minProb = parseFloat(document.getElementById('minProb').value) / 100;
             const betRows = document.querySelectorAll('.bet-table tbody tr');
             
-            let selectedCount = 0;
-            let totalStakePercent = 0;
-            let expectedReturn = 0;
-            
-            betRows.forEach(row => {{
+            betRows.forEach(row => {
                 const checkbox = row.querySelector('input[type="checkbox"]');
-                const odds = parseFloat(row.dataset.odds);
-                const stake = parseFloat(row.dataset.stake);
                 const prob = parseFloat(row.dataset.prob);
                 
-                if (checkbox && checkbox.checked) {{
-                    selectedCount++;
-                    totalStakePercent += stake;
-                    // Expected return = stake * odds * probability
-                    const stakeAmount = bankroll * stake;
-                    expectedReturn += stakeAmount * odds * prob;
+                if (prob >= minProb) {
+                    checkbox.checked = true;
+                } else {
+                    checkbox.checked = false;
+                }
+            });
+            
+            updateCalculator();
+        }
+        
+        function updateCalculator() {
+            const bankroll = parseFloat(document.getElementById('bankroll').value) || 0;
+            const stakingMethod = document.getElementById('staking').value;
+            const betRows = document.querySelectorAll('.bet-table tbody tr');
+            
+            // First pass: collect selected bets
+            let selectedBets = [];
+            betRows.forEach(row => {
+                const checkbox = row.querySelector('input[type="checkbox"]');
+                if (checkbox && checkbox.checked) {
+                    const odds = parseFloat(row.dataset.odds);
+                    const kelly = parseFloat(row.dataset.stake);
+                    const prob = parseFloat(row.dataset.prob);
+                    const ev = prob * odds - 1;
+                    const teams = row.querySelector('.teams').textContent;
+                    const bet = row.querySelector('.bet-type-cell').textContent;
+                    selectedBets.push({ row, odds, kelly, prob, ev, teams, bet });
                     row.classList.add('selected');
-                }} else {{
+                } else {
                     row.classList.remove('selected');
-                }}
-            }});
+                }
+            });
             
-            const totalStakeAmount = bankroll * totalStakePercent;
-            const expectedProfit = expectedReturn - totalStakeAmount;
+            // Calculate stakes based on method
+            let totalKelly = selectedBets.reduce((sum, b) => sum + b.kelly, 0);
+            let totalEV = selectedBets.reduce((sum, b) => sum + Math.max(0, b.ev), 0);
             
-            document.getElementById('selected-count').textContent = selectedCount;
-            document.getElementById('total-stake').textContent = totalStakeAmount.toFixed(0) + ' kr';
+            selectedBets.forEach(bet => {
+                if (stakingMethod === 'kelly') {
+                    // Proportional to Kelly fraction - distribute bankroll proportionally
+                    bet.stakePercent = totalKelly > 0 ? bet.kelly / totalKelly : 0;
+                } else if (stakingMethod === 'fixed') {
+                    // Equal stakes
+                    bet.stakePercent = selectedBets.length > 0 ? 1 / selectedBets.length : 0;
+                } else if (stakingMethod === 'ev-weighted') {
+                    // Weighted by EV
+                    bet.stakePercent = totalEV > 0 ? Math.max(0, bet.ev) / totalEV : 0;
+                }
+                bet.stakeAmount = bankroll * bet.stakePercent;
+            });
+            
+            // Calculate totals
+            let totalStake = selectedBets.reduce((sum, b) => sum + b.stakeAmount, 0);
+            let expectedReturn = selectedBets.reduce((sum, b) => sum + b.stakeAmount * b.odds * b.prob, 0);
+            let expectedProfit = expectedReturn - totalStake;
+            
+            // Update display
+            document.getElementById('selected-count').textContent = selectedBets.length;
+            document.getElementById('total-stake').textContent = totalStake.toFixed(0) + ' kr';
             document.getElementById('expected-return').textContent = expectedReturn.toFixed(0) + ' kr';
             document.getElementById('expected-profit').textContent = (expectedProfit >= 0 ? '+' : '') + expectedProfit.toFixed(0) + ' kr';
             
             // Update color based on profit
             const profitEl = document.getElementById('expected-profit');
-            if (expectedProfit >= 0) {{
-                profitEl.className = 'value green';
-            }} else {{
-                profitEl.className = 'value red';
-            }}
-        }}
+            profitEl.className = expectedProfit >= 0 ? 'value green' : 'value red';
+            
+            // Update breakdown
+            const breakdownEl = document.getElementById('bet-breakdown');
+            if (selectedBets.length > 0) {
+                let breakdownHTML = '<div class="bet-breakdown-title">Stake Breakdown</div><div class="bet-breakdown-list">';
+                selectedBets.forEach(bet => {
+                    breakdownHTML += `
+                        <div class="bet-breakdown-item">
+                            <div>
+                                <span class="bet-match">${bet.teams}</span>
+                                <span class="bet-info"> — ${bet.bet} @ ${bet.odds.toFixed(2)}</span>
+                            </div>
+                            <span class="bet-amount">${bet.stakeAmount.toFixed(0)} kr</span>
+                        </div>
+                    `;
+                });
+                breakdownHTML += '</div>';
+                breakdownEl.innerHTML = breakdownHTML;
+                breakdownEl.classList.add('visible');
+            } else {
+                breakdownEl.classList.remove('visible');
+            }
+        }
         
-        function selectAll() {{
+        function selectAll() {
             document.querySelectorAll('.bet-table tbody input[type="checkbox"]').forEach(cb => cb.checked = true);
             updateCalculator();
-        }}
+        }
         
-        function selectNone() {{
+        function selectNone() {
             document.querySelectorAll('.bet-table tbody input[type="checkbox"]').forEach(cb => cb.checked = false);
             updateCalculator();
-        }}
+        }
         
-        function selectTop5() {{
+        function selectTop5() {
             const checkboxes = document.querySelectorAll('.bet-table tbody input[type="checkbox"]');
-            checkboxes.forEach((cb, index) => {{
+            checkboxes.forEach((cb, index) => {
                 cb.checked = index < 5;
-            }});
+            });
             updateCalculator();
-        }}
-        
-        function calculateBets() {{
-            updateCalculator();
-            
-            // Show individual bet amounts
-            const bankroll = parseFloat(document.getElementById('bankroll').value) || 0;
-            let message = 'Bet Amounts:\n\n';
-            
-            document.querySelectorAll('.bet-table tbody tr').forEach((row, index) => {{
-                const checkbox = row.querySelector('input[type="checkbox"]');
-                if (checkbox && checkbox.checked) {{
-                    const teams = row.querySelector('.teams').textContent;
-                    const bet = row.querySelector('.bet-type-cell').textContent;
-                    const odds = parseFloat(row.dataset.odds);
-                    const stake = parseFloat(row.dataset.stake);
-                    const amount = (bankroll * stake).toFixed(0);
-                    message += `${{teams}}\n${{bet}} @ ${{odds.toFixed(2)}} → ${{amount}} kr\n\n`;
-                }}
-            }});
-            
-            alert(message);
-        }}
+        }
         
         // Update when bankroll changes
         document.getElementById('bankroll').addEventListener('input', updateCalculator);
