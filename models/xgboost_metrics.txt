@@ -1,0 +1,25 @@
+Model Type: xgboost
+Features: 134
+
+TRAIN Metrics:
+  home:
+    mae: 0.8937
+    rmse: 1.1236
+    mean_pred: 1.4881
+    mean_actual: 1.4880
+  away:
+    mae: 0.8032
+    rmse: 1.0255
+    mean_pred: 1.2023
+    mean_actual: 1.2021
+TEST Metrics:
+  home:
+    mae: 0.9434
+    rmse: 1.1708
+    mean_pred: 1.5293
+    mean_actual: 1.4549
+  away:
+    mae: 0.8491
+    rmse: 1.0840
+    mean_pred: 1.2287
+    mean_actual: 1.2169

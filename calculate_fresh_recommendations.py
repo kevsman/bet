@@ -52,11 +52,36 @@ if dc_model_path.exists():
 else:
     print("Note: Dixon-Coles model not found, using feature-based model only")
 
-# Load the historical dataset to get team stats (prefer xG-enhanced if available)
+# Load Gradient Boosting models if available
+gb_home_model = None
+gb_away_model = None
+gb_features = None
+lgb_home_path = Path('models/lightgbm_home.joblib')
+lgb_away_path = Path('models/lightgbm_away.joblib')
+lgb_features_path = Path('models/lightgbm_features.txt')
+
+if lgb_home_path.exists() and lgb_away_path.exists():
+    try:
+        gb_home_model = load(lgb_home_path)
+        gb_away_model = load(lgb_away_path)
+        if lgb_features_path.exists():
+            with open(lgb_features_path, 'r') as f:
+                gb_features = [line.strip() for line in f if line.strip()]
+        print("✓ Gradient Boosting models loaded (LightGBM)")
+    except Exception as e:
+        print(f"Warning: Could not load Gradient Boosting models: {e}")
+else:
+    print("Note: Gradient Boosting models not found, using Poisson + Dixon-Coles only")
+
+# Load the historical dataset to get team stats (prefer enhanced if available)
+enhanced_path = Path('data/processed/match_dataset_enhanced.csv')
 xg_dataset_path = Path('data/processed/match_dataset_with_xg.csv')
 std_dataset_path = Path('data/processed/match_dataset.csv')
 
-if xg_dataset_path.exists():
+if enhanced_path.exists():
+    dataset = pd.read_csv(enhanced_path, parse_dates=['Date'], low_memory=False)
+    print(f"✓ Enhanced dataset loaded ({len(dataset.columns)} columns)")
+elif xg_dataset_path.exists():
     dataset = pd.read_csv(xg_dataset_path, parse_dates=['Date'], low_memory=False)
 else:
     dataset = pd.read_csv(std_dataset_path, parse_dates=['Date'], low_memory=False)
@@ -215,14 +240,16 @@ def bivariate_poisson_prob(line: float, home_xg: float, away_xg: float,
 
 def ensemble_over_under(home_team: str, away_team: str, line: float,
                         poisson_home: float, poisson_away: float,
+                        gb_home: float = None, gb_away: float = None,
                         model_weight: float = 0.5) -> dict:
     """
-    Ensemble prediction combining Poisson and Dixon-Coles models.
+    Ensemble prediction combining Poisson, Dixon-Coles, and Gradient Boosting models.
     
     Args:
         home_team, away_team: Team names
         line: Goal line (1.5, 2.5, 3.5)
         poisson_home, poisson_away: Expected goals from feature-based Poisson
+        gb_home, gb_away: Expected goals from Gradient Boosting (if available)
         model_weight: Weight for Dixon-Coles (0=pure Poisson, 1=pure DC)
     
     Returns:
@@ -232,35 +259,57 @@ def ensemble_over_under(home_team: str, away_team: str, line: float,
     poisson_over = bivariate_poisson_prob(line, poisson_home, poisson_away, over=True)
     poisson_under = bivariate_poisson_prob(line, poisson_home, poisson_away, over=False)
     
+    # Gradient Boosting probabilities (if available)
+    gb_over, gb_under = None, None
+    if gb_home is not None and gb_away is not None:
+        gb_over = bivariate_poisson_prob(line, gb_home, gb_away, over=True)
+        gb_under = bivariate_poisson_prob(line, gb_home, gb_away, over=False)
+    
     # Dixon-Coles probabilities (if available)
+    dc_over, dc_under = None, None
     if dixon_coles_model is not None and home_team in dixon_coles_model.teams and away_team in dixon_coles_model.teams:
         dc_probs = dixon_coles_model.predict_over_under(home_team, away_team, line)
         dc_over = dc_probs['over']
         dc_under = dc_probs['under']
-        
-        # Ensemble: weighted average
+    
+    # Determine ensemble weights and combine
+    # If all 3 models available: 35% Poisson, 35% GB, 30% DC
+    # If 2 models (Poisson + DC): 60% Poisson, 40% DC
+    # If 2 models (Poisson + GB): 50% Poisson, 50% GB
+    # If only Poisson: 100% Poisson
+    
+    if gb_over is not None and dc_over is not None:
+        # All 3 models available - full ensemble
+        final_over = 0.35 * poisson_over + 0.35 * gb_over + 0.30 * dc_over
+        final_under = 0.35 * poisson_under + 0.35 * gb_under + 0.30 * dc_under
+        model_used = 'full_ensemble'
+    elif dc_over is not None:
+        # Poisson + Dixon-Coles
         final_over = (1 - model_weight) * poisson_over + model_weight * dc_over
         final_under = (1 - model_weight) * poisson_under + model_weight * dc_under
-        
-        return {
-            'over': final_over,
-            'under': final_under,
-            'poisson_over': poisson_over,
-            'poisson_under': poisson_under,
-            'dc_over': dc_over,
-            'dc_under': dc_under,
-            'model_used': 'ensemble'
-        }
+        model_used = 'poisson_dc_ensemble'
+    elif gb_over is not None:
+        # Poisson + Gradient Boosting
+        final_over = 0.5 * poisson_over + 0.5 * gb_over
+        final_under = 0.5 * poisson_under + 0.5 * gb_under
+        model_used = 'poisson_gb_ensemble'
     else:
-        return {
-            'over': poisson_over,
-            'under': poisson_under,
-            'poisson_over': poisson_over,
-            'poisson_under': poisson_under,
-            'dc_over': None,
-            'dc_under': None,
-            'model_used': 'poisson_only'
-        }
+        # Poisson only
+        final_over = poisson_over
+        final_under = poisson_under
+        model_used = 'poisson_only'
+    
+    return {
+        'over': final_over,
+        'under': final_under,
+        'poisson_over': poisson_over,
+        'poisson_under': poisson_under,
+        'gb_over': gb_over,
+        'gb_under': gb_under,
+        'dc_over': dc_over,
+        'dc_under': dc_under,
+        'model_used': model_used
+    }
 
 
 # ============================================================================
@@ -296,14 +345,35 @@ for _, row in odds_df.iterrows():
         skipped_teams.add((row['home_team'], row['away_team']))
         continue
     
-    # Check for any missing features
-    if home_feats.isna().any() or away_feats.isna().any():
-        continue
+    # Fill NaN values with 0 (same as training - optional features like xG, advanced stats, etc.)
+    home_feats = home_feats.fillna(0)
+    away_feats = away_feats.fillna(0)
     
-    # Predict using feature-based Poisson
-    pred_home = float(np.clip(home_model.predict([home_feats])[0], 0.1, 5.0))
-    pred_away = float(np.clip(away_model.predict([away_feats])[0], 0.1, 5.0))
+    # Reindex to match model features (may be fewer after removing zero-variance cols)
+    home_feats = home_feats.reindex(features).fillna(0)
+    away_feats = away_feats.reindex(features).fillna(0)
+    
+    # Predict using feature-based Poisson (model may be a pipeline with StandardScaler)
+    pred_home = float(np.clip(home_model.predict(np.array(home_feats).reshape(1, -1))[0], 0.1, 5.0))
+    pred_away = float(np.clip(away_model.predict(np.array(away_feats).reshape(1, -1))[0], 0.1, 5.0))
     total = pred_home + pred_away
+    
+    # Predict using Gradient Boosting if available
+    gb_home, gb_away = None, None
+    if gb_home_model is not None and gb_away_model is not None:
+        try:
+            # Get features for GB model (may differ from Poisson features)
+            if gb_features is not None:
+                gb_home_feats = home_feats.reindex(gb_features).fillna(0)
+                gb_away_feats = away_feats.reindex(gb_features).fillna(0)
+            else:
+                gb_home_feats = home_feats
+                gb_away_feats = away_feats
+            
+            gb_home = float(np.clip(gb_home_model.predict(np.array(gb_home_feats).reshape(1, -1))[0], 0.1, 5.0))
+            gb_away = float(np.clip(gb_away_model.predict(np.array(gb_away_feats).reshape(1, -1))[0], 0.1, 5.0))
+        except Exception:
+            gb_home, gb_away = None, None
     
     # Get Dixon-Coles predictions if available
     dc_home, dc_away = None, None
@@ -322,8 +392,9 @@ for _, row in odds_df.iterrows():
         if pd.isna(over_odds) or pd.isna(under_odds):
             continue
         
-        # Get ensemble probabilities
-        probs = ensemble_over_under(home, away, line, pred_home, pred_away, DC_WEIGHT)
+        # Get ensemble probabilities (now includes GB if available)
+        probs = ensemble_over_under(home, away, line, pred_home, pred_away, 
+                                     gb_home=gb_home, gb_away=gb_away, model_weight=DC_WEIGHT)
         p_over = probs['over']
         p_under = probs['under']
         

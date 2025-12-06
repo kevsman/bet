@@ -1,0 +1,25 @@
+Model Type: lightgbm
+Features: 134
+
+TRAIN Metrics:
+  home:
+    mae: 0.9093
+    rmse: 1.1462
+    mean_pred: 1.4882
+    mean_actual: 1.4880
+  away:
+    mae: 0.8167
+    rmse: 1.0444
+    mean_pred: 1.2023
+    mean_actual: 1.2021
+TEST Metrics:
+  home:
+    mae: 0.9395
+    rmse: 1.1689
+    mean_pred: 1.5075
+    mean_actual: 1.4549
+  away:
+    mae: 0.8462
+    rmse: 1.0840
+    mean_pred: 1.2164
+    mean_actual: 1.2169

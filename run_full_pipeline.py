@@ -6,10 +6,12 @@ DOMESTIC LEAGUES PIPELINE (default):
 1. Download latest results from football-data.co.uk
 2. Prepare the dataset with rolling averages
 2b. Fetch xG data from Understat (top 5 leagues)
+2c. Integrate advanced features (FBref stats, weather, injuries, manager data)
 3. Train the Poisson regression models
 3b. Train Dixon-Coles model (correlation adjustment for low-scoring games)
+3c. Train Gradient Boosting models (LightGBM/XGBoost)
 4. Scrape Norsk Tipping odds (via Selenium)
-5. Calculate value bets using ensemble of both models
+5. Calculate value bets using ensemble of all models
 6. Generate the HTML report
 
 EUROPEAN COMPETITIONS PIPELINE (--european flag):
@@ -24,6 +26,8 @@ Usage:
     python run_full_pipeline.py --european       # Run European competitions pipeline
     python run_full_pipeline.py --no-xg          # Skip xG data fetching
     python run_full_pipeline.py --no-dixon-coles # Skip Dixon-Coles model
+    python run_full_pipeline.py --no-gradient    # Skip Gradient Boosting training
+    python run_full_pipeline.py --no-advanced    # Skip advanced features integration
 """
 
 import subprocess
@@ -99,6 +103,47 @@ def step2b_fetch_xg_data():
         return None
 
 
+def step2c_integrate_advanced_features():
+    """Integrate advanced features (FBref, weather, injuries, manager data)."""
+    from src.integrate_advanced_features import integrate_all_features
+    from src.config import get_config
+    import pandas as pd
+    
+    cfg = get_config()
+    base_dataset = cfg.processed_dir / "match_dataset.csv"
+    
+    if not base_dataset.exists():
+        print("Warning: Base dataset not found, skipping advanced features integration")
+        return None
+    
+    # Load base dataset
+    match_df = pd.read_csv(base_dataset, parse_dates=["Date"], low_memory=False)
+    
+    # Run integration
+    try:
+        result_df = integrate_all_features(
+            match_df=match_df,
+            cfg=cfg,
+            include_advanced=True,
+            include_weather=True,
+            include_injuries=True,
+            include_manager=True
+        )
+        if result_df is not None:
+            # Save enhanced dataset
+            output_path = cfg.processed_dir / "match_dataset_enhanced.csv"
+            result_df.to_csv(output_path, index=False)
+            print(f"Advanced features integrated: {len(result_df)} matches")
+            # Count new columns
+            new_cols = len(result_df.columns) - len(match_df.columns)
+            if new_cols > 0:
+                print(f"Added {new_cols} advanced feature columns")
+        return result_df
+    except Exception as e:
+        print(f"Warning: Advanced features integration failed ({e}), continuing without them")
+        return None
+
+
 def step3_train_models():
     """Train Poisson regression models."""
     from src.models import main as train_main
@@ -114,6 +159,23 @@ def step3b_train_dixon_coles():
     except Exception as e:
         print(f"Warning: Dixon-Coles training failed ({e}), continuing with Poisson model only")
         return None
+
+
+def step3c_train_gradient_boosting():
+    """Train LightGBM and XGBoost models."""
+    import subprocess
+    import sys
+    
+    print("Training Gradient Boosting models (LightGBM + XGBoost)...")
+    result = subprocess.run(
+        [sys.executable, "train_gradient_boosting.py"],
+        capture_output=False
+    )
+    
+    if result.returncode != 0:
+        print("Warning: Gradient Boosting training had issues")
+        return False
+    return True
 
 
 def step4_scrape_odds(headless: bool = True, skip_if_recent: bool = True):
@@ -293,7 +355,9 @@ def main():
     parser.add_argument("--no-download", action="store_true", help="Skip downloading latest results")
     parser.add_argument("--no-train", action="store_true", help="Skip model training")
     parser.add_argument("--no-xg", action="store_true", help="Skip xG data fetching")
+    parser.add_argument("--no-advanced", action="store_true", help="Skip advanced features integration")
     parser.add_argument("--no-dixon-coles", action="store_true", help="Skip Dixon-Coles model training")
+    parser.add_argument("--no-gradient", action="store_true", help="Skip Gradient Boosting model training")
     parser.add_argument("--no-scrape", action="store_true", help="Skip odds scraping")
     parser.add_argument("--force-scrape", action="store_true", help="Force scrape even if recent")
     parser.add_argument("--headless", action="store_true", default=True, help="Run browser in headless mode")
@@ -335,6 +399,12 @@ def main():
         elif args.no_xg:
             print("\n[Skipping xG data fetch]")
         
+        # Step 2c: Integrate advanced features (FBref, weather, injuries, manager)
+        if not args.no_train and not args.no_advanced:
+            run_step("Integrate Advanced Features", step2c_integrate_advanced_features)
+        elif args.no_advanced:
+            print("\n[Skipping advanced features integration]")
+        
         # Step 3: Train models
         if not args.no_train:
             run_step("Train Poisson Models", step3_train_models)
@@ -346,6 +416,12 @@ def main():
             run_step("Train Dixon-Coles Model", step3b_train_dixon_coles)
         elif args.no_dixon_coles:
             print("\n[Skipping Dixon-Coles training]")
+        
+        # Step 3c: Train Gradient Boosting models
+        if not args.no_train and not args.no_gradient:
+            run_step("Train Gradient Boosting Models", step3c_train_gradient_boosting)
+        elif args.no_gradient:
+            print("\n[Skipping Gradient Boosting training]")
         
         # Step 4: Scrape odds
         if not args.no_scrape:

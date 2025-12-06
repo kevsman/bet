@@ -19,8 +19,8 @@ class ModelConfig:
     min_matches_for_features: int = 5
     validation_season: str = "2425"
     test_season: str = "2526"
-    alpha: float = 0.5
-    max_iter: int = 1000
+    alpha: float = 0.01  # Reduced for better learning with StandardScaler
+    max_iter: int = 2000
 
 
 @dataclass

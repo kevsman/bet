@@ -1,0 +1,49 @@
+team,player_name,injury_type,description,date_from,date_until,is_key_player,date
+Man United,Harry Maguire,Injury,06/12/2025,,,False,2025-12-05 13:18:05.350964
+Man City,Mateo Kovacic,Injury,14/03/2026,,,False,2025-12-05 13:18:08.012661
+Liverpool,Stefan Bajcetic,Injury,01/04/2026,,,False,2025-12-05 13:18:12.760485
+Liverpool,Giovanni Leoni,Injury,01/08/2026,,,False,2025-12-05 13:18:12.760488
+Liverpool,Conor Bradley,Injury,12/12/2025,,,False,2025-12-05 13:18:12.760489
+Arsenal,Kai Havertz,Injury,18/08/2025,,,False,2025-12-05 13:18:16.059082
+Arsenal,Gabriel Magalhães,Injury,27/12/2025,,,False,2025-12-05 13:18:16.059085
+Arsenal,William Saliba,Injury,29/11/2025,,,False,2025-12-05 13:18:16.059088
+Arsenal,Leandro Trossard,Injury,27/11/2025,,,False,2025-12-05 13:18:16.059089
+Chelsea,Levi Colwill,Injury,01/06/2026,,,False,2025-12-05 13:18:20.419923
+Chelsea,Roméo Lavia,Injury,05/11/2025,,,False,2025-12-05 13:18:20.419925
+Chelsea,Dário Essugo,Injury,28/11/2025,,,False,2025-12-05 13:18:20.419926
+Tottenham,James Maddison,Injury,01/06/2026,,,False,2025-12-05 13:18:23.428445
+Tottenham,Dejan Kulusevski,Injury,20/12/2025,,,False,2025-12-05 13:18:23.428448
+Tottenham,Yves Bissouma,Injury,15/08/2025,,,False,2025-12-05 13:18:23.428449
+Newcastle,Yoane Wissa,Injury,06/12/2025,,,False,2025-12-05 13:18:25.984635
+Newcastle,Kieran Trippier,Injury,21/11/2025,,,False,2025-12-05 13:18:25.984638
+Aston Villa,Tyrone Mings,Injury,03/01/2026,,,False,2025-12-05 13:18:30.689328
+Brighton,Adam Webster,Injury,01/06/2026,,,False,2025-12-05 13:18:34.164883
+Brighton,Solly March,Injury,13/12/2025,,,False,2025-12-05 13:18:34.164886
+Brighton,James Milner,Injury,07/12/2025,,,False,2025-12-05 13:18:34.164887
+West Ham,Lukasz Fabianski,Injury,19/09/2025,,,False,2025-12-05 13:18:37.354303
+West Ham,Oliver Scarles,Injury,26/12/2025,,,False,2025-12-05 13:18:37.354306
+Bournemouth,Ben Gannon-Doak,Injury,21/02/2026,,,False,2025-12-05 13:18:40.174825
+Fulham,Rodrigo Muniz,Injury,21/02/2026,,,False,2025-12-05 13:18:44.363739
+Fulham,Antonee Robinson,Injury,17/10/2025,,,False,2025-12-05 13:18:44.363742
+Wolves,Rodrigo Gomes,Injury,21/02/2026,,,False,2025-12-05 13:18:47.389728
+Wolves,Ki-Jana Hoever,Injury,23/08/2025,,,False,2025-12-05 13:18:47.389731
+Wolves,Matt Doherty,Injury,24/10/2025,,,False,2025-12-05 13:18:47.389732
+Crystal Palace,Cheick Doucouré,Injury,24/01/2025,,,False,2025-12-05 13:18:51.031043
+Crystal Palace,Chadi Riad,Injury,24/01/2025,,,False,2025-12-05 13:18:51.031046
+Crystal Palace,Caleb Kporha,Injury,14/07/2025,,,False,2025-12-05 13:18:51.031047
+Everton,Jarrad Branthwaite,Injury,31/01/2026,,,False,2025-12-05 13:18:54.456741
+Everton,Nathan Patterson,Injury,06/12/2025,,,False,2025-12-05 13:18:54.456744
+Everton,Merlin Röhl,Injury,20/12/2025,,,False,2025-12-05 13:18:54.456745
+Brentford,Josh Dasilva,Injury,01/01/2026,,,False,2025-12-05 13:18:56.806979
+Brentford,Antoni Milambo,Injury,31/07/2026,,,False,2025-12-05 13:18:56.806982
+Brentford,Fábio Carvalho,Injury,31/08/2026,,,False,2025-12-05 13:18:56.806982
+Nott'm Forest,Ola Aina,Injury,03/01/2026,,,False,2025-12-05 13:19:01.021735
+Nott'm Forest,Douglas Luiz,Injury,11/12/2025,,,False,2025-12-05 13:19:01.021738
+Nott'm Forest,Angus Gunn,Injury,30/10/2025,,,False,2025-12-05 13:19:01.021738
+Ipswich,Wes Burns,Injury,01/01/2026,,,False,2025-12-05 13:19:04.264193
+Ipswich,Conor Townsend,Injury,03/08/2025,,,False,2025-12-05 13:19:04.264195
+Ipswich,Sammie Szmodics,Injury,06/10/2025,,,False,2025-12-05 13:19:04.264196
+Leicester,Harry Souttar,Injury,31/12/2025,,,False,2025-12-05 13:19:06.781914
+Leicester,Ricardo Pereira,Injury,0.33,,,False,2025-12-05 13:19:06.781917
+Southampton,Welington,Injury,24/08/2025,,,False,2025-12-05 13:19:10.852185
+Southampton,Taylor Harwood-Bellis,Injury,0.31,,,False,2025-12-05 13:19:10.852188

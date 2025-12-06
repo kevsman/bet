@@ -3,7 +3,7 @@ from __future__ import annotations
 import math
 from dataclasses import dataclass
 from pathlib import Path
-from typing import List
+from typing import List, Union
 
 import joblib
 import numpy as np
@@ -12,6 +12,8 @@ from scipy.stats import poisson
 from sklearn.isotonic import IsotonicRegression
 from sklearn.linear_model import PoissonRegressor
 from sklearn.metrics import mean_absolute_error, mean_squared_error
+from sklearn.pipeline import Pipeline, make_pipeline
+from sklearn.preprocessing import StandardScaler
 
 from .config import AppConfig, get_config
 
@@ -21,8 +23,8 @@ CALIBRATOR_FILE = "over_calibrator.joblib"
 
 @dataclass
 class ModelBundle:
-    home_model: PoissonRegressor
-    away_model: PoissonRegressor
+    home_model: Union[PoissonRegressor, Pipeline]
+    away_model: Union[PoissonRegressor, Pipeline]
     feature_columns: List[str]
 
 
@@ -34,11 +36,15 @@ def assign_splits(df: pd.DataFrame, cfg: AppConfig) -> pd.Series:
 
 
 def load_dataset(cfg: AppConfig) -> pd.DataFrame:
-    # Prefer xG-enhanced dataset if available
+    # Prefer enhanced dataset (with advanced features) if available
+    enhanced_path = cfg.processed_dir / "match_dataset_enhanced.csv"
     xg_dataset_path = cfg.processed_dir / "match_dataset_with_xg.csv"
     dataset_path = cfg.processed_dir / "match_dataset.csv"
     
-    if xg_dataset_path.exists():
+    if enhanced_path.exists():
+        print(f"Loading enhanced dataset (with advanced features) from {enhanced_path.name}")
+        df = pd.read_csv(enhanced_path, parse_dates=["Date"], low_memory=False)
+    elif xg_dataset_path.exists():
         print(f"Loading xG-enhanced dataset from {xg_dataset_path.name}")
         df = pd.read_csv(xg_dataset_path, parse_dates=["Date"], low_memory=False)
     elif dataset_path.exists():
@@ -75,6 +81,29 @@ def select_feature_columns(df: pd.DataFrame) -> List[str]:
             "away_matches_played",
         }:
             candidates.append(col)
+        # ============ ADVANCED FEATURES (NEW) ============
+        # FBref advanced stats (possession, passing, pressing, etc.)
+        elif col.startswith("home_adv_") or col.startswith("away_adv_"):
+            candidates.append(col)
+        # Weather features
+        elif col.startswith("weather_"):
+            candidates.append(col)
+        # Injury features
+        elif col in {
+            "home_injury_count", "away_injury_count",
+            "home_injury_severity", "away_injury_severity",
+            "home_suspended_count", "away_suspended_count",
+            "injury_count_diff", "injury_severity_diff",
+        }:
+            candidates.append(col)
+        # Manager features
+        elif col in {
+            "home_manager_tenure_days", "away_manager_tenure_days",
+            "home_new_manager", "away_new_manager",
+            "home_experienced_manager", "away_experienced_manager",
+            "manager_tenure_diff",
+        }:
+            candidates.append(col)
     
     # Ensure we don't include NaN columns if some leagues don't have shot data
     # But for now, we assume they do or we handle NaNs (PoissonRegressor handles NaNs? No, need imputation or drop)
@@ -83,13 +112,17 @@ def select_feature_columns(df: pd.DataFrame) -> List[str]:
     return sorted(candidates)
 
 
-def train_poisson_model(X: pd.DataFrame, y: pd.Series, alpha: float, max_iter: int) -> PoissonRegressor:
-    model = PoissonRegressor(alpha=alpha, max_iter=max_iter)
+def train_poisson_model(X: pd.DataFrame, y: pd.Series, alpha: float, max_iter: int) -> Pipeline:
+    """Train a Poisson model with StandardScaler for better coefficient learning."""
+    model = make_pipeline(
+        StandardScaler(),
+        PoissonRegressor(alpha=alpha, max_iter=max_iter)
+    )
     model.fit(X, y)
     return model
 
 
-def evaluate(model: PoissonRegressor, X: pd.DataFrame, y: pd.Series) -> dict[str, float]:
+def evaluate(model: Union[PoissonRegressor, Pipeline], X: pd.DataFrame, y: pd.Series) -> dict[str, float]:
     preds = model.predict(X)
     mse = mean_squared_error(y, preds)
     return {
@@ -136,21 +169,53 @@ def main() -> None:
     data = load_dataset(cfg)
     feature_columns = select_feature_columns(data)
     
-    # Separate xG features (may have many NaNs) from core features
-    xg_features = [c for c in feature_columns if 'xg' in c.lower()]
-    core_features = [c for c in feature_columns if 'xg' not in c.lower()]
+    # Separate optional features (xG, advanced stats, weather, etc.) from core features
+    # Core features are required for training; optional features are filled with 0 if missing
+    optional_feature_names = {
+        # Injury features
+        'home_injury_count', 'away_injury_count',
+        'home_injury_severity', 'away_injury_severity',
+        'home_suspended_count', 'away_suspended_count',
+        'injury_count_diff', 'injury_severity_diff',
+        # Manager features
+        'home_manager_tenure_days', 'away_manager_tenure_days',
+        'home_new_manager', 'away_new_manager',
+        'home_experienced_manager', 'away_experienced_manager',
+        'manager_tenure_diff',
+    }
+    optional_prefixes = ('home_adv_', 'away_adv_', 'weather_')
     
-    print(f"Total features: {len(feature_columns)} (core: {len(core_features)}, xG: {len(xg_features)})")
+    def is_optional(col):
+        if col in optional_feature_names:
+            return True
+        if 'xg' in col.lower():
+            return True
+        for prefix in optional_prefixes:
+            if col.startswith(prefix):
+                return True
+        return False
+    
+    optional_features = [c for c in feature_columns if is_optional(c)]
+    core_features = [c for c in feature_columns if c not in optional_features]
+    
+    print(f"Total features: {len(feature_columns)} (core: {len(core_features)}, optional: {len(optional_features)})")
     
     # Drop rows missing core features
     data = data.dropna(subset=core_features)
     
-    # Fill xG features with 0 (will have no effect if model learns they're missing)
-    # or use league averages
-    for col in xg_features:
+    # Fill optional features with 0 (will have no effect if model learns they're missing)
+    for col in optional_features:
         if col in data.columns:
             data[col] = data[col].fillna(0)
     
+    # Remove zero-variance features (provide no predictive value)
+    variances = data[feature_columns].var()
+    zero_var_features = variances[variances == 0].index.tolist()
+    if zero_var_features:
+        print(f"Removing {len(zero_var_features)} zero-variance features")
+        feature_columns = [f for f in feature_columns if f not in zero_var_features]
+    
+    print(f"Final feature count: {len(feature_columns)}")
     print(f"Dataset size after cleaning: {len(data)}")
 
     data["dataset_split"] = assign_splits(data, cfg)
