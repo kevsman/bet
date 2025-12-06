@@ -324,6 +324,14 @@ if not odds_path.exists():
 odds_df = pd.read_csv(odds_path)
 print(f'Loaded {len(odds_df)} matches from Norsk Tipping')
 
+# Fetch weather forecasts for upcoming matches
+try:
+    from src.weather_forecast import fetch_weather_for_matches
+    odds_df = fetch_weather_for_matches(odds_df)
+    print("✓ Weather forecasts loaded")
+except Exception as e:
+    print(f"Note: Could not fetch weather forecasts: {e}")
+
 # Configuration
 MIN_EDGE = 0.05  # 5% minimum edge
 KELLY_FRACTION = 0.25  # Quarter Kelly
@@ -352,6 +360,18 @@ for _, row in odds_df.iterrows():
     # Reindex to match model features (may be fewer after removing zero-variance cols)
     home_feats = home_feats.reindex(features).fillna(0)
     away_feats = away_feats.reindex(features).fillna(0)
+    
+    # Inject actual weather forecast (if available) instead of historical averages
+    if 'weather_temp' in row and pd.notna(row.get('weather_temp')):
+        if 'weather_temp' in home_feats.index:
+            home_feats['weather_temp'] = row['weather_temp']
+            away_feats['weather_temp'] = row['weather_temp']
+        if 'weather_wind_speed' in home_feats.index:
+            home_feats['weather_wind_speed'] = row.get('weather_wind_speed', 0)
+            away_feats['weather_wind_speed'] = row.get('weather_wind_speed', 0)
+        if 'weather_is_cold' in home_feats.index:
+            home_feats['weather_is_cold'] = row.get('weather_is_cold', 0)
+            away_feats['weather_is_cold'] = row.get('weather_is_cold', 0)
     
     # Predict using feature-based Poisson (model may be a pipeline with StandardScaler)
     pred_home = float(np.clip(home_model.predict(np.array(home_feats).reshape(1, -1))[0], 0.1, 5.0))

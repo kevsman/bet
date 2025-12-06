@@ -409,6 +409,14 @@ def main():
     
     odds_df = pd.read_csv(odds_path)
     
+    # Fetch weather forecasts for upcoming matches
+    try:
+        from src.weather_forecast import fetch_weather_for_matches
+        odds_df = fetch_weather_for_matches(odds_df)
+        print("✓ Weather forecasts loaded")
+    except Exception as e:
+        print(f"Warning: Weather fetch failed ({e}), continuing without weather data")
+    
     # Filter to European matches with over/under odds
     euro_matches = odds_df[
         odds_df["league"].str.contains("Europa|Conference", case=False, na=False) &
@@ -493,6 +501,15 @@ def main():
                         features[col] = 0.0
                     elif col not in features:
                         features[col] = 0.0
+            
+            # Inject actual weather forecast (if available)
+            if 'weather_temp' in row and pd.notna(row.get('weather_temp')):
+                if 'weather_temp' in feature_cols:
+                    features['weather_temp'] = row['weather_temp']
+                if 'weather_wind_speed' in feature_cols:
+                    features['weather_wind_speed'] = row.get('weather_wind_speed', 0)
+                if 'weather_is_cold' in feature_cols:
+                    features['weather_is_cold'] = row.get('weather_is_cold', 0)
             
             # Create feature vector
             X = pd.DataFrame([features])[feature_cols]
