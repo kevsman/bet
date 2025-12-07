@@ -36,6 +36,8 @@ import time
 from datetime import datetime
 from pathlib import Path
 
+import pandas as pd
+
 # Add src to path
 BASE_DIR = Path(__file__).parent
 sys.path.insert(0, str(BASE_DIR))
@@ -180,7 +182,7 @@ def step3c_train_gradient_boosting():
 
 def step4_scrape_odds(headless: bool = True, skip_if_recent: bool = True):
     """Scrape odds from Norsk Tipping using Selenium."""
-    from src.config import get_config
+    from src.config import get_config, filter_womens_matches
     
     cfg = get_config()
     odds_file = cfg.processed_dir / "norsk_tipping_odds.csv"
@@ -193,6 +195,13 @@ def step4_scrape_odds(headless: bool = True, skip_if_recent: bool = True):
         if age_hours < 4:
             print(f"Odds file is {age_hours:.1f} hours old - skipping scrape")
             print(f"(Use --force-scrape to refresh)")
+            # Still filter existing file in case it has women's matches
+            df = pd.read_csv(odds_file)
+            original_count = len(df)
+            df = filter_womens_matches(df, verbose=True)
+            if len(df) < original_count:
+                df.to_csv(odds_file, index=False)
+                print(f"Re-saved filtered odds: {len(df)} matches")
             return
     
     # Import and run the scraper
@@ -202,6 +211,8 @@ def step4_scrape_odds(headless: bool = True, skip_if_recent: bool = True):
     df = scrape_all_leagues(headless=headless)
     
     if df is not None and not df.empty:
+        # Filter is already applied in scraper, but double-check
+        df = filter_womens_matches(df, verbose=False)
         df.to_csv(odds_file, index=False)
         print(f"Saved {len(df)} matches to {odds_file}")
     else:

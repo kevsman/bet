@@ -26,10 +26,15 @@ class ModelConfig:
 @dataclass
 class StrategyConfig:
     target_total_line: float = 2.5
-    min_edge: float = 0.05
+    min_edge: float = 0.10  # Based on calibration analysis: edges <10% have negative ROI
     bankroll: float = 10_000.0
     kelly_fraction: float = 0.15
     max_bet_fraction: float = 0.05
+    # Probability filters based on calibration analysis
+    min_probability: float = 0.35  # Below this, sample sizes too small
+    max_probability: float = 0.75  # Above this, calibration degrades
+    # Model preference: Poisson is better calibrated than Dixon-Coles
+    use_poisson_primary: bool = True
 
 
 @dataclass
@@ -109,3 +114,86 @@ CONFIG = AppConfig()
 def get_config() -> AppConfig:
     """Return a singleton-style configuration object."""
     return CONFIG
+
+
+# Patterns to identify women's league matches (case-insensitive)
+WOMENS_LEAGUE_PATTERNS = [
+    "women",       # English
+    "kvinner",     # Norwegian  
+    "feminine",    # French
+    "femminile",   # Italian
+    "femenino",    # Spanish
+    "frauen",      # German
+    "wfc",         # Women's Football Club suffix
+    "wsl",         # Women's Super League
+]
+
+
+def is_womens_match(league: str = "", home_team: str = "", away_team: str = "") -> bool:
+    """
+    Check if a match is from a women's league.
+    
+    Args:
+        league: League name
+        home_team: Home team name
+        away_team: Away team name
+        
+    Returns:
+        True if this appears to be a women's match
+    """
+    # Combine all text to check, convert to lowercase
+    text_to_check = f"{league} {home_team} {away_team}".lower()
+    
+    for pattern in WOMENS_LEAGUE_PATTERNS:
+        if pattern in text_to_check:
+            return True
+    return False
+
+
+def filter_womens_matches(df, league_col: str = "league", 
+                          home_col: str = "home_team", 
+                          away_col: str = "away_team",
+                          verbose: bool = True):
+    """
+    Filter out women's league matches from a DataFrame.
+    
+    Args:
+        df: DataFrame with match data
+        league_col: Column name for league
+        home_col: Column name for home team
+        away_col: Column name for away team
+        verbose: Print info about filtered matches
+        
+    Returns:
+        Filtered DataFrame with only men's matches
+    """
+    import pandas as pd
+    
+    if df.empty:
+        return df
+    
+    # Get column names safely (may not exist)
+    league_vals = df[league_col].fillna("") if league_col in df.columns else pd.Series([""] * len(df))
+    home_vals = df[home_col].fillna("") if home_col in df.columns else pd.Series([""] * len(df))
+    away_vals = df[away_col].fillna("") if away_col in df.columns else pd.Series([""] * len(df))
+    
+    # Create mask for women's matches
+    is_womens = [
+        is_womens_match(str(league), str(home), str(away))
+        for league, home, away in zip(league_vals, home_vals, away_vals)
+    ]
+    
+    womens_count = sum(is_womens)
+    if verbose and womens_count > 0:
+        womens_df = df[is_womens]
+        print(f"\n[!] Filtering out {womens_count} women's league matches:")
+        for _, row in womens_df.head(10).iterrows():
+            home = row.get(home_col, "?")
+            away = row.get(away_col, "?")
+            league = row.get(league_col, "?")
+            print(f"   - {home} vs {away} ({league})")
+        if womens_count > 10:
+            print(f"   ... and {womens_count - 10} more")
+    
+    # Return only non-women's matches
+    return df[[not w for w in is_womens]]

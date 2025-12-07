@@ -417,6 +417,14 @@ def main():
     except Exception as e:
         print(f"Warning: Weather fetch failed ({e}), continuing without weather data")
     
+    # Fetch injury/suspension data for upcoming matches
+    try:
+        from src.injury_forecast import fetch_injuries_for_matches
+        odds_df = fetch_injuries_for_matches(odds_df)
+        print("✓ Injury/suspension data loaded")
+    except Exception as e:
+        print(f"Warning: Injury fetch failed ({e}), continuing without injury data")
+    
     # Filter to European matches with over/under odds
     euro_matches = odds_df[
         odds_df["league"].str.contains("Europa|Conference", case=False, na=False) &

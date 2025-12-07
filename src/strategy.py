@@ -85,6 +85,10 @@ def pick_signal(row: pd.Series, cfg: AppConfig) -> Optional[SignalRecommendation
     odds_over = row.get("best_over_odds", float("nan"))
     odds_under = row.get("best_under_odds", float("nan"))
     options: List[SignalOption] = []
+    
+    # Get probability thresholds from config
+    min_prob = getattr(cfg.strategy, 'min_probability', 0.35)
+    max_prob = getattr(cfg.strategy, 'max_probability', 0.75)
 
     calibrated_line = abs(line - cfg.strategy.target_total_line) < 1e-6
     cal_over = row.get("cal_over_prob") if calibrated_line else np.nan
@@ -97,9 +101,11 @@ def pick_signal(row: pd.Series, cfg: AppConfig) -> Optional[SignalRecommendation
             else probability_over(line, lam_total)
         )
         prob_over = float(np.clip(prob_over, 1e-4, 1 - 1e-4))
-        edge = prob_over * odds_over - 1
-        frac = kelly_fraction(prob_over, odds_over)
-        options.append(SignalOption("Over", prob_over, odds_over, edge, frac))
+        # Only consider if probability is in well-calibrated range
+        if min_prob <= prob_over <= max_prob:
+            edge = prob_over * odds_over - 1
+            frac = kelly_fraction(prob_over, odds_over)
+            options.append(SignalOption("Over", prob_over, odds_over, edge, frac))
     else:
         prob_over = float("nan")
 
@@ -110,9 +116,11 @@ def pick_signal(row: pd.Series, cfg: AppConfig) -> Optional[SignalRecommendation
             else probability_under(line, lam_total)
         )
         prob_under = float(np.clip(prob_under, 1e-4, 1 - 1e-4))
-        edge = prob_under * odds_under - 1
-        frac = kelly_fraction(prob_under, odds_under)
-        options.append(SignalOption("Under", prob_under, odds_under, edge, frac))
+        # Only consider if probability is in well-calibrated range
+        if min_prob <= prob_under <= max_prob:
+            edge = prob_under * odds_under - 1
+            frac = kelly_fraction(prob_under, odds_under)
+            options.append(SignalOption("Under", prob_under, odds_under, edge, frac))
     else:
         prob_under = float("nan")
 

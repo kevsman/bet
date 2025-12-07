@@ -46,7 +46,7 @@ if dc_model_path.exists():
     try:
         from src.dixon_coles import DixonColesModel
         dixon_coles_model = DixonColesModel.load(dc_model_path)
-        print("✓ Dixon-Coles model loaded")
+        print("[OK] Dixon-Coles model loaded")
     except Exception as e:
         print(f"Warning: Could not load Dixon-Coles model: {e}")
 else:
@@ -67,7 +67,7 @@ if lgb_home_path.exists() and lgb_away_path.exists():
         if lgb_features_path.exists():
             with open(lgb_features_path, 'r') as f:
                 gb_features = [line.strip() for line in f if line.strip()]
-        print("✓ Gradient Boosting models loaded (LightGBM)")
+        print("[OK] Gradient Boosting models loaded (LightGBM)")
     except Exception as e:
         print(f"Warning: Could not load Gradient Boosting models: {e}")
 else:
@@ -80,7 +80,7 @@ std_dataset_path = Path('data/processed/match_dataset.csv')
 
 if enhanced_path.exists():
     dataset = pd.read_csv(enhanced_path, parse_dates=['Date'], low_memory=False)
-    print(f"✓ Enhanced dataset loaded ({len(dataset.columns)} columns)")
+    print(f"[OK] Enhanced dataset loaded ({len(dataset.columns)} columns)")
 elif xg_dataset_path.exists():
     dataset = pd.read_csv(xg_dataset_path, parse_dates=['Date'], low_memory=False)
 else:
@@ -316,6 +316,9 @@ def ensemble_over_under(home_team: str, away_team: str, line: float,
 # MAIN RECOMMENDATION ENGINE
 # ============================================================================
 
+# Import filter for women's leagues
+from src.config import filter_womens_matches
+
 # Load fresh Norsk Tipping odds
 odds_path = Path('data/processed/norsk_tipping_odds.csv')
 if not odds_path.exists():
@@ -324,13 +327,27 @@ if not odds_path.exists():
 odds_df = pd.read_csv(odds_path)
 print(f'Loaded {len(odds_df)} matches from Norsk Tipping')
 
+# Filter out women's league matches
+original_count = len(odds_df)
+odds_df = filter_womens_matches(odds_df, verbose=True)
+if len(odds_df) < original_count:
+    print(f'After filtering: {len(odds_df)} matches (removed {original_count - len(odds_df)} women\'s matches)')
+
 # Fetch weather forecasts for upcoming matches
 try:
     from src.weather_forecast import fetch_weather_for_matches
     odds_df = fetch_weather_for_matches(odds_df)
-    print("✓ Weather forecasts loaded")
+    print("[OK] Weather forecasts loaded")
 except Exception as e:
     print(f"Note: Could not fetch weather forecasts: {e}")
+
+# Fetch injury/suspension data for upcoming matches
+try:
+    from src.injury_forecast import fetch_injuries_for_matches
+    odds_df = fetch_injuries_for_matches(odds_df)
+    print("[OK] Injury/suspension data loaded")
+except Exception as e:
+    print(f"Note: Could not fetch injury data: {e}")
 
 # Configuration
 MIN_EDGE = 0.05  # 5% minimum edge
@@ -376,6 +393,19 @@ for _, row in odds_df.iterrows():
     # Predict using feature-based Poisson (model may be a pipeline with StandardScaler)
     pred_home = float(np.clip(home_model.predict(np.array(home_feats).reshape(1, -1))[0], 0.1, 5.0))
     pred_away = float(np.clip(away_model.predict(np.array(away_feats).reshape(1, -1))[0], 0.1, 5.0))
+    
+    # Apply injury adjustment: reduce expected goals for teams with many injuries
+    # Each injured player reduces expected goals by ~2% (rough estimate based on squad depth)
+    INJURY_FACTOR = 0.02
+    home_injured = row.get('home_injured', 0) + row.get('home_suspended', 0)
+    away_injured = row.get('away_injured', 0) + row.get('away_suspended', 0)
+    if home_injured > 0:
+        injury_adj_home = max(0.7, 1.0 - home_injured * INJURY_FACTOR)  # Cap at 30% reduction
+        pred_home *= injury_adj_home
+    if away_injured > 0:
+        injury_adj_away = max(0.7, 1.0 - away_injured * INJURY_FACTOR)
+        pred_away *= injury_adj_away
+    
     total = pred_home + pred_away
     
     # Predict using Gradient Boosting if available

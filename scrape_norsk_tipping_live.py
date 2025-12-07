@@ -18,6 +18,15 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException, NoSuchElementException
 from webdriver_manager.chrome import ChromeDriverManager
 
+# Import filter function for women's leagues
+try:
+    from src.config import filter_womens_matches
+except ImportError:
+    # Fallback if run directly without src in path
+    import sys
+    sys.path.insert(0, str(Path(__file__).parent))
+    from src.config import filter_womens_matches
+
 # League configurations - maps country tabs to their leagues
 LEAGUES_CONFIG = {
     "England": {
@@ -808,6 +817,11 @@ def scrape_all_leagues(headless: bool = False) -> pd.DataFrame:
     # Create DataFrame
     if all_matches:
         df = pd.DataFrame(all_matches)
+        
+        # Filter out women's league matches
+        original_count = len(df)
+        df = filter_womens_matches(df, verbose=True)
+        print(f"Matches after women's league filter: {len(df)} (removed {original_count - len(df)})")
         
         # Save to CSV
         output_path = Path("data/upcoming/norsk_tipping_odds.csv")

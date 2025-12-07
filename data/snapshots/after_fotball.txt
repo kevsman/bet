@@ -10,35 +10,37 @@ Resultatservice
 Statistikksenter
 Alle Sporter
 Fotball
-439
+305
 Ishockey
-44
+54
 Håndball
-31
+25
 Golf
 4
-Langrenn
+Alpint
 2
+Langrenn
+4
 Skiskyting
 2
 Formel 1
-3
+2
 Amerikansk fotball
-38
+30
+Bandy
+3
 Basketball
-17
+8
 Darts
 45
 Snooker
-2
+1
 Counter-Strike
-2
+6
 LoL
-9
+7
 Dota 2
-2
-Underholdning
-2
+1
 Avansert filter
 Avansert filter
 Trykk Enter eller Pil ned for å velge. Trykk Escape for å tilbakestille.
@@ -78,94 +80,10 @@ Uavgjort tilbakebetales
 1. omgang - HUB
 England
 England Premier League
-(14)
-Lør. 6/12 13:30
-Aston Villa
-Arsenal
-England - Premier League
-Vsport Premier League
-TOTALT ANTALL MÅL - OVER/UNDER 1.5
-Over 1.5
-1.33
-Under 1.5
-3.10
-TOTALT ANTALL MÅL - OVER/UNDER 2.5
-Over 2.5
-2.05
-Under 2.5
-1.72
-TOTALT ANTALL MÅL - OVER/UNDER 3.5
-Over 3.5
-3.70
-Under 3.5
-1.25
-+142
-Lør. 6/12 16:00
-Tottenham Hotspur
-Brentford
-England - Premier League
-TV3+
-TOTALT ANTALL MÅL - OVER/UNDER 1.5
-Over 1.5
-1.28
-Under 1.5
-3.50
-TOTALT ANTALL MÅL - OVER/UNDER 2.5
-Over 2.5
-1.85
-Under 2.5
-1.90
-TOTALT ANTALL MÅL - OVER/UNDER 3.5
-Over 3.5
-3.15
-Under 3.5
-1.33
-+142
-Lør. 6/12 16:00
-Bournemouth
-Chelsea
-England - Premier League
-VSport Premier L2
-TOTALT ANTALL MÅL - OVER/UNDER 1.5
-Over 1.5
-1.18
-Under 1.5
-4.50
-TOTALT ANTALL MÅL - OVER/UNDER 2.5
-Over 2.5
-1.60
-Under 2.5
-2.25
-TOTALT ANTALL MÅL - OVER/UNDER 3.5
-Over 3.5
-2.50
-Under 3.5
-1.50
-+142
-Lør. 6/12 16:00
-Newcastle United
-Burnley
-England - Premier League
-VSport Premier L1
-TOTALT ANTALL MÅL - OVER/UNDER 1.5
-Over 1.5
-1.17
-Under 1.5
-4.70
-TOTALT ANTALL MÅL - OVER/UNDER 2.5
-Over 2.5
-1.55
-Under 2.5
-2.35
-TOTALT ANTALL MÅL - OVER/UNDER 3.5
-Over 3.5
-2.45
-Under 3.5
-1.52
-+142
-Lør. 6/12 16:00
-Manchester City
-Sunderland
+(12)
+Søn. 7/12 15:00
+Brighton and Hove Albion
+West Ham United
 England - Premier League
 Vsport Premier League
 TOTALT ANTALL MÅL - OVER/UNDER 1.5
@@ -180,73 +98,10 @@ Under 2.5
 2.45
 TOTALT ANTALL MÅL - OVER/UNDER 3.5
 Over 3.5
-2.35
+2.30
 Under 3.5
-1.55
-+143
-Lør. 6/12 16:00
-Everton
-Nottingham Forest
-England - Premier League
-VSport Premier L4
-TOTALT ANTALL MÅL - OVER/UNDER 1.5
-Over 1.5
-1.35
-Under 1.5
-3.05
-TOTALT ANTALL MÅL - OVER/UNDER 2.5
-Over 2.5
-2.10
-Under 2.5
-1.70
-TOTALT ANTALL MÅL - OVER/UNDER 3.5
-Over 3.5
-3.70
-Under 3.5
-1.25
-+142
-Lør. 6/12 18:30
-Leeds United
-Liverpool
-England - Premier League
-Vsport Premier League
-TOTALT ANTALL MÅL - OVER/UNDER 1.5
-Over 1.5
-1.20
-Under 1.5
-4.20
-TOTALT ANTALL MÅL - OVER/UNDER 2.5
-Over 2.5
-1.65
-Under 2.5
-2.15
-TOTALT ANTALL MÅL - OVER/UNDER 3.5
-Over 3.5
-2.65
-Under 3.5
-1.45
-+142
-Søn. 7/12 15:00
-Brighton and Hove Albion
-West Ham United
-England - Premier League
-Vsport Premier League
-TOTALT ANTALL MÅL - OVER/UNDER 1.5
-Over 1.5
-1.18
-Under 1.5
-4.50
-TOTALT ANTALL MÅL - OVER/UNDER 2.5
-Over 2.5
-1.60
-Under 2.5
-2.25
-TOTALT ANTALL MÅL - OVER/UNDER 3.5
-Over 3.5
-2.50
-Under 3.5
-1.50
-+138
+1.58
++139
 Søn. 7/12 17:30
 Fulham
 Crystal Palace
@@ -264,19 +119,20 @@ Under 2.5
 1.75
 TOTALT ANTALL MÅL - OVER/UNDER 3.5
 Over 3.5
-3.55
+3.50
 Under 3.5
-1.27
+1.28
 +142
 Man. 8/12 21:00
 Wolverhampton Wanderers
 Manchester United
 England - Premier League
+Vsport Premier League
 TOTALT ANTALL MÅL - OVER/UNDER 1.5
 Over 1.5
-1.20
+1.22
 Under 1.5
-4.20
+4.10
 TOTALT ANTALL MÅL - OVER/UNDER 2.5
 Over 2.5
 1.67
@@ -284,13 +140,13 @@ Under 2.5
 2.10
 TOTALT ANTALL MÅL - OVER/UNDER 3.5
 Over 3.5
-2.70
+2.75
 Under 3.5
-1.43
-+142
+1.42
++140
 Lør. 13/12 16:00
-Chelsea
-Everton
+Liverpool
+Brighton and Hove Albion
 England - Premier League
 TOTALT ANTALL MÅL - OVER/UNDER 1.5
 Over 1.5
@@ -302,8 +158,8 @@ TOTALT ANTALL MÅL - OVER/UNDER 3.5
 Over 3.5
 Under 3.5
 Lør. 13/12 16:00
-Liverpool
-Brighton and Hove Albion
+Chelsea
+Everton
 England - Premier League
 TOTALT ANTALL MÅL - OVER/UNDER 1.5
 Over 1.5
@@ -340,205 +196,82 @@ Under 2.5
 TOTALT ANTALL MÅL - OVER/UNDER 3.5
 Over 3.5
 Under 3.5
+Søn. 14/12 15:00
+West Ham United
+Aston Villa
+England - Premier League
+TOTALT ANTALL MÅL - OVER/UNDER 1.5
+Over 1.5
+Under 1.5
+TOTALT ANTALL MÅL - OVER/UNDER 2.5
+Over 2.5
+Under 2.5
+TOTALT ANTALL MÅL - OVER/UNDER 3.5
+Over 3.5
+Under 3.5
+Søn. 14/12 15:00
+Sunderland
+Newcastle United
+England - Premier League
+TOTALT ANTALL MÅL - OVER/UNDER 1.5
+Over 1.5
+Under 1.5
+TOTALT ANTALL MÅL - OVER/UNDER 2.5
+Over 2.5
+Under 2.5
+TOTALT ANTALL MÅL - OVER/UNDER 3.5
+Over 3.5
+Under 3.5
+Søn. 14/12 15:00
+Nottingham Forest
+Tottenham Hotspur
+England - Premier League
+TOTALT ANTALL MÅL - OVER/UNDER 1.5
+Over 1.5
+Under 1.5
+TOTALT ANTALL MÅL - OVER/UNDER 2.5
+Over 2.5
+Under 2.5
+TOTALT ANTALL MÅL - OVER/UNDER 3.5
+Over 3.5
+Under 3.5
+Søn. 14/12 15:00
+Crystal Palace
+Manchester City
+England - Premier League
+TOTALT ANTALL MÅL - OVER/UNDER 1.5
+Over 1.5
+Under 1.5
+TOTALT ANTALL MÅL - OVER/UNDER 2.5
+Over 2.5
+Under 2.5
+TOTALT ANTALL MÅL - OVER/UNDER 3.5
+Over 3.5
+Under 3.5
+Søn. 14/12 17:30
+Brentford
+Leeds United
+England - Premier League
+TOTALT ANTALL MÅL - OVER/UNDER 1.5
+Over 1.5
+Under 1.5
+TOTALT ANTALL MÅL - OVER/UNDER 2.5
+Over 2.5
+Under 2.5
+TOTALT ANTALL MÅL - OVER/UNDER 3.5
+Over 3.5
+Under 3.5
 Fa Cup
-(19)
+(5)
 Championship
-(24)
+(23)
 League One
-(13)
-Lør. 6/12 13:30
-Cardiff City
-Huddersfield Town
-England - League One
-LIVESTR
-TOTALT ANTALL MÅL - OVER/UNDER 1.5
-Over 1.5
-1.20
-Under 1.5
-4.00
-TOTALT ANTALL MÅL - OVER/UNDER 2.5
-Over 2.5
-1.62
-Under 2.5
-2.10
-TOTALT ANTALL MÅL - OVER/UNDER 3.5
-Over 3.5
-2.50
-Under 3.5
-1.45
-+47
-Lør. 6/12 13:30
-Plymouth Argyle
-Bradford City FC
-England - League One
-TOTALT ANTALL MÅL - OVER/UNDER 1.5
-Over 1.5
-1.25
-Under 1.5
-3.50
-TOTALT ANTALL MÅL - OVER/UNDER 2.5
-Over 2.5
-1.77
-Under 2.5
-1.90
-TOTALT ANTALL MÅL - OVER/UNDER 3.5
-Over 3.5
-2.85
-Under 3.5
-1.35
-+47
-Tir. 9/12 20:45
-Lincoln City
-Barnsley FC
-England - League One
-TOTALT ANTALL MÅL - OVER/UNDER 1.5
-Over 1.5
-Under 1.5
-TOTALT ANTALL MÅL - OVER/UNDER 2.5
-Over 2.5
-Under 2.5
-TOTALT ANTALL MÅL - OVER/UNDER 3.5
-Over 3.5
-Under 3.5
-Tir. 9/12 20:45
-Northampton Town
-Huddersfield Town
-England - League One
-LIVESTR
-TOTALT ANTALL MÅL - OVER/UNDER 1.5
-Over 1.5
-Under 1.5
-TOTALT ANTALL MÅL - OVER/UNDER 2.5
-Over 2.5
-Under 2.5
-TOTALT ANTALL MÅL - OVER/UNDER 3.5
-Over 3.5
-Under 3.5
-Tir. 9/12 20:45
-Leyton Orient
-Luton Town
-England - League One
-TOTALT ANTALL MÅL - OVER/UNDER 1.5
-Over 1.5
-Under 1.5
-TOTALT ANTALL MÅL - OVER/UNDER 2.5
-Over 2.5
-Under 2.5
-TOTALT ANTALL MÅL - OVER/UNDER 3.5
-Over 3.5
-Under 3.5
-Tir. 9/12 20:45
-Wycombe Wanderers
-Plymouth Argyle
-England - League One
-LIVESTR
-TOTALT ANTALL MÅL - OVER/UNDER 1.5
-Over 1.5
-Under 1.5
-TOTALT ANTALL MÅL - OVER/UNDER 2.5
-Over 2.5
-Under 2.5
-TOTALT ANTALL MÅL - OVER/UNDER 3.5
-Over 3.5
-Under 3.5
-Tir. 9/12 20:45
-Stevenage
-Cardiff City
-England - League One
-TOTALT ANTALL MÅL - OVER/UNDER 1.5
-Over 1.5
-Under 1.5
-TOTALT ANTALL MÅL - OVER/UNDER 2.5
-Over 2.5
-Under 2.5
-TOTALT ANTALL MÅL - OVER/UNDER 3.5
-Over 3.5
-Under 3.5
-Tir. 9/12 20:45
-Port Vale
-Bradford City FC
-England - League One
-TOTALT ANTALL MÅL - OVER/UNDER 1.5
-Over 1.5
-Under 1.5
-TOTALT ANTALL MÅL - OVER/UNDER 2.5
-Over 2.5
-Under 2.5
-TOTALT ANTALL MÅL - OVER/UNDER 3.5
-Over 3.5
-Under 3.5
-Tir. 9/12 20:45
-Mansfield Town
-Bolton Wanderers
-England - League One
-LIVESTR
-TOTALT ANTALL MÅL - OVER/UNDER 1.5
-Over 1.5
-Under 1.5
-TOTALT ANTALL MÅL - OVER/UNDER 2.5
-Over 2.5
-Under 2.5
-TOTALT ANTALL MÅL - OVER/UNDER 3.5
-Over 3.5
-Under 3.5
-Tir. 9/12 20:45
-Doncaster Rovers
-Stockport County FC
-England - League One
-LIVESTR
-TOTALT ANTALL MÅL - OVER/UNDER 1.5
-Over 1.5
-Under 1.5
-TOTALT ANTALL MÅL - OVER/UNDER 2.5
-Over 2.5
-Under 2.5
-TOTALT ANTALL MÅL - OVER/UNDER 3.5
-Over 3.5
-Under 3.5
-Tir. 9/12 20:45
-Exeter City
-AFC Wimbledon
-England - League One
-TOTALT ANTALL MÅL - OVER/UNDER 1.5
-Over 1.5
-Under 1.5
-TOTALT ANTALL MÅL - OVER/UNDER 2.5
-Over 2.5
-Under 2.5
-TOTALT ANTALL MÅL - OVER/UNDER 3.5
-Over 3.5
-Under 3.5
-Tir. 9/12 21:00
-Reading
-Peterborough United
-England - League One
-LIVESTR
-TOTALT ANTALL MÅL - OVER/UNDER 1.5
-Over 1.5
-Under 1.5
-TOTALT ANTALL MÅL - OVER/UNDER 2.5
-Over 2.5
-Under 2.5
-TOTALT ANTALL MÅL - OVER/UNDER 3.5
-Over 3.5
-Under 3.5
-Ons. 10/12 20:45
-Rotherham United
-Blackpool FC
-England - League One
-LIVESTR
-TOTALT ANTALL MÅL - OVER/UNDER 1.5
-Over 1.5
-Under 1.5
-TOTALT ANTALL MÅL - OVER/UNDER 2.5
-Over 2.5
-Under 2.5
-TOTALT ANTALL MÅL - OVER/UNDER 3.5
-Over 3.5
-Under 3.5
+(11)
 League Two
-(12)
+(11)
 England Premier League Vinnerspill
+(1)
+Spesialer
 (1)
 Norge
 Europa
@@ -548,28 +281,26 @@ Tyskland
 Italia
 Frankrike
 Afrika
+Argentina
 Australia
 Belgia
 Brasil
-Chile
 Danmark
-Ecuador
 England Kvinner Og Lavere Divisjoner
 Hellas
 Israel
-Japan
 Kroatia
 Kypros
 Nederland
 Polen
 Portugal
+Romania
 Skottland
 Slovakia
 Slovenia
 Sveits
-Sør-Korea
+Sør-Afrika
 Tsjekkia
 Tyrkia
 Ungarn
-Usa
 Østerrike

@@ -156,10 +156,18 @@ def generate_html_report(
     avg_ev = df["ev"].mean() * 100
     best_ev = df["ev"].max() * 100
     avg_odds = df["odds"].mean()
+    avg_prob = df["probability"].mean() * 100
     
     # Count by bet type
     over_count = len(df[df["bet_type"] == "Over"])
     under_count = len(df[df["bet_type"] == "Under"])
+    
+    # Get highest probability bets (most confident predictions)
+    high_prob_df = df.sort_values("probability", ascending=False)
+    
+    # Filter to optimal calibration range (35-75% where model is most accurate)
+    optimal_range_df = df[(df["probability"] >= 0.35) & (df["probability"] <= 0.75)].copy()
+    optimal_count = len(optimal_range_df)
     
     # Generate HTML
     html = f"""<!DOCTYPE html>
@@ -304,6 +312,32 @@ def generate_html_report(
             position: sticky;
             top: 0;
             z-index: 10;
+        }}
+        
+        .bet-table th.sortable {{
+            cursor: pointer;
+            user-select: none;
+            transition: all 0.2s;
+        }}
+        
+        .bet-table th.sortable:hover {{
+            color: #4ecca3;
+            background: #1a1a2e;
+        }}
+        
+        .bet-table th.sortable.active {{
+            color: #4ecca3;
+        }}
+        
+        .bet-table th .sort-icon {{
+            display: inline-block;
+            margin-left: 4px;
+            font-size: 0.8em;
+            opacity: 0.5;
+        }}
+        
+        .bet-table th.sortable.active .sort-icon {{
+            opacity: 1;
         }}
         
         .bet-table th:first-child {{
@@ -1078,6 +1112,50 @@ def generate_html_report(
                 <div class="label">Over / Under</div>
                 <div class="value blue">{over_count} / {under_count}</div>
             </div>
+            <div class="summary-card">
+                <div class="label">Avg Prob</div>
+                <div class="value purple">{avg_prob:.0f}%</div>
+            </div>
+            <div class="summary-card">
+                <div class="label">Optimal Range</div>
+                <div class="value green">{optimal_count}</div>
+            </div>
+        </div>
+"""
+
+    # Add Model Insights section based on calibration analysis
+    html += """
+        <div class="top-bets" style="background: linear-gradient(135deg, #1a2e1a 0%, #1a1a2e 100%); border-left: 3px solid #4ecca3;">
+            <div class="top-bets-title" style="color: #4ecca3;">
+                <span class="icon">&#128202;</span>
+                <span>Model Calibration Insights</span>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; color: #a0a0b0; font-size: 0.9em;">
+                <div style="background: #0f0f23; padding: 15px; border-radius: 8px; border-left: 3px solid #60a5fa;">
+                    <div style="color: #60a5fa; font-weight: bold; margin-bottom: 8px;">Poisson Model (Primary)</div>
+                    <ul style="margin-left: 18px; line-height: 1.6;">
+                        <li>Best calibration: <span style="color: #4ecca3;">1.15% ECE</span> (excellent)</li>
+                        <li>Optimal range: <span style="color: #fbbf24;">35-75% probability</span></li>
+                        <li>Slight over-prediction bias: +0.08 goals</li>
+                    </ul>
+                </div>
+                <div style="background: #0f0f23; padding: 15px; border-radius: 8px; border-left: 3px solid #a855f7;">
+                    <div style="color: #a855f7; font-weight: bold; margin-bottom: 8px;">Dixon-Coles Model</div>
+                    <ul style="margin-left: 18px; line-height: 1.6;">
+                        <li>Higher ECE: <span style="color: #e94560;">9.84%</span> (needs caution)</li>
+                        <li>Under-predicts goals: -0.35 bias</li>
+                        <li>Use for secondary confirmation only</li>
+                    </ul>
+                </div>
+                <div style="background: #0f0f23; padding: 15px; border-radius: 8px; border-left: 3px solid #fbbf24;">
+                    <div style="color: #fbbf24; font-weight: bold; margin-bottom: 8px;">Edge Analysis (ROI)</div>
+                    <ul style="margin-left: 18px; line-height: 1.6;">
+                        <li>0-10% edge: <span style="color: #e94560;">Negative ROI</span> (avoid)</li>
+                        <li>10-15% edge: <span style="color: #4ecca3;">Break-even to +0.2%</span></li>
+                        <li>15%+ edge: <span style="color: #4ecca3;">+47.9% ROI</span> (best)</li>
+                    </ul>
+                </div>
+            </div>
         </div>
 """
 
@@ -1104,6 +1182,46 @@ def generate_html_report(
                         <span class="odds-display">@ {row['odds']:.2f}</span>
                     </div>
                     <div class="ev-display">+{true_ev:.1f}% EV</div>
+                </div>
+"""
+    
+    html += """
+            </div>
+        </div>
+"""
+
+    # Add Highest Probability section (most confident predictions)
+    top_prob = high_prob_df.head(5)
+    html += """
+        <div class="top-bets" style="border-left: 3px solid #a855f7;">
+            <div class="top-bets-title" style="color: #a855f7;">
+                <span class="icon">&#127919;</span>
+                <span>Highest Probability Bets (Most Confident)</span>
+            </div>
+            <div class="top-bets-grid">
+"""
+    
+    for rank, (idx, row) in enumerate(top_prob.iterrows(), 1):
+        true_ev = (row["probability"] * row["odds"] - 1) * 100
+        prob_pct = row["probability"] * 100
+        bet_class = row["bet_type"].lower()
+        
+        # Indicate if in optimal calibration range
+        in_optimal = 35 <= prob_pct <= 75
+        optimal_badge = '<span style="background: #4ecca3; color: #0f0f23; padding: 2px 6px; border-radius: 4px; font-size: 0.7em; margin-left: 5px;">CALIBRATED</span>' if in_optimal else ''
+        
+        html += f"""
+                <div class="top-bet-card" style="border-left: 3px solid #a855f7;">
+                    <div class="rank" style="background: #a855f7;">{rank}</div>
+                    <div class="teams">{row['home_team']} vs {row['away_team']}</div>
+                    <div class="bet-info">
+                        <span class="bet-label {bet_class}">{row['bet_type']} {row['line']}</span>
+                        <span class="odds-display">@ {row['odds']:.2f}</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div style="color: #a855f7; font-size: 1.2em; font-weight: bold;">{prob_pct:.0f}% Prob{optimal_badge}</div>
+                        <div class="ev-display" style="font-size: 0.9em;">+{true_ev:.1f}% EV</div>
+                    </div>
                 </div>
 """
     
@@ -1152,9 +1270,17 @@ def generate_html_report(
                     <label for="minProb">Min Prob:</label>
                     <select id="minProb" onchange="applyProbFilter()">
                         <option value="0">All bets</option>
-                        <option value="40">≥40% (moderate)</option>
-                        <option value="50" selected>≥50% (confident)</option>
+                        <option value="35" selected>≥35% (calibrated range)</option>
+                        <option value="50">≥50% (confident)</option>
                         <option value="60">≥60% (high confidence)</option>
+                    </select>
+                </div>
+                <div class="prob-filter">
+                    <label for="maxProb">Max Prob:</label>
+                    <select id="maxProb" onchange="applyProbFilter()">
+                        <option value="100">No limit</option>
+                        <option value="75" selected>≤75% (calibrated range)</option>
+                        <option value="65">≤65% (moderate)</option>
                     </select>
                 </div>
                 <div class="calc-buttons">
@@ -1190,22 +1316,22 @@ def generate_html_report(
                 <span class="count">{len(df)} bets found</span>
             </div>
             
-            <table class="bet-table">
+            <table class="bet-table" id="bet-table">
                 <thead>
                     <tr>
                         <th></th>
-                        <th>Match</th>
-                        <th>Bet</th>
-                        <th>Odds</th>
-                        <th>EV</th>
-                        <th>Edge</th>
-                        <th>Prob</th>
-                        <th>Goals</th>
-                        <th>Stake</th>
+                        <th class="sortable" data-sort="match" onclick="sortTable('match')">Match <span class="sort-icon"></span></th>
+                        <th class="sortable" data-sort="bet" onclick="sortTable('bet')">Bet <span class="sort-icon"></span></th>
+                        <th class="sortable" data-sort="odds" onclick="sortTable('odds')">Odds <span class="sort-icon"></span></th>
+                        <th class="sortable active desc" data-sort="ev" onclick="sortTable('ev')">EV <span class="sort-icon">&#9660;</span></th>
+                        <th class="sortable" data-sort="edge" onclick="sortTable('edge')">Edge <span class="sort-icon"></span></th>
+                        <th class="sortable" data-sort="prob" onclick="sortTable('prob')">Prob <span class="sort-icon"></span></th>
+                        <th class="sortable" data-sort="goals" onclick="sortTable('goals')">Goals <span class="sort-icon"></span></th>
+                        <th class="sortable" data-sort="stake" onclick="sortTable('stake')">Stake <span class="sort-icon"></span></th>
                         <th>Models (P / DC)</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="bet-table-body">
 """
     
     # Add each bet as a table row
@@ -1243,7 +1369,7 @@ def generate_html_report(
         pred_total = row["pred_total"]
         
         html += f"""
-                    <tr class="{row_class}" data-bet-id="{idx}" data-odds="{row['odds']}" data-stake="{row['stake']}" data-ev="{row['ev']}" data-prob="{row['probability']}">
+                    <tr class="{row_class}" data-bet-id="{idx}" data-match="{row['home_team']} vs {row['away_team']}" data-bet="{row['bet_type']} {row['line']}" data-odds="{row['odds']}" data-ev="{true_ev}" data-edge="{ev_pct}" data-prob="{prob_pct}" data-goals="{pred_total}" data-stake="{stake_pct}">
                         <td>
                             <div class="bet-row-checkbox">
                                 <input type="checkbox" id="bet-{idx}" checked onchange="updateCalculator()">
@@ -1285,26 +1411,76 @@ def generate_html_report(
         </div>
         
         <div class="footer">
-            <p>Model: Dixon-Coles + Poisson Ensemble | Kelly Criterion (25% fractional, max 5%)</p>
+            <p>Model: Poisson (primary) + Dixon-Coles (secondary) | Min Edge: 10% | Optimal Prob Range: 35-75%</p>
+            <p style="margin-top: 8px; color: #4ecca3;">Based on calibration analysis: Brier Score 0.246, ECE 1.15%</p>
             <p style="margin-top: 8px;">Bet responsibly. Past performance does not guarantee future results.</p>
         </div>
     </div>
     
     <script>
+        // Current sort state
+        let currentSort = { column: 'ev', direction: 'desc' };
+        
         // Initialize calculator on page load
         document.addEventListener('DOMContentLoaded', function() {
             applyProbFilter();
         });
         
+        function sortTable(column) {
+            const tbody = document.getElementById('bet-table-body');
+            const rows = Array.from(tbody.querySelectorAll('tr'));
+            const headers = document.querySelectorAll('.bet-table th.sortable');
+            
+            // Determine sort direction
+            let direction = 'desc';
+            if (currentSort.column === column && currentSort.direction === 'desc') {
+                direction = 'asc';
+            }
+            currentSort = { column, direction };
+            
+            // Update header styles
+            headers.forEach(th => {
+                th.classList.remove('active', 'asc', 'desc');
+                th.querySelector('.sort-icon').innerHTML = '';
+            });
+            
+            const activeHeader = document.querySelector(`th[data-sort="${column}"]`);
+            activeHeader.classList.add('active', direction);
+            activeHeader.querySelector('.sort-icon').innerHTML = direction === 'desc' ? '&#9660;' : '&#9650;';
+            
+            // Sort rows
+            rows.sort((a, b) => {
+                let aVal = a.dataset[column];
+                let bVal = b.dataset[column];
+                
+                // Check if numeric
+                const aNum = parseFloat(aVal);
+                const bNum = parseFloat(bVal);
+                
+                if (!isNaN(aNum) && !isNaN(bNum)) {
+                    return direction === 'desc' ? bNum - aNum : aNum - bNum;
+                } else {
+                    // String comparison
+                    return direction === 'desc' 
+                        ? bVal.localeCompare(aVal) 
+                        : aVal.localeCompare(bVal);
+                }
+            });
+            
+            // Re-append sorted rows
+            rows.forEach(row => tbody.appendChild(row));
+        }
+        
         function applyProbFilter() {
-            const minProb = parseFloat(document.getElementById('minProb').value) / 100;
+            const minProb = parseFloat(document.getElementById('minProb').value);
+            const maxProb = parseFloat(document.getElementById('maxProb').value);
             const betRows = document.querySelectorAll('.bet-table tbody tr');
             
             betRows.forEach(row => {
                 const checkbox = row.querySelector('input[type="checkbox"]');
-                const prob = parseFloat(row.dataset.prob);
+                const prob = parseFloat(row.dataset.prob);  // Already in percentage
                 
-                if (prob >= minProb) {
+                if (prob >= minProb && prob <= maxProb) {
                     checkbox.checked = true;
                 } else {
                     checkbox.checked = false;
@@ -1325,12 +1501,12 @@ def generate_html_report(
                 const checkbox = row.querySelector('input[type="checkbox"]');
                 if (checkbox && checkbox.checked) {
                     const odds = parseFloat(row.dataset.odds);
-                    const kelly = parseFloat(row.dataset.stake);
-                    const prob = parseFloat(row.dataset.prob);
+                    const stakePercent = parseFloat(row.dataset.stake);  // Already in percentage
+                    const prob = parseFloat(row.dataset.prob) / 100;  // Convert to decimal
                     const ev = prob * odds - 1;
                     const teams = row.querySelector('.teams').textContent;
                     const bet = row.querySelector('.bet-type-cell').textContent;
-                    selectedBets.push({ row, odds, kelly, prob, ev, teams, bet });
+                    selectedBets.push({ row, odds, kelly: stakePercent / 100, prob, ev, teams, bet });
                     row.classList.add('selected');
                 } else {
                     row.classList.remove('selected');
