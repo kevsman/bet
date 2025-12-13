@@ -151,6 +151,13 @@ def generate_html_report(
         print("No recommendations found.")
         return
     
+    # Load all predictions for high-confidence section (regardless of edge)
+    all_predictions_path = Path("data/processed/all_predictions.csv")
+    all_preds_df = None
+    if all_predictions_path.exists():
+        all_preds_df = pd.read_csv(all_predictions_path)
+        all_preds_df = all_preds_df.sort_values("probability", ascending=False)
+    
     # Calculate summary stats
     total_stake = df["stake"].sum() * 100
     avg_ev = df["ev"].mean() * 100
@@ -1228,6 +1235,142 @@ def generate_html_report(
     html += """
             </div>
         </div>
+"""
+
+    # Add High Confidence Bets section (from ALL predictions - no edge requirement)
+    if all_preds_df is not None and len(all_preds_df) > 0:
+        # Get bets with >65% probability (we'll filter by odds with slider)
+        high_conf_df = all_preds_df[
+            (all_preds_df['probability'] >= 0.65) & 
+            (all_preds_df['odds'] >= 1.10)  # Minimum odds for any display
+        ].head(30)  # Get more to allow filtering
+        
+        if len(high_conf_df) > 0:
+            # Build high confidence data for JavaScript
+            high_conf_data = []
+            for idx, row in high_conf_df.iterrows():
+                prob_pct = row["probability"] * 100
+                implied = row.get("implied_prob", 1/row["odds"]) * 100
+                edge_pct = row.get("edge", row["probability"] - 1/row["odds"]) * 100
+                expected_return = (row["probability"] * row["odds"] - 1) * 100
+                bet_type = "Over" if "over" in str(row["bet"]).lower() else "Under"
+                line = row.get("line", 2.5)
+                
+                high_conf_data.append({
+                    "home": row['home_team'],
+                    "away": row['away_team'],
+                    "bet_type": bet_type,
+                    "line": float(line),
+                    "odds": float(row['odds']),
+                    "prob": prob_pct,
+                    "implied": implied,
+                    "edge": edge_pct,
+                    "expected_return": expected_return
+                })
+            
+            import json as json_module
+            high_conf_json = json_module.dumps(high_conf_data)
+            
+            html += f"""
+        <div class="top-bets" style="border-left: 3px solid #22d3ee;">
+            <div class="top-bets-title" style="color: #22d3ee;">
+                <span class="icon">&#128176;</span>
+                <span>High Confidence Bets (Good Odds + High Probability)</span>
+            </div>
+            <p style="color: #888; font-size: 0.85em; margin-bottom: 15px; padding: 0 15px;">
+                Bets with >65% model probability. Use the slider to set minimum odds threshold.
+            </p>
+            
+            <!-- Odds Slider -->
+            <div style="padding: 0 15px 20px 15px;">
+                <div style="display: flex; align-items: center; gap: 15px; background: #1a1a2e; padding: 15px; border-radius: 8px;">
+                    <label style="color: #22d3ee; font-weight: bold; white-space: nowrap;">Min Odds:</label>
+                    <input type="range" id="highConfOddsSlider" min="1.10" max="2.50" step="0.05" value="1.25" 
+                           style="flex: 1; accent-color: #22d3ee; cursor: pointer;">
+                    <span id="highConfOddsValue" style="color: #fff; font-weight: bold; min-width: 50px; text-align: center; 
+                          background: #22d3ee; color: #0f0f23; padding: 5px 10px; border-radius: 5px;">1.25</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; padding: 5px 0; color: #666; font-size: 0.8em;">
+                    <span>1.10 (safer)</span>
+                    <span>Showing <span id="highConfCount" style="color: #22d3ee;">0</span> bets</span>
+                    <span>2.50 (higher return)</span>
+                </div>
+            </div>
+            
+            <div id="highConfBetsGrid" class="top-bets-grid">
+                <!-- Populated by JavaScript -->
+            </div>
+        </div>
+        
+        <script>
+            const highConfData = {high_conf_json};
+            
+            function renderHighConfBets(minOdds) {{
+                const filtered = highConfData.filter(b => b.odds >= minOdds);
+                const container = document.getElementById('highConfBetsGrid');
+                const countEl = document.getElementById('highConfCount');
+                
+                countEl.textContent = filtered.length;
+                
+                if (filtered.length === 0) {{
+                    container.innerHTML = '<div style="color: #888; padding: 20px; text-align: center;">No bets match the current filter. Try lowering the minimum odds.</div>';
+                    return;
+                }}
+                
+                let html = '';
+                filtered.slice(0, 10).forEach((bet, idx) => {{
+                    const edgeColor = bet.edge > 0 ? '#4ecca3' : '#f97316';
+                    const edgeStr = bet.edge > 0 ? '+' + bet.edge.toFixed(1) + '%' : bet.edge.toFixed(1) + '%';
+                    const returnColor = bet.expected_return > 0 ? '#4ecca3' : '#f97316';
+                    const returnStr = (bet.expected_return > 0 ? '+' : '') + bet.expected_return.toFixed(1) + '%';
+                    const betClass = bet.bet_type.toLowerCase();
+                    
+                    html += `
+                        <div class="top-bet-card" style="border-left: 3px solid #22d3ee;">
+                            <div class="rank" style="background: #22d3ee; color: #0f0f23;">${{idx + 1}}</div>
+                            <div class="teams">${{bet.home}} vs ${{bet.away}}</div>
+                            <div class="bet-info">
+                                <span class="bet-label ${{betClass}}">${{bet.bet_type}} ${{bet.line}}</span>
+                                <span class="odds-display">@ ${{bet.odds.toFixed(2)}}</span>
+                            </div>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 0.85em;">
+                                <div>
+                                    <span style="color: #888;">Model:</span> 
+                                    <span style="color: #22d3ee; font-weight: bold;">${{bet.prob.toFixed(0)}}%</span>
+                                </div>
+                                <div>
+                                    <span style="color: #888;">Implied:</span> 
+                                    <span style="color: #fff;">${{bet.implied.toFixed(0)}}%</span>
+                                </div>
+                                <div>
+                                    <span style="color: #888;">Edge:</span> 
+                                    <span style="color: ${{edgeColor}};">${{edgeStr}}</span>
+                                </div>
+                                <div>
+                                    <span style="color: #888;">E[Return]:</span> 
+                                    <span style="color: ${{returnColor}};">${{returnStr}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }});
+                
+                container.innerHTML = html;
+            }}
+            
+            // Initialize slider
+            const slider = document.getElementById('highConfOddsSlider');
+            const valueDisplay = document.getElementById('highConfOddsValue');
+            
+            slider.addEventListener('input', function() {{
+                const val = parseFloat(this.value);
+                valueDisplay.textContent = val.toFixed(2);
+                renderHighConfBets(val);
+            }});
+            
+            // Initial render
+            renderHighConfBets(1.25);
+        </script>
 """
 
     # Add Calculator section

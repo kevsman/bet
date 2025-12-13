@@ -356,6 +356,7 @@ MAX_STAKE = 0.05  # Max 5% of bankroll
 DC_WEIGHT = 0.4  # 40% Dixon-Coles, 60% Poisson (if DC available)
 
 recommendations = []
+all_predictions = []  # Store ALL predictions for high-confidence analysis
 skipped_teams = set()
 
 for _, row in odds_df.iterrows():
@@ -482,6 +483,28 @@ for _, row in odds_df.iterrows():
                 'kelly': stake
             })
         
+        # Also save ALL predictions for high-confidence analysis (even without edge)
+        all_predictions.append({
+            'date': row['date'],
+            'time': row.get('time', ''),
+            'home_team': row['home_team'],
+            'away_team': row['away_team'],
+            'bet': f'Over {line}',
+            'line': line,
+            'odds': over_odds,
+            'model_total': total,
+            'pred_home': pred_home,
+            'pred_away': pred_away,
+            'dc_home': dc_home,
+            'dc_away': dc_away,
+            'probability': p_over,
+            'poisson_prob': probs['poisson_over'],
+            'dc_prob': probs['dc_over'],
+            'model_used': probs['model_used'],
+            'edge': edge_over,
+            'implied_prob': implied_over
+        })
+        
         # Check for value in UNDER bet
         if edge_under > MIN_EDGE:
             kelly = edge_under / (under_odds - 1) if under_odds > 1 else 0
@@ -507,6 +530,28 @@ for _, row in odds_df.iterrows():
                 'edge': edge_under,
                 'kelly': stake
             })
+        
+        # Also save UNDER prediction for high-confidence analysis
+        all_predictions.append({
+            'date': row['date'],
+            'time': row.get('time', ''),
+            'home_team': row['home_team'],
+            'away_team': row['away_team'],
+            'bet': f'Under {line}',
+            'line': line,
+            'odds': under_odds,
+            'model_total': total,
+            'pred_home': pred_home,
+            'pred_away': pred_away,
+            'dc_home': dc_home,
+            'dc_away': dc_away,
+            'probability': p_under,
+            'poisson_prob': probs['poisson_under'],
+            'dc_prob': probs['dc_under'],
+            'model_used': probs['model_used'],
+            'edge': edge_under,
+            'implied_prob': implied_under
+        })
 
 # Sort by edge
 recommendations = sorted(recommendations, key=lambda x: -x['edge'])
@@ -583,3 +628,22 @@ if unique_recs:
     output_path = cfg.processed_dir / 'recommendations.csv'
     recs_df.to_csv(output_path, index=False)
     print(f'\nRecommendations saved to {output_path}')
+
+# Save ALL predictions for high-confidence analysis (regardless of edge)
+if all_predictions:
+    all_preds_df = pd.DataFrame(all_predictions)
+    all_preds_df = all_preds_df.sort_values('probability', ascending=False)
+    cfg = get_config()
+    all_output_path = cfg.processed_dir / 'all_predictions.csv'
+    all_preds_df.to_csv(all_output_path, index=False)
+    
+    # Show high confidence bets summary
+    high_conf = all_preds_df[all_preds_df['probability'] >= 0.70]
+    if len(high_conf) > 0:
+        print(f'\n{"="*80}')
+        print(f'HIGH CONFIDENCE BETS (>70% probability)')
+        print(f'{"="*80}')
+        print(f'Found {len(high_conf)} high-confidence predictions')
+        for _, r in high_conf.head(10).iterrows():
+            edge_str = f"+{r['edge']*100:.1f}%" if r['edge'] > 0 else f"{r['edge']*100:.1f}%"
+            print(f"  {r['home_team']} vs {r['away_team']}: {r['bet']} @ {r['odds']:.2f} ({r['probability']*100:.0f}% prob, edge: {edge_str})")

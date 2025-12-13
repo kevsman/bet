@@ -912,7 +912,7 @@
             <h1>Value Bets Report</h1>
             <div class="subtitle">Domestic Leagues</div>
             <div class="model-info">Dixon-Coles + Poisson Ensemble Model</div>
-            <div class="timestamp">Generated: December 07, 2025 at 08:18</div>
+            <div class="timestamp">Generated: December 07, 2025 at 08:57</div>
         </div>
         
         <div class="summary">
@@ -922,7 +922,7 @@
             </div>
             <div class="summary-card">
                 <div class="label">Total Stake</div>
-                <div class="value red">48.1%</div>
+                <div class="value red">48.2%</div>
             </div>
             <div class="summary-card">
                 <div class="label">Avg EV</div>
@@ -1098,7 +1098,7 @@
                     </div>
                     <div style="display: flex; justify-content: space-between; align-items: center;">
                         <div style="color: #a855f7; font-size: 1.2em; font-weight: bold;">80% Prob</div>
-                        <div class="ev-display" style="font-size: 0.9em;">+7.3% EV</div>
+                        <div class="ev-display" style="font-size: 0.9em;">+7.4% EV</div>
                     </div>
                 </div>
 
@@ -1117,6 +1117,106 @@
 
             </div>
         </div>
+
+        <div class="top-bets" style="border-left: 3px solid #22d3ee;">
+            <div class="top-bets-title" style="color: #22d3ee;">
+                <span class="icon">&#128176;</span>
+                <span>High Confidence Bets (Good Odds + High Probability)</span>
+            </div>
+            <p style="color: #888; font-size: 0.85em; margin-bottom: 15px; padding: 0 15px;">
+                Bets with >65% model probability. Use the slider to set minimum odds threshold.
+            </p>
+            
+            <!-- Odds Slider -->
+            <div style="padding: 0 15px 20px 15px;">
+                <div style="display: flex; align-items: center; gap: 15px; background: #1a1a2e; padding: 15px; border-radius: 8px;">
+                    <label style="color: #22d3ee; font-weight: bold; white-space: nowrap;">Min Odds:</label>
+                    <input type="range" id="highConfOddsSlider" min="1.10" max="2.50" step="0.05" value="1.25" 
+                           style="flex: 1; accent-color: #22d3ee; cursor: pointer;">
+                    <span id="highConfOddsValue" style="color: #fff; font-weight: bold; min-width: 50px; text-align: center; 
+                          background: #22d3ee; color: #0f0f23; padding: 5px 10px; border-radius: 5px;">1.25</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; padding: 5px 0; color: #666; font-size: 0.8em;">
+                    <span>1.10 (safer)</span>
+                    <span>Showing <span id="highConfCount" style="color: #22d3ee;">0</span> bets</span>
+                    <span>2.50 (higher return)</span>
+                </div>
+            </div>
+            
+            <div id="highConfBetsGrid" class="top-bets-grid">
+                <!-- Populated by JavaScript -->
+            </div>
+        </div>
+        
+        <script>
+            const highConfData = [{"home": "Granada", "away": "Ceuta", "bet_type": "Under", "line": 3.5, "odds": 1.18, "prob": 87.33654321710837, "implied": 84.74576271186442, "edge": 2.59078050524396, "expected_return": 3.0571209961878676}, {"home": "Udinese", "away": "Genoa", "bet_type": "Under", "line": 3.5, "odds": 1.18, "prob": 84.74782699138417, "implied": 84.74576271186442, "edge": 0.002064279519764512, "expected_return": 0.0024358498333265644}, {"home": "Elche", "away": "Girona", "bet_type": "Under", "line": 3.5, "odds": 1.32, "prob": 83.68726125753233, "implied": 75.75757575757575, "edge": 7.92968549995657, "expected_return": 10.46718485994269}, {"home": "Las Palmas", "away": "Mirandes", "bet_type": "Under", "line": 3.5, "odds": 1.18, "prob": 83.61054562987952, "implied": 84.74576271186442, "edge": -1.13521708198488, "expected_return": -1.339556156742161}, {"home": "Valencia", "away": "Sevilla", "bet_type": "Under", "line": 3.5, "odds": 1.22, "prob": 81.68184175486448, "implied": 81.9672131147541, "edge": -0.28537135988961004, "expected_return": -0.348153059065337}, {"home": "Osasuna", "away": "Levante", "bet_type": "Under", "line": 3.5, "odds": 1.32, "prob": 81.48950432923058, "implied": 75.75757575757575, "edge": 5.73192857165482, "expected_return": 7.56614571458436}, {"home": "Burgos", "away": "Albacete", "bet_type": "Under", "line": 3.5, "odds": 1.17, "prob": 81.31063818624146, "implied": 85.47008547008548, "edge": -4.159447283844, "expected_return": -4.866553322097489}, {"home": "Alanyaspor", "away": "Antalyaspor", "bet_type": "Under", "line": 3.5, "odds": 1.32, "prob": 81.18964148363206, "implied": 75.75757575757575, "edge": 5.4320657260563, "expected_return": 7.17032675839433}, {"home": "Leganes", "away": "Cordoba", "bet_type": "Under", "line": 3.5, "odds": 1.23, "prob": 80.21283121529954, "implied": 81.30081300813008, "edge": -1.08798179283053, "expected_return": -1.3382176051815686}, {"home": "Torino FC", "away": "Milan", "bet_type": "Under", "line": 3.5, "odds": 1.27, "prob": 80.1263198293259, "implied": 78.74015748031495, "edge": 1.3861623490109398, "expected_return": 1.7604261832439017}, {"home": "OGC Nice", "away": "Angers SCO", "bet_type": "Under", "line": 3.5, "odds": 1.35, "prob": 79.56224937771019, "implied": 74.07407407407408, "edge": 5.48817530363611, "expected_return": 7.409036659908752}, {"home": "Cagliari", "away": "Roma", "bet_type": "Under", "line": 3.5, "odds": 1.25, "prob": 79.09287160972644, "implied": 80.0, "edge": -0.9071283902735501, "expected_return": -1.1339104878419493}, {"home": "Le Havre", "away": "Paris FC", "bet_type": "Under", "line": 3.5, "odds": 1.3, "prob": 79.02628858160763, "implied": 76.92307692307692, "edge": 2.1032116585307103, "expected_return": 2.734175156089913}, {"home": "Sparta Rotterdam", "away": "NAC Breda", "bet_type": "Under", "line": 3.5, "odds": 1.42, "prob": 78.4465528369612, "implied": 70.42253521126761, "edge": 8.02401762569359, "expected_return": 11.394105028484901}, {"home": "Fulham", "away": "Crystal Palace", "bet_type": "Under", "line": 3.5, "odds": 1.28, "prob": 76.20981240339569, "implied": 78.125, "edge": -1.9151875966043002, "expected_return": -2.4514401236535144}, {"home": "Lazio", "away": "Bologna", "bet_type": "Over", "line": 1.5, "odds": 1.4, "prob": 74.2009222396062, "implied": 71.42857142857143, "edge": 2.77235081103476, "expected_return": 3.8812911354486612}, {"home": "Napoli", "away": "Juventus", "bet_type": "Over", "line": 1.5, "odds": 1.5, "prob": 74.15592817470528, "implied": 66.66666666666666, "edge": 7.489261508038619, "expected_return": 11.233892262057932}, {"home": "Lazio", "away": "Bologna", "bet_type": "Under", "line": 3.5, "odds": 1.2, "prob": 71.53183151895082, "implied": 83.33333333333334, "edge": -11.801501814382501, "expected_return": -14.161802177259009}, {"home": "Fulham", "away": "Crystal Palace", "bet_type": "Over", "line": 1.5, "odds": 1.33, "prob": 70.77308504287707, "implied": 75.18796992481202, "edge": -4.414884881934951, "expected_return": -5.8717968929734905}, {"home": "Granada", "away": "Ceuta", "bet_type": "Under", "line": 2.5, "odds": 1.58, "prob": 70.40852509766351, "implied": 63.291139240506325, "edge": 7.1173858571571795, "expected_return": 11.245469654308348}, {"home": "Napoli", "away": "Juventus", "bet_type": "Under", "line": 3.5, "odds": 1.15, "prob": 69.35941364744997, "implied": 86.95652173913044, "edge": -17.597108091680468, "expected_return": -20.236674305432533}, {"home": "Le Havre", "away": "Paris FC", "bet_type": "Over", "line": 1.5, "odds": 1.3, "prob": 67.94015379964645, "implied": 76.92307692307692, "edge": -8.98292312343046, "expected_return": -11.677800060459608}, {"home": "Sparta Rotterdam", "away": "NAC Breda", "bet_type": "Over", "line": 1.5, "odds": 1.2, "prob": 67.93697885778138, "implied": 83.33333333333334, "edge": -15.396354475551949, "expected_return": -18.475625370662343}, {"home": "Cagliari", "away": "Roma", "bet_type": "Over", "line": 1.5, "odds": 1.35, "prob": 67.63806022845972, "implied": 74.07407407407408, "edge": -6.436013845614339, "expected_return": -8.688618691579364}, {"home": "OGC Nice", "away": "Angers SCO", "bet_type": "Over", "line": 1.5, "odds": 1.25, "prob": 67.35521342646454, "implied": 80.0, "edge": -12.64478657353546, "expected_return": -15.805983216919318}, {"home": "Leganes", "away": "Cordoba", "bet_type": "Over", "line": 1.5, "odds": 1.33, "prob": 66.68714226929224, "implied": 75.18796992481202, "edge": -8.50082765551978, "expected_return": -11.30610078184131}, {"home": "Torino FC", "away": "Milan", "bet_type": "Over", "line": 1.5, "odds": 1.32, "prob": 66.66047367698691, "implied": 75.75757575757575, "edge": -9.09710208058884, "expected_return": -12.008174746377275}, {"home": "Udinese", "away": "Genoa", "bet_type": "Under", "line": 2.5, "odds": 1.52, "prob": 66.25424674531682, "implied": 65.78947368421053, "edge": 0.46477306110628, "expected_return": 0.7064550528815605}, {"home": "Alanyaspor", "away": "Antalyaspor", "bet_type": "Over", "line": 1.5, "odds": 1.25, "prob": 65.41790556533549, "implied": 80.0, "edge": -14.58209443466451, "expected_return": -18.22761804333064}, {"home": "Burgos", "away": "Albacete", "bet_type": "Over", "line": 1.5, "odds": 1.4, "prob": 65.36257370521632, "implied": 71.42857142857143, "edge": -6.06599772335511, "expected_return": -8.492396812697155}];
+            
+            function renderHighConfBets(minOdds) {
+                const filtered = highConfData.filter(b => b.odds >= minOdds);
+                const container = document.getElementById('highConfBetsGrid');
+                const countEl = document.getElementById('highConfCount');
+                
+                countEl.textContent = filtered.length;
+                
+                if (filtered.length === 0) {
+                    container.innerHTML = '<div style="color: #888; padding: 20px; text-align: center;">No bets match the current filter. Try lowering the minimum odds.</div>';
+                    return;
+                }
+                
+                let html = '';
+                filtered.slice(0, 10).forEach((bet, idx) => {
+                    const edgeColor = bet.edge > 0 ? '#4ecca3' : '#f97316';
+                    const edgeStr = bet.edge > 0 ? '+' + bet.edge.toFixed(1) + '%' : bet.edge.toFixed(1) + '%';
+                    const returnColor = bet.expected_return > 0 ? '#4ecca3' : '#f97316';
+                    const returnStr = (bet.expected_return > 0 ? '+' : '') + bet.expected_return.toFixed(1) + '%';
+                    const betClass = bet.bet_type.toLowerCase();
+                    
+                    html += `
+                        <div class="top-bet-card" style="border-left: 3px solid #22d3ee;">
+                            <div class="rank" style="background: #22d3ee; color: #0f0f23;">${idx + 1}</div>
+                            <div class="teams">${bet.home} vs ${bet.away}</div>
+                            <div class="bet-info">
+                                <span class="bet-label ${betClass}">${bet.bet_type} ${bet.line}</span>
+                                <span class="odds-display">@ ${bet.odds.toFixed(2)}</span>
+                            </div>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 0.85em;">
+                                <div>
+                                    <span style="color: #888;">Model:</span> 
+                                    <span style="color: #22d3ee; font-weight: bold;">${bet.prob.toFixed(0)}%</span>
+                                </div>
+                                <div>
+                                    <span style="color: #888;">Implied:</span> 
+                                    <span style="color: #fff;">${bet.implied.toFixed(0)}%</span>
+                                </div>
+                                <div>
+                                    <span style="color: #888;">Edge:</span> 
+                                    <span style="color: ${edgeColor};">${edgeStr}</span>
+                                </div>
+                                <div>
+                                    <span style="color: #888;">E[Return]:</span> 
+                                    <span style="color: ${returnColor};">${returnStr}</span>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                container.innerHTML = html;
+            }
+            
+            // Initialize slider
+            const slider = document.getElementById('highConfOddsSlider');
+            const valueDisplay = document.getElementById('highConfOddsValue');
+            
+            slider.addEventListener('input', function() {
+                const val = parseFloat(this.value);
+                valueDisplay.textContent = val.toFixed(2);
+                renderHighConfBets(val);
+            });
+            
+            // Initial render
+            renderHighConfBets(1.25);
+        </script>
 
         <div class="calculator">
             <div class="calculator-title">
@@ -1588,7 +1688,7 @@
                         </td>
                     </tr>
 
-                    <tr class="strong" data-bet-id="11" data-match="OGC Nice vs Angers SCO" data-bet="Under 2.5" data-odds="1.9" data-ev="12.299732532360075" data-edge="6.473543438084251" data-prob="59.10512238545267" data-goals="2.316778192743313" data-stake="1.79820651057895">
+                    <tr class="strong" data-bet-id="11" data-match="OGC Nice vs Angers SCO" data-bet="Under 2.5" data-odds="1.9" data-ev="12.409828798156486" data-edge="6.531488841134999" data-prob="59.16306778850342" data-goals="2.316639804160089" data-stake="1.8143024558708298">
                         <td>
                             <div class="bet-row-checkbox">
                                 <input type="checkbox" id="bet-11" checked onchange="updateCalculator()">
@@ -1604,9 +1704,9 @@
                         </td>
                         <td><span class="bet-type-cell under">Under 2.5</span></td>
                         <td class="odds-cell">1.90</td>
-                        <td class="ev-cell">+12.3% <span class="badge-mini strong">Strong</span></td>
+                        <td class="ev-cell">+12.4% <span class="badge-mini strong">Strong</span></td>
                         <td class="edge-cell">+6.5%</td>
-                        <td class="prob-cell">59.1%</td>
+                        <td class="prob-cell">59.2%</td>
                         <td class="goals-cell">2.32</td>
                         <td class="stake-cell">1.8%</td>
                         <td class="models-cell">
@@ -1763,11 +1863,46 @@
                         </td>
                     </tr>
 
-                    <tr class="strong" data-bet-id="16" data-match="Lazio vs Bologna" data-bet="Over 2.5" data-odds="2.25" data-ev="12.265242204271631" data-edge="5.45121875745406" data-prob="49.8956632018985" data-goals="2.885928743829736" data-stake="1.0902437514908099">
+                    <tr class="" data-bet-id="16" data-match="OGC Nice vs Angers SCO" data-bet="Under 3.5" data-odds="1.35" data-ev="7.409036659908752" data-edge="5.48817530363611" data-prob="79.56224937771019" data-goals="2.316639804160089" data-stake="3.9201252168829295">
                         <td>
                             <div class="bet-row-checkbox">
                                 <input type="checkbox" id="bet-16" checked onchange="updateCalculator()">
                                 <label for="bet-16">&#10003;</label>
+                            </div>
+                        </td>
+                        <td class="match-cell">
+                            <div class="teams">OGC Nice vs Angers SCO</div>
+                            <div class="meta">
+                                <span class="league">Unknown</span>
+                                <span class="date">2025-12-07 15:00</span>
+                            </div>
+                        </td>
+                        <td><span class="bet-type-cell under">Under 3.5</span></td>
+                        <td class="odds-cell">1.35</td>
+                        <td class="ev-cell">+7.4% </td>
+                        <td class="edge-cell">+5.5%</td>
+                        <td class="prob-cell">79.6%</td>
+                        <td class="goals-cell">2.32</td>
+                        <td class="stake-cell">3.9%</td>
+                        <td class="models-cell">
+                            <div class="model-mini">
+                                <span class="model-label poisson">P</span>
+                                <span class="model-prob">80%</span>
+                                <span class="model-score">(1.5-0.8)</span>
+                            </div>
+                            <div class="model-mini">
+                                <span class="model-label dc">D</span>
+                                <span class="model-prob">82%</span>
+                                <span class="model-score">(1.6-0.6)</span>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr class="strong" data-bet-id="17" data-match="Lazio vs Bologna" data-bet="Over 2.5" data-odds="2.25" data-ev="12.265242204271631" data-edge="5.45121875745406" data-prob="49.8956632018985" data-goals="2.885928743829736" data-stake="1.0902437514908099">
+                        <td>
+                            <div class="bet-row-checkbox">
+                                <input type="checkbox" id="bet-17" checked onchange="updateCalculator()">
+                                <label for="bet-17">&#10003;</label>
                             </div>
                         </td>
                         <td class="match-cell">
@@ -1794,41 +1929,6 @@
                                 <span class="model-label dc">D</span>
                                 <span class="model-prob">36%</span>
                                 <span class="model-score">(1.1-1.0)</span>
-                            </div>
-                        </td>
-                    </tr>
-
-                    <tr class="" data-bet-id="17" data-match="OGC Nice vs Angers SCO" data-bet="Under 3.5" data-odds="1.35" data-ev="7.34598654707499" data-edge="5.44147151635184" data-prob="79.51554559042592" data-goals="2.316778192743313" data-stake="3.88676536882274">
-                        <td>
-                            <div class="bet-row-checkbox">
-                                <input type="checkbox" id="bet-17" checked onchange="updateCalculator()">
-                                <label for="bet-17">&#10003;</label>
-                            </div>
-                        </td>
-                        <td class="match-cell">
-                            <div class="teams">OGC Nice vs Angers SCO</div>
-                            <div class="meta">
-                                <span class="league">Unknown</span>
-                                <span class="date">2025-12-07 15:00</span>
-                            </div>
-                        </td>
-                        <td><span class="bet-type-cell under">Under 3.5</span></td>
-                        <td class="odds-cell">1.35</td>
-                        <td class="ev-cell">+7.3% </td>
-                        <td class="edge-cell">+5.4%</td>
-                        <td class="prob-cell">79.5%</td>
-                        <td class="goals-cell">2.32</td>
-                        <td class="stake-cell">3.9%</td>
-                        <td class="models-cell">
-                            <div class="model-mini">
-                                <span class="model-label poisson">P</span>
-                                <span class="model-prob">80%</span>
-                                <span class="model-score">(1.5-0.8)</span>
-                            </div>
-                            <div class="model-mini">
-                                <span class="model-label dc">D</span>
-                                <span class="model-prob">82%</span>
-                                <span class="model-score">(1.6-0.6)</span>
                             </div>
                         </td>
                     </tr>
